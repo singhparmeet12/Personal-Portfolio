@@ -1,0 +1,1441 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Case Study | Parmeet Singh{% endblock %}
+{% block meta_description %}{{ project.tagline }} Detailed case study and architecture by Parmeet Singh.{% endblock %}
+
+{% block content %}
+<div class="site-container">
+  
+  <!-- Breadcrumbs & Contextual Back Navigation -->
+  <div class="case-study-hero">
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+      <a href="{% url 'portfolio:home' %}">Home</a>
+      <span>/</span>
+      <a href="{% url 'portfolio:work' %}">Work</a>
+      <span>/</span>
+      <span style="color: var(--text-primary); font-weight: 600;">{{ project.title }}</span>
+    </nav>
+
+    <a href="{% url 'portfolio:work' %}" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to All Projects</span>
+    </a>
+
+    <div class="mt-2" style="margin-top: 0.75rem;">
+      <span class="badge-category">{{ project.category.name|default:"Web Application" }}</span>
+      <h1 class="hero-title mt-2 mb-2" style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.75rem 0;">
+        {{ project.title }}
+      </h1>
+      <p class="lead" style="max-width: 800px;">
+        {{ project.tagline }}
+      </p>
+    </div>
+
+    <!-- Metadata Quick Strip -->
+    <div class="project-meta-strip">
+      <div class="meta-strip-item">
+        <span class="meta-strip-label">Project Type</span>
+        <span class="meta-strip-val">{{ project.get_client_type_display }}</span>
+      </div>
+
+      {% if project.completion_date %}
+        <div class="meta-strip-item">
+          <span class="meta-strip-label">Completed</span>
+          <span class="meta-strip-val">{{ project.completion_date|date:"F Y" }}</span>
+        </div>
+      {% endif %}
+
+      <div class="meta-strip-item">
+        <span class="meta-strip-label">Category</span>
+        <span class="meta-strip-val">{{ project.category.name }}</span>
+      </div>
+
+      {% if project.live_url or project.github_url %}
+        <div class="meta-strip-item" style="margin-left: auto;">
+          <span class="meta-strip-label">Project Links</span>
+          <div style="display: flex; gap: 0.75rem; margin-top: 0.35rem;">
+            {% if project.live_url %}
+              <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm">
+                <i class="bi bi-box-arrow-up-right"></i>
+                <span>Live Demo</span>
+              </a>
+            {% endif %}
+            {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-secondary-outline btn-sm">
+                <i class="bi bi-github"></i>
+                <span>View Source</span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- Featured Showcase: Interactive Multi-Screen Experience for GaadiMandi -->
+  {% if project.slug == 'gaadimandi' %}
+    <div class="interactive-showcase-container mb-5" id="gaadimandiShowcase">
+      <!-- Showcase Controls Header -->
+      <div class="showcase-control-bar">
+        <div class="showcase-nav-tabs">
+          <button type="button" class="showcase-tab-btn active" data-screen="1">
+            <i class="bi bi-globe2"></i>
+            <span>01 • Dealer Website</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="2">
+            <i class="bi bi-speedometer2"></i>
+            <span>02 • Command Center</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="3">
+            <i class="bi bi-file-earmark-check"></i>
+            <span>03 • Vehicle Dossier</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="4">
+            <i class="bi bi-whatsapp text-success"></i>
+            <span>04 • Deal Hub &amp; Leads</span>
+          </button>
+        </div>
+        <div class="showcase-status-badge">
+          <button type="button" class="showcase-auto-btn" id="showcaseAutoPlayBtn" title="Toggle Auto-Play Demo">
+            <i class="bi bi-pause-fill" id="showcaseAutoPlayIcon"></i>
+            <span id="showcaseAutoPlayText">Live Demo Active</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layered 16:9 Screen Stage -->
+      <div class="showcase-stage" id="showcaseStage">
+        <img src="{% static 'img/projects/gaadimandi_screen_01.jpg' %}" alt="GaadiMandi Personal Dealer Website" class="showcase-layer active" data-layer="1">
+        <img src="{% static 'img/projects/gaadimandi_screen_02.jpg' %}" alt="GaadiMandi Command Center" class="showcase-layer" data-layer="2">
+        <img src="{% static 'img/projects/gaadimandi_screen_03.jpg' %}" alt="GaadiMandi Vehicle Dossier" class="showcase-layer" data-layer="3">
+        <img src="{% static 'img/projects/gaadimandi_screen_04.jpg' %}" alt="GaadiMandi Deal Hub & WhatsApp Leads" class="showcase-layer" data-layer="4">
+        
+        <!-- Live Micro-Cursor Interaction Overlay -->
+        <div class="showcase-cursor" id="showcaseCursor">
+          <i class="bi bi-cursor-fill"></i>
+        </div>
+      </div>
+
+      <!-- Caption & Context Bar -->
+      <div class="showcase-caption-bar">
+        <div class="showcase-caption-item active" data-caption="1">
+          <strong>01 • Personal Dealer Website (Public Link):</strong> Every dealership gets its own branded link (<code style="color:var(--accent-cyan);">gaadimandi.in/d/shiv-car-sales/</code>) with 6 live vehicles, instant WhatsApp sharing &amp; verified dealership trust badges.
+        </div>
+        <div class="showcase-caption-item" data-caption="2">
+          <strong>02 • Dealership Command Center (Private OS):</strong> Operational cockpit managing ₹5.25 Cr stock capital, +₹42.50 L profit, real-time inventory sync &amp; live buyer leads.
+        </div>
+        <div class="showcase-caption-item" data-caption="3">
+          <strong>03 • 150-Point Inspection Dossier (Vehicle Detail):</strong> 2024 Porsche 911 (₹1.85 Cr) with 9.9/10 scorecard, active RC/PUC documents, test-drive booking &amp; direct WhatsApp conversion.
+        </div>
+        <div class="showcase-caption-item" data-caption="4">
+          <strong>04 • Deal Hub &amp; WhatsApp Lead CRM:</strong> Direct buyer chat routing, ₹5.00 L token tracking, KYC verification &amp; FastTrack RTO transfer pipeline.
+        </div>
+      </div>
+    </div>
+  {% elif project.slug == 'tourcraze' %}
+    <!-- Unified 5-Screen Interactive Showcase for TourCraze -->
+    <div class="interactive-showcase-container mb-5" id="tourcrazeShowcase">
+      <!-- Showcase Controls Header -->
+      <div class="showcase-control-bar">
+        <div class="showcase-nav-tabs">
+          <button type="button" class="showcase-tab-btn active" data-screen="1">
+            <i class="bi bi-compass"></i>
+            <span>01 • Brand Cover</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="2">
+            <i class="bi bi-laptop"></i>
+            <span>02 • Command Center</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="3">
+            <i class="bi bi-calendar-check"></i>
+            <span>03 • Smart Itinerary</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="4">
+            <i class="bi bi-pie-chart"></i>
+            <span>04 • TripSplit Finance</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="5">
+            <i class="bi bi-geo-alt"></i>
+            <span>05 • Mountain Adventure</span>
+          </button>
+        </div>
+        <div class="showcase-status-badge">
+          <button type="button" class="showcase-auto-btn" id="tourcrazeAutoPlayBtn" title="Toggle Auto-Play Demo">
+            <i class="bi bi-pause-fill" id="tourcrazeAutoPlayIcon"></i>
+            <span id="tourcrazeAutoPlayText">Live Demo Active</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layered 16:9 Screen Stage -->
+      <div class="showcase-stage">
+        <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="TourCraze Intelligent Travel Platform" class="showcase-layer active" data-layer="1">
+        <img src="{% static 'img/projects/tourcraze_dashboard.jpg' %}" alt="TourCraze 3D Command Center Dashboard" class="showcase-layer" data-layer="2">
+        <img src="{% static 'img/projects/tourcraze_screen_01.jpg' %}" alt="TourCraze Smart Itinerary Planning" class="showcase-layer" data-layer="3">
+        <img src="{% static 'img/projects/tourcraze_screen_02.jpg' %}" alt="TourCraze TripSplit Group Travel Finance" class="showcase-layer" data-layer="4">
+        <img src="{% static 'img/projects/tourcraze_screen_03.jpg' %}" alt="TourCraze Real-World Mountain Adventure" class="showcase-layer" data-layer="5">
+        
+        <!-- Live Micro-Cursor Interaction Overlay -->
+        <div class="showcase-cursor">
+          <i class="bi bi-cursor-fill"></i>
+        </div>
+      </div>
+
+      <!-- Caption & Context Bar -->
+      <div class="showcase-caption-bar">
+        <div class="showcase-caption-item active" data-caption="1">
+          <strong>01 • Brand Identity:</strong> Modern travel platform connecting discovery, procedural itinerary generation, and multi-party financial collaboration.
+        </div>
+        <div class="showcase-caption-item" data-caption="2">
+          <strong>02 • SaaS Command Center:</strong> High-density 3D dashboard integrating heuristic itinerary schedules, activity chips, and TripSplit donut analytics.
+        </div>
+        <div class="showcase-caption-item" data-caption="3">
+          <strong>03 • Smart Itinerary Generation:</strong> AI-powered day-by-day travel orchestration structuring activities, timings, travel styles, and live budget optimization.
+        </div>
+        <div class="showcase-caption-item" data-caption="4">
+          <strong>04 • TripSplit Financial Analytics:</strong> Real-time collaborative group expense calculation, multi-category spend telemetry, and automated debt settlement.
+        </div>
+        <div class="showcase-caption-item" data-caption="5">
+          <strong>05 • Mountain Adventure:</strong> Seamlessly turning digital planning into real-world mountain exploration with dynamic route telemetry.
+        </div>
+      </div>
+    </div>
+  {% elif project.slug == 'tradelab' %}
+    <!-- Unified 4-Screen Interactive Showcase for TradeLab -->
+    <div class="interactive-showcase-container mb-5" id="tradelabShowcase">
+      <!-- Showcase Controls Header -->
+      <div class="showcase-control-bar">
+        <div class="showcase-nav-tabs">
+          <button type="button" class="showcase-tab-btn active" data-screen="1">
+            <i class="bi bi-shield-shaded"></i>
+            <span>01 • Brand Hero &amp; Philosophy</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="2">
+            <i class="bi bi-cpu"></i>
+            <span>02 • AI Chart Analysis</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="3">
+            <i class="bi bi-signpost-2"></i>
+            <span>03 • 8-Stage Learning Roadmap</span>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-screen="4">
+            <i class="bi bi-sliders"></i>
+            <span>04 • Proprietary Indicator</span>
+          </button>
+        </div>
+        <div class="showcase-status-badge">
+          <button type="button" class="showcase-auto-btn" id="tradelabAutoPlayBtn" title="Toggle Auto-Play Demo">
+            <i class="bi bi-pause-fill" id="tradelabAutoPlayIcon"></i>
+            <span id="tradelabAutoPlayText">Live Demo Active</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Layered 16:9 Screen Stage -->
+      <div class="showcase-stage">
+        <img src="{% static 'img/projects/tradelab_banner.jpg' %}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="TradeLab Brand Hero &amp; Philosophy" class="showcase-layer active" data-layer="1">
+        <img src="{% static 'img/projects/tradelab_screen_01.jpg' %}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="TradeLab AI Chart Pattern Analysis" class="showcase-layer" data-layer="2">
+        <img src="{% static 'img/projects/tradelab_screen_02.jpg' %}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="TradeLab 8-Stage Trading Learning Roadmap" class="showcase-layer" data-layer="3">
+        <img src="{% static 'img/projects/tradelab_screen_03.jpg' %}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="TradeLab Proprietary Trading Indicator" class="showcase-layer" data-layer="4">
+        
+        <!-- Live Micro-Cursor Interaction Overlay -->
+        <div class="showcase-cursor">
+          <i class="bi bi-cursor-fill"></i>
+        </div>
+      </div>
+
+      <!-- Caption & Context Bar -->
+      <div class="showcase-caption-bar">
+        <div class="showcase-caption-item active" data-caption="1">
+          <strong>01 • Brand Hero &amp; Philosophy:</strong> All-in-one platform connecting progressive trading education, real-time multi-market charts, and computer vision pattern recognition.
+        </div>
+        <div class="showcase-caption-item" data-caption="2">
+          <strong>02 • AI Chart Analysis:</strong> Custom-trained YOLOv5 computer vision model scanning chart screenshots to detect classical candlestick patterns and breakout formations.
+        </div>
+        <div class="showcase-caption-item" data-caption="3">
+          <strong>03 • 8-Stage Learning Roadmap:</strong> Progressive interactive journey from market fundamentals to technical indicators, risk management, and live execution.
+        </div>
+        <div class="showcase-caption-item" data-caption="4">
+          <strong>04 • Proprietary Indicator Suite:</strong> Clean, low-noise Pine Script v5 algorithm with distinct BUY/SELL signal markers, EMA ribbons, and dynamic ATR trend telemetry.
+        </div>
+      </div>
+    </div>
+  {% elif project.featured_image %}
+    <div class="modern-card" style="padding: 0; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: 3rem; border: 1px solid var(--border-medium); box-shadow: var(--shadow-md);">
+      <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="{{ project.title }} Banner" style="width: 100%; aspect-ratio: 16/9; max-height: 560px; object-fit: cover; display: block;">
+    </div>
+  {% endif %}
+
+  <!-- Main Case Study Content -->
+  <div class="project-detail-layout">
+    
+    <!-- Left / Main Column -->
+    <div class="case-study-main">
+      
+      {% if project.slug == 'gaadimandi' %}
+        <!-- SECTION 01 — PROJECT OVERVIEW -->
+        <section class="case-study-block">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span class="badge-tech accent mb-2" style="display: inline-block;">Flagship Case Study</span>
+              <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0 0.4rem 0;">GaadiMandi</h2>
+              <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent-cyan); margin-bottom: 1rem;">India's Next-Gen Dealership &amp; Automotive Network</p>
+            </div>
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0;">
+            A full-stack automotive marketplace and dealership operating system that gives independent dealers their own branded digital showroom, live inventory, financial telemetry, and direct buyer communication.
+          </p>
+
+          <div class="cs-meta-grid">
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-person-badge"></i> Role</div>
+              <div class="cs-meta-value">Product Designer + Full-Stack Developer</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-layers"></i> Type</div>
+              <div class="cs-meta-value">Automotive Marketplace + B2B SaaS</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-bullseye"></i> Focus</div>
+              <div class="cs-meta-value">Digital Showrooms • Inventory • Operations</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 02 — THE PROBLEM -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-exclamation-triangle" style="color: var(--accent-amber);"></i>
+            <span>The Problem</span>
+          </h3>
+          <div class="cs-problem-grid">
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-globe-americas"></i> Dealers Lack Digital Ownership</div>
+              <p class="cs-problem-text">Independent dealerships often depend on third-party listing portals instead of having a professional website of their own.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-graph-down-arrow"></i> Inventory is Hard to Manage</div>
+              <p class="cs-problem-text">Dealers need to understand active capital, vehicle aging, refurbishment costs, holding-cost bleed, and actual profit.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-shield-slash"></i> Buyers Need More Trust</div>
+              <p class="cs-problem-text">Used-vehicle buyers need inspection information, verified documents, transparent pricing, and easy direct communication with dealers.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 03 — THE SOLUTION -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-lightning-charge" style="color: var(--accent-cyan);"></i>
+            <span>One Platform. Two Experiences.</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0;">
+            GaadiMandi connects a dealer's public digital showroom with a private dealership operating system — keeping inventory, leads, finances, and customer-facing listings connected in real time.
+          </p>
+          <div class="cs-flow-strip">
+            <span class="cs-flow-node"><i class="bi bi-shop"></i> Dealer Website</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node"><i class="bi bi-car-front"></i> Live Inventory</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node"><i class="bi bi-chat-dots"></i> Buyer Inquiry</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node highlight"><i class="bi bi-speedometer2"></i> Command Center</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node highlight"><i class="bi bi-cash-stack"></i> Sale + Profit</span>
+          </div>
+        </section>
+
+        <!-- SECTION 04 — THE CORE IDEA -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-stars" style="color: var(--accent-primary);"></i>
+            <span>Every Dealer Gets Their Own Website</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            Instead of sending customers screenshots or scattered marketplace listings, a dealer can share one personalized GaadiMandi URL containing their live inventory.
+          </p>
+          <div>
+            <div class="cs-url-highlight">
+              <i class="bi bi-link-45deg" style="font-size: 1.3rem;"></i>
+              <span>gaadimandi.in/d/shiv-car-sales/</span>
+            </div>
+          </div>
+          <p style="font-size: 1rem; line-height: 1.7; color: var(--text-secondary); margin-top: 0.5rem;">
+            Customers see available vehicles, pricing, inspection scores, verification status, and WhatsApp contact — all from the dealer's own branded showroom.
+          </p>
+          <div class="cs-callout-box">
+            <strong style="color: #ffffff; font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">✨ Your showroom. Your inventory. Your customers.</strong>
+            <span style="color: var(--text-secondary); font-size: 0.92rem;">Direct-to-buyer relationship with zero third-party commissions or intermediary friction.</span>
+          </div>
+        </section>
+
+        <!-- SECTION 05 — WHAT I BUILT -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-cpu" style="color: var(--accent-emerald);"></i>
+            <span>What I Built</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-globe2"></i> Live Dealer Websites</div>
+              <p class="cs-feature-text">Personalized dealership URLs with branded layouts, inventory, contact information and live customization.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-palette"></i> Live Showroom Customizer</div>
+              <p class="cs-feature-text">Inline editing of typography, colors, banners, logos, assurances and showroom content.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-speedometer2"></i> Dealer Command Center</div>
+              <p class="cs-feature-text">Real-time inventory capital, profit, leads, aging and holding-cost telemetry.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-boxes"></i> Inventory Management</div>
+              <p class="cs-feature-text">Vehicle pricing, acquisition cost, specifications, documents, images and availability management.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-journal-text"></i> Profit &amp; Sales Ledger</div>
+              <p class="cs-feature-text">Sale settlement, expense tracking, ROI calculation and immutable financial snapshots.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-search"></i> Buyer Marketplace</div>
+              <p class="cs-feature-text">Search, autocomplete, multi-parameter filtering, wishlists and vehicle discovery.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-clipboard2-check"></i> Vehicle Inspection Dossier</div>
+              <p class="cs-feature-text">150-point inspection scoring, specifications, document verification and direct dealer contact.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-file-earmark-ruled"></i> RTO Buying Guide</div>
+              <p class="cs-feature-text">Inter-state transfer guidance, NOC workflow, road-tax information and Forms 28/29/30 resources.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 06 — THE INTERACTION MODEL -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-diagram-3" style="color: var(--accent-cyan);"></i>
+            <span>Designed Around Real Dealer Workflows</span>
+          </h3>
+          <div class="cs-workflow-grid">
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">01 — PUBLISH</div>
+              <div class="cs-workflow-title">Instant Showroom Sync</div>
+              <p class="cs-problem-text">Dealer manages inventory and publishes it instantly to their personal showroom.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">02 — SHARE</div>
+              <div class="cs-workflow-title">One-Tap WhatsApp Sharing</div>
+              <p class="cs-problem-text">Dealer sends one showroom link to customers inquiring on WhatsApp.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">03 — CONVERT</div>
+              <div class="cs-workflow-title">Direct Buyer Action</div>
+              <p class="cs-problem-text">Customers inspect vehicles, request test drives, and contact the dealer directly.</p>
+            </div>
+          </div>
+          <div class="mt-3 text-muted" style="font-size: 0.92rem;">
+            <i class="bi bi-check-all text-success"></i> The public website and private dealer portal stay connected to the same inventory.
+          </div>
+        </section>
+
+        <!-- SECTION 07 — PRODUCT HIGHLIGHT -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-magic" style="color: var(--accent-amber);"></i>
+            <span>The Interesting Part</span>
+          </h3>
+          <div style="font-size: 1.35rem; font-weight: 700; color: #ffffff; line-height: 1.4; margin-bottom: 1rem;">
+            A dealership website that behaves like a product, not a static page.
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            Owners can enter <em>Edit Website</em> mode directly on their live showroom and change content, themes, banners, logos and trust sections without navigating a traditional admin CMS.
+          </p>
+          <div class="cs-metrics-grid">
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">3</div>
+              <div class="cs-metric-label">Luxury Showroom Layouts</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">9</div>
+              <div class="cs-metric-label">Live Visual Themes</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">1</div>
+              <div class="cs-metric-label">Connected Inventory System</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 08 — TECHNICAL IMPLEMENTATION -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-stack" style="color: var(--accent-primary);"></i>
+            <span>Built With</span>
+          </h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            {% for tech in project.technologies.all %}
+              <span class="badge-tech accent">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+          <p style="font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); margin: 0;">
+            Django powers the modular backend, ORM, authentication, financial logic and AJAX endpoints, while HTMX and vanilla JavaScript provide fast partial updates and live showroom interactions without unnecessary page reloads.
+          </p>
+        </section>
+
+        <!-- SECTION 09 — ENGINEERING HIGHLIGHTS -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-gear-wide-connected" style="color: var(--accent-cyan);"></i>
+            <span>Engineering Highlights</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-broadcast"></i> Real-Time UI</div>
+              <p class="cs-feature-text">HTMX-powered inventory filtering and asynchronous updates without full page reloads.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-calculator"></i> Financial Logic</div>
+              <p class="cs-feature-text">Automated acquisition cost, expenses, holding-cost bleed, profit and ROI calculations.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-person-lock"></i> Role Separation</div>
+              <p class="cs-feature-text">Distinct buyer and dealership workflows with strict permission and session boundary controls.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-cloud-check"></i> Production Ready</div>
+              <p class="cs-feature-text">PostgreSQL support, Cloudinary media pipeline, WhiteNoise static delivery, Gunicorn deployment and custom error handling.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10 — DESIGN SYSTEM -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-brush" style="color: var(--accent-emerald);"></i>
+            <span>Visual Direction</span>
+          </h3>
+          <p style="font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary);">
+            Cyber-luxury automotive design combining premium dealership aesthetics with a high-density SaaS command center.
+          </p>
+          <div class="cs-swatches-grid">
+            <div class="cs-swatch-item">
+              <div class="cs-swatch-dot" style="background: #07090E;"></div>
+              <span>#07090E Space Navy</span>
+            </div>
+            <div class="cs-swatch-item">
+              <div class="cs-swatch-dot" style="background: #00F2FE;"></div>
+              <span>#00F2FE Cyber Cyan</span>
+            </div>
+            <div class="cs-swatch-item">
+              <div class="cs-swatch-dot" style="background: #F59E0B;"></div>
+              <span>#F59E0B Warm Amber</span>
+            </div>
+            <div class="cs-swatch-item">
+              <div class="cs-swatch-dot" style="background: #10B981;"></div>
+              <span>#10B981 Emerald</span>
+            </div>
+            <div class="cs-swatch-item">
+              <div class="cs-swatch-dot" style="background: #F8FAFC;"></div>
+              <span>#F8FAFC Platinum</span>
+            </div>
+          </div>
+          <div style="margin-top: 1rem; font-family: var(--font-mono); font-size: 0.84rem; color: var(--text-muted);">
+            <i class="bi bi-fonts"></i> Typography: Outfit · Plus Jakarta Sans · JetBrains Mono · Playfair Display
+          </div>
+        </section>
+
+        <!-- SECTION 11 — KEY PRODUCT METRICS -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-speedometer" style="color: var(--accent-amber);"></i>
+            <span>The Product at a Glance</span>
+          </h3>
+          <div class="cs-metrics-grid">
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">6</div>
+              <div class="cs-metric-label">Live Vehicles in Fleet</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">₹5.25 Cr</div>
+              <div class="cs-metric-label">Active Stock Capital</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">+₹42.50 L</div>
+              <div class="cs-metric-label">30-Day Realized Profit</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">9.9 / 10</div>
+              <div class="cs-metric-label">Top Inspection Score</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">3</div>
+              <div class="cs-metric-label">Showroom Architectures</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">9</div>
+              <div class="cs-metric-label">Theme Palettes</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12 — OUTCOME -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-award" style="color: var(--accent-emerald);"></i>
+            <span>Outcome</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            GaadiMandi turns a traditional dealership into a digitally owned business — giving dealers a professional storefront, live inventory management, financial visibility, and direct customer communication in one connected platform.
+          </p>
+          <div class="cs-callout-box">
+            <div style="font-size: 1.15rem; font-weight: 700; color: #00f2fe;">
+              “From ‘What cars do you have?’ to one shareable link.”
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 13 — PORTFOLIO SUMMARY CARD -->
+        <div class="cs-footer-summary">
+          <span class="badge-tech accent mb-3" style="display: inline-block;">Production Showcase</span>
+          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">GAADIMANDI</h3>
+          <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
+            Automotive Marketplace + Dealership Operating System
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 1.5rem auto;">
+            Personal Digital Showrooms · Live Inventory · Dealer Intelligence · Direct Buyer Conversion
+          </p>
+          {% if project.demo_url %}
+            <a href="{{ project.demo_url }}" target="_blank" rel="noopener" class="btn-modern btn-primary-glow">
+              <span>EXPLORE THE LIVE EXPERIENCE</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          {% endif %}
+        </div>
+
+      {% elif project.slug == 'tourcraze' %}
+        <!-- ================================================================= -->
+        <!-- TOURCRAZE ZERO-REDUNDANCY CASE STUDY CONTENT                      -->
+        <!-- ================================================================= -->
+
+        <!-- SECTION 01 — HERO & PROJECT OVERVIEW -->
+        <section class="case-study-block">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span class="badge-tech accent mb-2" style="display: inline-block;">Flagship Case Study</span>
+              <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0 0.4rem 0;">TourCraze</h2>
+              <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent-cyan); margin-bottom: 1rem;">Intelligent Travel Planning &amp; Collaborative Group Expense Platform</p>
+            </div>
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0;">
+            A full-stack travel platform that connects algorithmic trip scheduling with multi-party financial collaboration. Built with Django and client-side telemetry, it replaces disjointed spreadsheets and split-bill calculators with an integrated system for discovering destinations, generating day-by-day itineraries, and settling group expenses.
+          </p>
+
+          <div class="cs-meta-grid">
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-person-badge"></i> Role</div>
+              <div class="cs-meta-value">Product Designer + Full-Stack Engineer</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-layers"></i> Type</div>
+              <div class="cs-meta-value">Travel SaaS + Collaborative Platform</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-bullseye"></i> Focus</div>
+              <div class="cs-meta-value">Procedural Scheduling • Debt Algorithms • Financial Telemetry</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 02 — THE PROBLEM -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-exclamation-triangle" style="color: var(--accent-amber);"></i>
+            <span>The Problem</span>
+          </h3>
+          <div class="cs-problem-grid">
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-grid-3x3-gap"></i> Fragmented Planning</div>
+              <p class="cs-problem-text">Travelers juggle separate apps for research, itinerary scheduling, stay bookings, and route pacing, leading to disjointed plans.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-calendar2-range"></i> Manual Assembly</div>
+              <p class="cs-problem-text">Structuring realistic day-by-day travel timelines with appropriate pacing, cost estimates, and geographical grouping requires tedious manual curation.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-cash-stack"></i> Group Expense Friction</div>
+              <p class="cs-problem-text">Splitting trip costs across uneven contributions, shared receipts, and multiple members creates complex debt webs that are difficult to reconcile.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 03 — THE ALGORITHMIC CORE -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-magic" style="color: var(--accent-amber);"></i>
+            <span>The Core Engineering</span>
+          </h3>
+          <div style="font-size: 1.35rem; font-weight: 700; color: #ffffff; line-height: 1.4; margin-bottom: 1rem;">
+            Procedural Itinerary Synthesis &amp; Greedy Debt Simplification
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            Unlike conventional travel directories that display static catalogs, TourCraze generates structured multi-day schedules dynamically. The itinerary engine synthesizes target duration, traveler count, budget constraints, and travel styles into structured daily timelines with cost estimates and transit pacing.
+          </p>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            For group finances, TripSplit implements a <strong>Greedy Minimum Cash Flow</strong> settlement algorithm. By computing the net balance of every traveler and repeatedly pairing the largest net debtor with the largest net creditor, it collapses tangled multi-party debt webs into the minimum number of direct settlement transactions.
+          </p>
+          <div class="cs-metrics-grid">
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">O(N)</div>
+              <div class="cs-metric-label">Greedy Settlement Flow</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">3-Slot</div>
+              <div class="cs-metric-label">Daily Pacing Matrix</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">100%</div>
+              <div class="cs-metric-label">Relational Integrity</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 04 — WHAT I BUILT (COMPLEMENTARY PLATFORM SUBSYSTEMS) -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-cpu" style="color: var(--accent-emerald);"></i>
+            <span>Platform Subsystems</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-radar"></i> Getaway Proximity Radar</div>
+              <p class="cs-feature-text">Proximity-based engine locating road trips and weekend destinations within custom kilometer radii.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-patch-question"></i> Vibe Match Recommendation</div>
+              <p class="cs-feature-text">Interactive preference engine scoring traveler personality against curated destination attributes.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-buildings"></i> Stays &amp; Sanctuaries Directory</div>
+              <p class="cs-feature-text">Curated accommodation directory detailing boutique hotels, homestays, amenities, and host actions.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-pie-chart-fill"></i> Financial Telemetry Dashboard</div>
+              <p class="cs-feature-text">Real-time Chart.js donut analytics breaking down group spend across Stays, Food, Transit, and Activities.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-folder-check"></i> My Trips Vault</div>
+              <p class="cs-feature-text">Authenticated personal dashboard managing active group ledgers, saved schedules, and trip histories.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-arrow-repeat"></i> Asynchronous Data Pipeline</div>
+              <p class="cs-feature-text">RESTful AJAX endpoints delivering dynamic partial updates and instant filter evaluations without page reloads.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 05 — BUILT WITH -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-stack" style="color: var(--accent-primary);"></i>
+            <span>Built With</span>
+          </h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            {% for tech in project.technologies.all %}
+              <span class="badge-tech accent">{{ tech.name }}</span>
+            {% empty %}
+              <span class="badge-tech accent">Python</span>
+              <span class="badge-tech accent">Django</span>
+              <span class="badge-tech accent">JavaScript (ES6+)</span>
+              <span class="badge-tech accent">HTML5 &amp; CSS3</span>
+              <span class="badge-tech accent">Bootstrap 5</span>
+              <span class="badge-tech accent">SQLite</span>
+              <span class="badge-tech accent">Chart.js</span>
+              <span class="badge-tech accent">WhiteNoise</span>
+            {% endfor %}
+          </div>
+          <p style="font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); margin: 0;">
+            Django powers the domain models, authentication, financial ledger calculations, and AJAX endpoints, while Vanilla JavaScript and Chart.js provide dynamic client-side interactivity, live debt previews, and responsive data visualizations.
+          </p>
+        </section>
+
+        <!-- SECTION 06 — ENGINEERING HIGHLIGHTS -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-gear-wide-connected" style="color: var(--accent-cyan);"></i>
+            <span>Engineering Highlights</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-diagram-2"></i> Graph Cash-Flow Optimization</div>
+              <p class="cs-feature-text">Greedy settlement algorithm resolving multi-party debts with minimum total transactions.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-database-check"></i> Relational Data Architecture</div>
+              <p class="cs-feature-text">Normalized Django ORM schema enforcing foreign-key integrity across trips, members, expenses, and splits.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-bar-chart-line"></i> Asynchronous State Sync</div>
+              <p class="cs-feature-text">Interactive Chart.js visualizations dynamically updated via asynchronous AJAX without full page refreshes.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-shield-check"></i> Modular Backend Security</div>
+              <p class="cs-feature-text">Custom Django template tags, strict CSRF validation, and optimized ORM query patterns (`select_related`).</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 07 — THE PRODUCT AT A GLANCE -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-speedometer" style="color: var(--accent-amber);"></i>
+            <span>The Product at a Glance</span>
+          </h3>
+          <div class="cs-metrics-grid">
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">40+</div>
+              <div class="cs-metric-label">Destinations &amp; Itineraries</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">6</div>
+              <div class="cs-metric-label">Expense Categories</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">5</div>
+              <div class="cs-metric-label">Travel Vibe Classifiers</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">1</div>
+              <div class="cs-metric-label">Debt Simplification Engine</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">3</div>
+              <div class="cs-metric-label">Heuristic Pacing Modes</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">100%</div>
+              <div class="cs-metric-label">Client-Side Telemetry</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 08 — OUTCOME -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-award" style="color: var(--accent-emerald);"></i>
+            <span>Outcome</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            TourCraze demonstrates full-stack software engineering depth: designing a unified multi-system platform that bridges relational data modeling, procedural scheduling algorithms, and greedy cash-flow debt simplification into a responsive, production-ready product.
+          </p>
+          <div class="cs-callout-box">
+            <div style="font-size: 1.15rem; font-weight: 700; color: #38bdf8;">
+              “From planning the journey to settling the bill — one connected travel system.”
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 09 — PORTFOLIO SUMMARY CARD -->
+        <div class="cs-footer-summary">
+          <span class="badge-tech accent mb-3" style="display: inline-block;">Production Showcase</span>
+          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">TOURCRAZE</h3>
+          <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
+            Intelligent Travel Planning &amp; Collaborative Group Expense Platform
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 1.5rem auto;">
+            Procedural Itinerary Generation · TripSplit Financial Analytics · Greedy Debt Simplification · Dynamic Telemetry
+          </p>
+          {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn-modern btn-primary-glow">
+              <span>EXPLORE THE LIVE EXPERIENCE</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          {% endif %}
+        </div>
+
+      {% elif project.slug == 'tradelab' %}
+        <!-- ================================================================= -->
+        <!-- TRADELAB FLAGSHIP CASE STUDY CONTENT                              -->
+        <!-- ================================================================= -->
+
+        <!-- SECTION 01 — HERO & PROJECT OVERVIEW -->
+        <section class="case-study-block">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span class="badge-tech accent mb-2" style="display: inline-block;">Flagship Case Study</span>
+              <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0 0.4rem 0;">TradeLab</h2>
+              <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent-cyan); margin-bottom: 1rem;">AI-Powered Trading Education &amp; Multi-Market Analysis Platform</p>
+            </div>
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0;">
+            An all-in-one web-based educational and market analysis platform designed to simplify technical analysis and market literacy for retail market participants. It unites an 8-milestone progressive trading curriculum, real-time multi-market charting hubs (Crypto, Forex, and Indian Equities), computer vision chart pattern recognition (YOLOv5), a production-ready Pine Script v5 algorithmic indicator suite, and live financial RSS news feeds into a single dark fintech command center.
+          </p>
+
+          <div class="cs-meta-grid">
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-person-badge"></i> Role</div>
+              <div class="cs-meta-value">Product Designer + Full-Stack Developer</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-layers"></i> Type</div>
+              <div class="cs-meta-value">Fintech Portal + Applied AI Web App</div>
+            </div>
+            <div class="cs-meta-card">
+              <div class="cs-meta-label"><i class="bi bi-bullseye"></i> Focus</div>
+              <div class="cs-meta-value">Technical Analysis • Computer Vision • Multi-Market</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 02 — THE PROBLEM -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-exclamation-triangle" style="color: var(--accent-amber);"></i>
+            <span>The Problem</span>
+          </h3>
+          <div class="cs-problem-grid">
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-activity"></i> Indicator Noise &amp; Clutter</div>
+              <p class="cs-problem-text">Most public TradingView indicators overwhelm charts with excessive visual clutter, lagging repaints, and conflicting signals rather than providing clean, actionable trend structure.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-grid-3x3-gap"></i> Tool &amp; Market Fragmentation</div>
+              <p class="cs-problem-text">Retail traders are forced to juggle disparate websites for live charting, session timing clocks, economic news feeds, and indicator scripts, creating a disjointed workflow.</p>
+            </div>
+            <div class="cs-problem-card">
+              <div class="cs-problem-title"><i class="bi bi-compass"></i> Unstructured Learning &amp; Complexity</div>
+              <p class="cs-problem-text">Beginners face a steep learning curve identifying complex chart formations and risk management rules without a structured, step-by-step curriculum.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 03 — THE SOLUTION & CORE ARCHITECTURE -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-lightning-charge" style="color: var(--accent-cyan);"></i>
+            <span>One Platform. Every Market.</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 0;">
+            TradeLab brings structured education, live multi-asset charting, and computer vision pattern detection together into a focused trader command center designed around five continuous stages:
+          </p>
+          <div class="cs-flow-strip">
+            <span class="cs-flow-node"><i class="bi bi-book"></i> Learn</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node"><i class="bi bi-graph-up"></i> Analyze</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node"><i class="bi bi-cpu"></i> Understand</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node highlight"><i class="bi bi-sliders"></i> Practice</span>
+            <span class="cs-flow-arrow"><i class="bi bi-arrow-right"></i></span>
+            <span class="cs-flow-node highlight"><i class="bi bi-trophy"></i> Trade Smarter</span>
+          </div>
+        </section>
+
+        <!-- SECTION 04 — WHAT I BUILT (PLATFORM SUBSYSTEMS) -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-cpu" style="color: var(--accent-emerald);"></i>
+            <span>Platform Subsystems</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-signpost-2"></i> 8-Milestone Learning Roadmap</div>
+              <p class="cs-feature-text">Step-by-step curriculum with interactive lesson modules, strategy blueprints, diagrams, and Investopedia references.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-currency-bitcoin"></i> Crypto Trading Hub</div>
+              <p class="cs-feature-text">11 live TradingView pairs (BTC, ETH, SOL, ADA, etc.) with liquidation heatmap tools and real-time market data.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-globe"></i> Forex &amp; Commodities Hub</div>
+              <p class="cs-feature-text">Live charts for major currency pairs (EUR/USD, GBP/USD, USD/JPY) plus Gold, Crude Oil, US30, and NASDAQ.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-building"></i> Indian Market Hub</div>
+              <p class="cs-feature-text">Dynamic charts for NIFTY 50, BANK NIFTY, SENSEX, and top blue-chip equities (Reliance, HDFC Bank, TCS, Infosys).</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-bounding-box-circles"></i> AI Chart Pattern Recognition</div>
+              <p class="cs-feature-text">Custom-trained YOLOv5 model pipeline with 20 pattern classes, drag-and-drop uploader, and pan/zoom preview.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-code-slash"></i> Pine Script Indicator Center</div>
+              <p class="cs-feature-text">Copy-paste ready Pine Script v5 algorithmic code with Triple EMA ribbons, ATR trailing stops, and candlestick counters.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-newspaper"></i> Live Financial News Feed</div>
+              <p class="cs-feature-text">Asynchronous XML/RSS news ingestion via Python `feedparser` streaming real-time global macroeconomic headlines.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-clock-history"></i> Global Market Session Clocks</div>
+              <p class="cs-feature-text">Comparative session breakdowns for New York, London, Tokyo, and Mumbai with volatility window indicators.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 05 — THE 8-MILESTONE LEARNING ROADMAP -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-diagram-3" style="color: var(--accent-cyan);"></i>
+            <span>The 8-Milestone Structured Curriculum</span>
+          </h3>
+          <div class="cs-workflow-grid">
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 01 — FOUNDATIONS</div>
+              <div class="cs-workflow-title">Market Mechanics</div>
+              <p class="cs-problem-text">Order types, bid/ask spreads, market participants, and multi-asset class mechanics.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 02 — TECHNICALS</div>
+              <div class="cs-workflow-title">Structure &amp; Trends</div>
+              <p class="cs-problem-text">Support and resistance levels, trendlines, and Higher-High / Lower-Low price action structure.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 03 — INDICATORS</div>
+              <div class="cs-workflow-title">Momentum &amp; Volatility</div>
+              <p class="cs-problem-text">EMA ribbons, RSI divergences, MACD crossovers, and Bollinger Band volatility breakouts.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 04 — PATTERNS</div>
+              <div class="cs-workflow-title">Chart Formations</div>
+              <p class="cs-problem-text">Head &amp; Shoulders, Double Tops/Bottoms, Triangles, Wedges, and Flag breakout strategies.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 05 — RISK MGMT</div>
+              <div class="cs-workflow-title">Position Sizing &amp; R:R</div>
+              <p class="cs-problem-text">1:2+ Risk-to-Reward rules, stop-loss calculations, portfolio drawdown protection, and capital preservation.</p>
+            </div>
+            <div class="cs-workflow-card">
+              <div class="cs-workflow-step">STAGE 06 — PSYCHOLOGY</div>
+              <div class="cs-workflow-title">Emotional Discipline</div>
+              <p class="cs-problem-text">FOMO mitigation, revenge trading avoidance, and maintaining disciplined execution consistency.</p>
+            </div>
+          </div>
+          <div class="mt-3 text-muted" style="font-size: 0.92rem;">
+            <i class="bi bi-check-all text-success"></i> Includes Milestones 7 &amp; 8 covering Algorithmic Pine Script Backtesting and Live Execution Governance.
+          </div>
+        </section>
+
+        <!-- SECTION 06 — WHAT MAKES TRADELAB DIFFERENT -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-magic" style="color: var(--accent-amber);"></i>
+            <span>What Makes TradeLab Different</span>
+          </h3>
+          <div style="font-size: 1.35rem; font-weight: 700; color: #ffffff; line-height: 1.4; margin-bottom: 1rem;">
+            An educational workspace built like an institutional analytical terminal.
+          </div>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            TradeLab bridges theory and practice: instead of reading static PDF guides, learners immediately cross-reference concepts against live TradingView charts, test automated Pine Script algorithms, and scan setups with computer vision AI.
+          </p>
+          <div class="cs-callout-box">
+            <strong style="color: #ffffff; font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">✨ 100% Educational &amp; Objective</strong>
+            <span style="color: var(--text-secondary); font-size: 0.92rem;">Designed strictly as an educational and technical analysis research tool with zero real-money trading risks or gamified gambling schemes.</span>
+          </div>
+        </section>
+
+        <!-- SECTION 07 — BUILT WITH -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-stack" style="color: var(--accent-primary);"></i>
+            <span>Built With</span>
+          </h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            {% for tech in project.technologies.all %}
+              <span class="badge-tech accent">{{ tech.name }}</span>
+            {% empty %}
+              <span class="badge-tech accent">Python</span>
+              <span class="badge-tech accent">Django 5</span>
+              <span class="badge-tech accent">PyTorch / YOLOv5</span>
+              <span class="badge-tech accent">JavaScript (ES6+)</span>
+              <span class="badge-tech accent">Bootstrap 5</span>
+              <span class="badge-tech accent">TradingView API</span>
+              <span class="badge-tech accent">feedparser (RSS)</span>
+              <span class="badge-tech accent">SQLite3</span>
+              <span class="badge-tech accent">WhiteNoise</span>
+            {% endfor %}
+          </div>
+          <p style="font-size: 1.02rem; line-height: 1.75; color: var(--text-secondary); margin: 0;">
+            Django powers the modular routing, multi-asset views, and server-side RSS feeds, while PyTorch / YOLOv5 provides the computer vision model architecture for chart pattern bounding. Embedded TradingView widgets deliver real-time multi-market data without expensive third-party data subscriptions.
+          </p>
+        </section>
+
+        <!-- SECTION 08 — ENGINEERING HIGHLIGHTS -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-gear-wide-connected" style="color: var(--accent-cyan);"></i>
+            <span>Engineering Highlights</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-bounding-box"></i> YOLOv5 Pattern Model</div>
+              <p class="cs-feature-text">Custom object-detection weights (`best.pt`) trained on 20 classical candlestick pattern classes.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-layers-half"></i> Modular Multi-Asset Routing</div>
+              <p class="cs-feature-text">Extensible Django view hierarchy cleanly organizing Crypto, Forex, and Indian equity hubs.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-rss-fill"></i> Live RSS Ingestion Pipeline</div>
+              <p class="cs-feature-text">Automated financial headline parsing using Python's `feedparser` streaming live macroeconomic news.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-palette2"></i> Cyberpunk Fintech UI</div>
+              <p class="cs-feature-text">High-contrast dark-mode interface (`#0f1115` obsidian, neon cyan, emerald green) with mobile bottom app navigation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 09 — PRODUCT METRICS AT A GLANCE -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-speedometer" style="color: var(--accent-amber);"></i>
+            <span>The Product at a Glance</span>
+          </h3>
+          <div class="cs-metrics-grid">
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">8</div>
+              <div class="cs-metric-label">Structured Milestones</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">3</div>
+              <div class="cs-metric-label">Global Market Hubs</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">30+</div>
+              <div class="cs-metric-label">Live Tracked Tickers</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">20</div>
+              <div class="cs-metric-label">AI Pattern Classes</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">1</div>
+              <div class="cs-metric-label">Pine Script v5 Algo Suite</div>
+            </div>
+            <div class="cs-metric-card">
+              <div class="cs-metric-num">100%</div>
+              <div class="cs-metric-label">Dark Fintech UI</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10 — FUTURE SCOPE & ENHANCEMENTS -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-rocket-takeoff" style="color: var(--accent-cyan);"></i>
+            <span>Future Scope &amp; Enhancements</span>
+          </h3>
+          <div class="cs-feature-grid">
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-wallet2"></i> Virtual Paper Trading Simulator</div>
+              <p class="cs-feature-text">Simulated $10,000 cash balance, virtual order placement, and live unrealized P&amp;L portfolio tracking.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-person-check"></i> Persistent User Watchlists</div>
+              <p class="cs-feature-text">Database-backed user profiles to save custom market watchlists, trade journals, and milestone checklist state.</p>
+            </div>
+            <div class="cs-feature-card">
+              <div class="cs-feature-title"><i class="bi bi-chat-square-dots"></i> Active Gemini AI Assistant</div>
+              <p class="cs-feature-text">Integrating Google Gemini API for an interactive market intelligence and technical analysis query assistant.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11 — OUTCOME -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-award" style="color: var(--accent-emerald);"></i>
+            <span>Outcome</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            TradeLab demonstrates full-stack software development and applied machine learning capabilities: synthesizing real-time financial market telemetry, structured technical analysis education, algorithmic indicator scripting, and computer vision chart pattern detection into a single, cohesive web platform.
+          </p>
+          <div class="cs-callout-box">
+            <div style="font-size: 1.15rem; font-weight: 700; color: #00f0ff;">
+              “Learn. Analyze. Trade Smarter. One platform for every market.”
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12 — PORTFOLIO SUMMARY CARD -->
+        <div class="cs-footer-summary">
+          <span class="badge-tech accent mb-3" style="display: inline-block;">Flagship Showcase</span>
+          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">TRADELAB</h3>
+          <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
+            AI-Powered Trading Education &amp; Multi-Market Analysis Platform
+          </p>
+          <p style="font-size: 0.92rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 1.5rem auto;">
+            8-Milestone Structured Roadmap · Multi-Market TradingView Hubs · YOLOv5 Chart Pattern AI · Pine Script v5 Algo
+          </p>
+          {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn-modern btn-primary-glow">
+              <span>EXPLORE THE LIVE EXPERIENCE</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          {% endif %}
+        </div>
+
+      {% else %}
+        <!-- Standard Generic Case Study Sections for other projects -->
+        <!-- Section 1: Overview / Problem -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-bullseye" style="color: var(--accent-cyan);"></i>
+            <span>Project Overview</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            {{ project.overview|linebreaks }}
+          </p>
+        </section>
+
+        <!-- Section 2: What I Built -->
+        <section class="case-study-block">
+          <h3>
+            <i class="bi bi-cpu" style="color: var(--accent-primary);"></i>
+            <span>What I Built &amp; Architecture</span>
+          </h3>
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
+            {{ project.what_i_built|linebreaks }}
+          </p>
+        </section>
+
+        <!-- Section 3: Key Features -->
+        {% if features_list %}
+          <section class="case-study-block">
+            <h3>
+              <i class="bi bi-check2-square" style="color: var(--accent-emerald);"></i>
+              <span>Key Features &amp; Capabilities</span>
+            </h3>
+            <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem;">
+              {% for feature in features_list %}
+                <li style="display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.98rem; color: var(--text-secondary);">
+                  <i class="bi bi-check-circle-fill" style="color: var(--accent-emerald); margin-top: 0.2rem;"></i>
+                  <span>{{ feature }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endif %}
+
+        <!-- Section 4: Screenshot Gallery -->
+        {% if project.gallery_images.all and project.slug != 'tourcraze' %}
+          <section class="case-study-block">
+            <h3>
+              <i class="bi bi-images" style="color: var(--accent-cyan);"></i>
+              <span>Visuals &amp; Interface</span>
+            </h3>
+            <div class="grid-2" style="margin-top: 1rem;">
+              {% for item in project.gallery_images.all %}
+                <div class="modern-card" style="padding: 0; overflow: hidden;">
+                  <img src="{{ item.image.url }}" alt="{{ item.caption|default:project.title }}" style="width: 100%; height: auto; display: block;" loading="lazy">
+                  {% if item.caption %}
+                    <div style="padding: 0.6rem 0.9rem; font-size: 0.82rem; color: var(--text-muted); background: var(--bg-surface-subtle);">
+                      {{ item.caption }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        <!-- Section 5: Technical Challenges & Learnings -->
+        {% if project.challenges_learning %}
+          <section class="case-study-block">
+            <h3>
+              <i class="bi bi-lightbulb" style="color: var(--accent-amber);"></i>
+              <span>Challenges &amp; Technical Learnings</span>
+            </h3>
+            <div class="modern-card" style="background: var(--bg-surface-subtle); border-left: 4px solid var(--accent-primary); padding: 1.5rem;">
+              <p style="font-size: 0.98rem; line-height: 1.7; color: var(--text-secondary); margin: 0;">
+                {{ project.challenges_learning|linebreaks }}
+              </p>
+            </div>
+          </section>
+        {% endif %}
+      {% endif %}
+
+    </div>
+
+    <!-- Right Sidebar -->
+    <aside class="case-study-sidebar">
+      
+      <!-- Tech Stack Box -->
+      <div class="modern-card" style="padding: 1.5rem; position: sticky; top: calc(var(--nav-height) + 1.5rem);">
+        <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 1rem;">Technologies Used</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.5rem;">
+          {% for tech in project.technologies.all %}
+            <span class="badge-tech accent">{{ tech.name }}</span>
+          {% endfor %}
+        </div>
+
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+          <h5 style="font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Ready to Build Something?
+          </h5>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+            Need a similar platform, custom web application, or digital solution?
+          </p>
+          <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow btn-sm w-100" style="width: 100%;">
+            <span>Contact Parmeet</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Bottom Project Pagination (Previous / Next Navigation) -->
+  <nav style="display: flex; justify-content: space-between; align-items: center; padding: 3rem 0 2rem 0; border-top: 1px solid var(--border-subtle); margin-top: 3rem;" aria-label="Project Navigation">
+    {% if prev_project %}
+      <a href="{{ prev_project.get_absolute_url }}" class="btn-modern btn-secondary-outline">
+        <i class="bi bi-arrow-left"></i>
+        <span>Previous: {{ prev_project.title }}</span>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+
+    {% if next_project %}
+      <a href="{{ next_project.get_absolute_url }}" class="btn-modern btn-primary-glow" style="margin-left: auto;">
+        <span>Next: {{ next_project.title }}</span>
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    {% endif %}
+  </nav>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+  function setupShowcase() {
+    const containers = document.querySelectorAll('.interactive-showcase-container');
+    containers.forEach(container => {
+      const tabBtns = container.querySelectorAll('.showcase-tab-btn');
+      const layers = container.querySelectorAll('.showcase-layer');
+      const captions = container.querySelectorAll('.showcase-caption-item');
+      const autoPlayBtn = container.querySelector('.showcase-auto-btn');
+      const autoPlayIcon = autoPlayBtn ? autoPlayBtn.querySelector('i') : null;
+      const autoPlayText = autoPlayBtn ? autoPlayBtn.querySelector('span') : null;
+      const cursor = container.querySelector('.showcase-cursor');
+
+      const totalScreens = layers.length;
+      if (totalScreens <= 1) return;
+
+      let currentScreen = 1;
+      let isAutoPlay = true;
+      let autoTimer = null;
+
+      const cursorTargets = {
+        1: { top: '64%', left: '58%' },
+        2: { top: '48%', left: '76%' },
+        3: { top: '55%', left: '50%' },
+        4: { top: '72%', left: '62%' },
+        5: { top: '68%', left: '78%' }
+      };
+
+      function switchScreen(screenNum) {
+        currentScreen = parseInt(screenNum, 10);
+
+        // Update Tab Buttons
+        tabBtns.forEach(btn => {
+          if (parseInt(btn.getAttribute('data-screen'), 10) === currentScreen) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Update Images
+        layers.forEach(layer => {
+          if (parseInt(layer.getAttribute('data-layer'), 10) === currentScreen) {
+            layer.classList.add('active');
+          } else {
+            layer.classList.remove('active');
+          }
+        });
+
+        // Update Captions
+        captions.forEach(cap => {
+          if (parseInt(cap.getAttribute('data-caption'), 10) === currentScreen) {
+            cap.classList.add('active');
+          } else {
+            cap.classList.remove('active');
+          }
+        });
+
+        // Micro Cursor Animation
+        if (cursor && cursorTargets[currentScreen]) {
+          cursor.style.opacity = '1';
+          cursor.style.top = cursorTargets[currentScreen].top;
+          cursor.style.left = cursorTargets[currentScreen].left;
+          setTimeout(() => {
+            cursor.style.opacity = '0';
+          }, 1400);
+        }
+      }
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoTimer = setInterval(() => {
+          let nextScreen = currentScreen + 1;
+          if (nextScreen > totalScreens) nextScreen = 1;
+          switchScreen(nextScreen);
+        }, 3500);
+      }
+
+      function stopAutoPlay() {
+        if (autoTimer) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const screenNum = btn.getAttribute('data-screen');
+          switchScreen(screenNum);
+          isAutoPlay = false;
+          stopAutoPlay();
+          if (autoPlayIcon) autoPlayIcon.className = 'bi bi-play-fill';
+          if (autoPlayText) autoPlayText.textContent = 'Resume Demo';
+        });
+      });
+
+      if (autoPlayBtn) {
+        autoPlayBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          isAutoPlay = !isAutoPlay;
+          if (isAutoPlay) {
+            if (autoPlayIcon) autoPlayIcon.className = 'bi bi-pause-fill';
+            if (autoPlayText) autoPlayText.textContent = 'Live Demo Active';
+            startAutoPlay();
+          } else {
+            if (autoPlayIcon) autoPlayIcon.className = 'bi bi-play-fill';
+            if (autoPlayText) autoPlayText.textContent = 'Resume Demo';
+            stopAutoPlay();
+          }
+        });
+      }
+
+      startAutoPlay();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupShowcase);
+  } else {
+    setupShowcase();
+  }
+})();
+</script>
+{% endblock %}

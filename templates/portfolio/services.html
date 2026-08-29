@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Freelance Web & Digital Product Services — Parmeet Singh{% endblock %}
+{% block meta_description %}Custom web development, business websites, modern landing pages, web applications, and digital solutions by Parmeet Singh.{% endblock %}
+
+{% block content %}
+<div class="site-container">
+  
+  <!-- Page Header -->
+  <section class="section-padding" style="padding-bottom: 2.5rem;" aria-label="Services Header">
+    <div class="section-header" style="max-width: 720px;">
+      <span class="section-subtitle">Client &amp; Freelance Offerings</span>
+      <h1 class="section-title">Websites &amp; Digital Products Built for Impact</h1>
+      <p class="section-description">
+        I partner directly with founders, businesses, and professionals to design, engineer, and deploy high-performing digital experiences from start to finish.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section-padding-sm" aria-label="Service Offerings">
+    <div class="grid-3">
+      {% for service in services %}
+        <article class="service-card" id="service-{{ service.slug }}">
+          <div class="service-card-image-wrap">
+            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
+            <div class="service-image-tag">
+              {% if service.icon == 'layout' %}
+                <i class="bi bi-layout-wtf"></i> <span>Business Sites</span>
+              {% elif service.icon == 'layers' %}
+                <i class="bi bi-layers"></i> <span>Landing Pages</span>
+              {% elif service.icon == 'refresh-cw' %}
+                <i class="bi bi-arrow-repeat"></i> <span>UI Modernization</span>
+              {% else %}
+                <i class="bi bi-laptop"></i> <span>Digital Solutions</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="service-card-body">
+            <h2 class="service-card-title">{{ service.title }}</h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+              {{ service.short_summary }}
+            </p>
+
+            <!-- What Included -->
+            <div class="mb-3">
+              <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.5rem;">
+                What It Includes
+              </h4>
+              <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.88rem; color: var(--text-secondary);">
+                {% for inc in service.get_included_list %}
+                  <li style="display: flex; gap: 0.5rem;">
+                    <i class="bi bi-check2 text-success" style="color: var(--accent-emerald);"></i>
+                    <span>{{ inc }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <!-- Who It's For & Deliverable -->
+            <div class="service-deliverable-box mt-auto">
+              <div class="mb-2">
+                <span class="font-mono" style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-cyan); display: block;">
+                  Ideal For
+                </span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">{{ service.who_its_for }}</span>
+              </div>
+              
+              <div>
+                <span class="font-mono" style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-primary); display: block;">
+                  Deliverable
+                </span>
+                <span style="font-size: 0.85rem; color: var(--text-primary); font-weight: 600;">{{ service.what_delivered }}</span>
+              </div>
+            </div>
+          </div>
+
+        </article>
+      {% empty %}
+        <!-- Fallback if not seeded yet -->
+        <article class="service-card">
+          <div class="service-icon-box"><i class="bi bi-layout-wtf fs-4"></i></div>
+          <h2 class="service-card-title">Business Websites</h2>
+          <p class="text-secondary">Modern responsive websites built for businesses with fast loading and SEO.</p>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Development Process Section -->
+  <section class="section-padding" style="border-top: 1px solid var(--border-subtle);" aria-label="Development Process">
+    <div class="section-header text-center" style="max-width: 650px; margin-left: auto; margin-right: auto; text-align: center;">
+      <span class="section-subtitle">How We Work</span>
+      <h2 class="section-title">The Development Process</h2>
+      <p class="section-description" style="margin-left: auto; margin-right: auto;">
+        A straightforward, collaborative workflow ensuring rapid delivery, transparency, and top-tier code quality.
+      </p>
+    </div>
+
+    <div class="grid-4">
+      
+      <div class="process-step-card">
+        <div class="process-step-number">01</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Discovery &amp; Scope</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          We discuss your objectives, target audience, core features, and design preferences to map out clear technical requirements.
+        </p>
+      </div>
+
+      <div class="process-step-card">
+        <div class="process-step-number">02</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Design &amp; Architecture</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          Crafting modern UI layouts, responsive styling, and database schema structures optimized for speed and maintainability.
+        </p>
+      </div>
+
+      <div class="process-step-card">
+        <div class="process-step-number">03</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Build &amp; Integrate</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          Writing clean full-stack code using Django, Python, and JavaScript with regular progress demos and interactive checkpoints.
+        </p>
+      </div>
+
+      <div class="process-step-card">
+        <div class="process-step-number">04</div>
+        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Testing &amp; Launch</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          Cross-browser testing, SEO optimization, responsive audit, and production deployment with handover documentation.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="section-padding" style="border-top: 1px solid var(--border-subtle);">
+    <div class="cta-banner">
+      <div class="cta-banner-content">
+        <span class="badge-category">Start a Project</span>
+        <h2 style="font-size: 2rem; margin: 0.5rem 0 1rem 0;">
+          Have a project in mind? Let's discuss it.
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.75rem;">
+          Send over your ideas, timeline, and requirements. I'll get back to you with insights and a structured plan.
+        </p>
+        <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow btn-lg">
+          <span>Contact Parmeet</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

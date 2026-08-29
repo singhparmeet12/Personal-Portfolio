@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Server Error (500) — Parmeet Singh{% endblock %}
+
+{% block content %}
+<div class="site-container">
+  <div class="section-padding text-center" style="text-align: center; max-width: 600px; margin: 0 auto; min-height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="font-mono" style="font-size: clamp(4rem, 10vw, 7rem); font-weight: 800; color: var(--accent-coral); line-height: 1; letter-spacing: -0.05em; margin-bottom: 1rem;">
+      500
+    </div>
+    <h1 style="font-size: 1.85rem; color: var(--text-primary); margin-bottom: 0.75rem;">Unexpected Server Error</h1>
+    <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.6; margin-bottom: 2rem;">
+      Something went wrong while processing this request. Please return to the home page or try again later.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="{% url 'portfolio:home' %}" class="btn-modern btn-primary-glow">
+        <i class="bi bi-house-door"></i>
+        <span>Back to Home</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

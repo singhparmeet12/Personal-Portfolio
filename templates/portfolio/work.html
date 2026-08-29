@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Work & Projects — Parmeet Singh{% endblock %}
+{% block meta_description %}Explore selected software projects, full-stack web applications, and data analytics tools built by Parmeet Singh.{% endblock %}
+
+{% block content %}
+<section class="section-padding" aria-label="Projects Portfolio">
+  <div class="site-container">
+    
+    <!-- Page Header -->
+    <div class="section-header">
+      <span class="section-subtitle">Portfolio &amp; Case Studies</span>
+      <h1 class="section-title">Featured Work &amp; Projects</h1>
+      <p class="section-description">
+        A collection of web platforms, full-stack applications, and data workflows designed to solve practical business and technical problems.
+      </p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-tabs" role="tablist" aria-label="Project Category Filters">
+      <button 
+        type="button" 
+        class="filter-btn {% if selected_category_slug == 'all' or not selected_category_slug %}active{% endif %}" 
+        data-filter="all"
+        role="tab">
+        All Projects
+      </button>
+      
+      {% for cat in categories %}
+        <button 
+          type="button" 
+          class="filter-btn {% if selected_category_slug == cat.slug %}active{% endif %}" 
+          data-filter="{{ cat.slug }}"
+          role="tab">
+          {{ cat.name }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid-3" id="projectsGrid">
+      {% for project in projects %}
+        <article 
+          class="project-card" 
+          data-project-category="all {{ project.category.slug|default:'' }}"
+          id="project-{{ project.slug }}">
+          
+          <div class="project-card-image-wrap">
+            {% if project.featured_image %}
+              <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="{{ project.title }} Preview" class="project-card-image" loading="lazy">
+            {% else %}
+              <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--bg-surface-subtle); color:var(--text-muted); font-family:var(--font-mono); font-size:0.9rem;">
+                [ {{ project.title }} ]
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="project-card-body">
+            <div class="project-card-meta">
+              <span class="badge-category">{{ project.category.name|default:"Web Application" }}</span>
+              <span class="font-mono text-muted" style="font-size: 0.78rem;">
+                {% if project.client_type == 'freelance' %}Client Work{% else %}Full-Stack App{% endif %}
+              </span>
+            </div>
+
+            <h2 class="project-card-title" style="font-size: 1.3rem;">
+              <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+            </h2>
+
+            <p class="project-card-description">
+              {{ project.tagline }}
+            </p>
+
+            <div class="project-tech-tags mb-3">
+              {% for tech in project.technologies.all %}
+                <span class="badge-tech">{{ tech.name }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between pt-3" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); margin-top:auto; padding-top:1rem;">
+              <a href="{{ project.get_absolute_url }}" class="btn-modern btn-subtle btn-sm p-0" style="padding:0; font-weight:600;">
+                <span>View Case Study</span>
+                <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+
+              <div style="display: flex; gap: 0.5rem;">
+                {% if project.live_url %}
+                  <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="Live Demo">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                  </a>
+                {% endif %}
+                {% if project.github_url %}
+                  <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="View Code on GitHub">
+                    <i class="bi bi-github"></i>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+        </article>
+      {% empty %}
+        <div class="col-12 py-5 text-center" style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
+          <p class="text-muted">No projects found in this category.</p>
+          <a href="{% url 'portfolio:work' %}" class="btn-modern btn-secondary-outline mt-3">Reset Filters</a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- No Dead Ends CTA -->
+    <div class="cta-banner" style="margin-top: 4.5rem;">
+      <div class="cta-banner-content">
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.75rem;">
+          Interested in collaborating or building a project together?
+        </h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+          Whether you have a freelance development opportunity or an engineering role, I'd love to hear from you.
+        </p>
+        <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow btn-lg">
+          <span>Start a Conversation</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}
+
+{% block content %}
+<!-- ==========================================================================
+     HERO SECTION (ELEGANT, CLEAN PERSONAL DEVELOPER SHOWCASE)
+     ========================================================================== -->
+<section class="hero-section" aria-label="Introduction">
+  <div class="site-container">
+    <div class="hero-grid">
+      
+      <!-- Left Column: Content & Actions -->
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span class="status-dot"></span>
+          <span>Full-Stack Python &bull; Django Architecture &bull; Web Systems</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="name-highlight">{{ site_profile.name|default:"PARMEET SINGH" }}</span>
+        </h1>
+
+        <!-- Dynamic Typing Role Bar -->
+        <div class="hero-roles-bar">
+          <span id="heroRoleText">Full-Stack Python &amp; Django Developer</span>
+          <span class="typing-cursor"></span>
+        </div>
+
+        <p class="hero-description">
+          I build high-performance web applications, scalable database architectures, and digital products with clean Python &amp; Django backends and refined, responsive frontends.
+        </p>
+
+        <div class="hero-actions">
+          <a href="{% url 'portfolio:work' %}" class="btn-modern btn-primary-glow btn-lg">
+            <span>Explore My Work</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-secondary-outline btn-lg">
+            <i class="bi bi-file-earmark-arrow-down"></i>
+            <span>Download Resume</span>
+          </a>
+          <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-subtle">
+            <span>Let's Talk</span>
+            <i class="bi bi-chat-dots"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Living Lo-Fi Animated Workspace Scene (Day / Sunset / Night) -->
+      <div class="hero-box-col">
+        <div class="lofi-card-wrap" id="lofiHeroCard" role="region" aria-label="Interactive Lo-Fi Developer Workspace">
+          
+          <!-- 3D Mouse Parallax Tilt Layer (Contains only artwork and canvas effects) -->
+          <div class="lofi-tilt-layer" id="lofiTiltLayer">
+            <!-- Day, Sunset & Night Base Artworks (Smooth 1.2s Crossfade) -->
+            <img src="{% static 'img/lofi_workspace_day.jpg' %}" alt="Parmeet's Day Workspace" class="lofi-bg-image lofi-bg-day" id="lofiBgDay" loading="eager">
+            <img src="{% static 'img/lofi_workspace_sunset.jpg' %}" alt="Parmeet's Sunset Workspace" class="lofi-bg-image lofi-bg-sunset" id="lofiBgSunset" loading="eager">
+            <img src="{% static 'img/lofi_workspace_night.jpg' %}" alt="Parmeet's Night Workspace" class="lofi-bg-image lofi-bg-night" id="lofiBgNight" loading="eager">
+            
+            <!-- Real-Time Atmospheric Canvas Overlay (Birds, Sunbeams / Raindrops, Coffee Steam, Blinking Cursor) -->
+            <canvas class="lofi-canvas-overlay" id="lofiCanvasOverlay"></canvas>
+
+            <!-- Radial Lamp & Monitor Glows vs Warm Sunbeam & Sunset Ray -->
+            <div class="lofi-lamp-glow"></div>
+            <div class="lofi-monitor-glow"></div>
+            <div class="lofi-sunlight-beam"></div>
+            <div class="lofi-sunset-beam"></div>
+          </div>
+
+          <!-- Top Glass Bar (Fixed & Untilted) -->
+          <div class="lofi-top-badge">
+            <div class="lofi-status-pill">
+              <span class="status-dot"></span>
+              <span id="lofiStatusModeLabel">☀️ Day Session</span> &bull; <span id="lofiLiveClock">11:30 AM</span>
+            </div>
+            
+            <div class="lofi-top-actions">
+              <!-- 3-Way Time-Travel Scene Switcher Button -->
+              <button type="button" class="lofi-mode-toggle-btn" id="lofiSceneToggleBtn" title="Cycle Day / Sunset / Night Ambience" onclick="event.stopPropagation();">
+                <i class="bi bi-sunset-fill" id="lofiSceneToggleIcon"></i>
+                <span id="lofiSceneToggleText">Sunset</span>
+              </button>
+
+              <button type="button" class="lofi-expand-hint" id="lofiCardExpandBtn" title="Expand Studio">
+                <i class="bi bi-arrows-fullscreen"></i>
+                <span>Expand</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     EXPANDED LO-FI WORKSPACE STUDIO MODAL
+     ========================================================================== -->
+<div class="lofi-modal-backdrop" id="lofiModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="lofi-modal-dialog" id="lofiModalDialog">
+    
+    <button type="button" class="lofi-modal-close-btn" id="lofiModalCloseBtn" aria-label="Close Studio View">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <!-- Art & Canvas Pane (Synchronized with Active Theme/Mode) -->
+    <div class="lofi-modal-art-pane" id="lofiModalArtPane">
+      <img src="{% static 'img/lofi_workspace_day.jpg' %}" alt="Day Studio" class="lofi-bg-image lofi-bg-day" id="lofiModalBgDay">
+      <img src="{% static 'img/lofi_workspace_sunset.jpg' %}" alt="Sunset Studio" class="lofi-bg-image lofi-bg-sunset" id="lofiModalBgSunset">
+      <img src="{% static 'img/lofi_workspace_night.jpg' %}" alt="Night Studio" class="lofi-bg-image lofi-bg-night" id="lofiModalBgNight">
+      <canvas class="lofi-canvas-overlay" id="lofiModalCanvas"></canvas>
+      <div class="lofi-lamp-glow"></div>
+      <div class="lofi-monitor-glow"></div>
+      <div class="lofi-sunlight-beam"></div>
+      <div class="lofi-sunset-beam"></div>
+    </div>
+
+    <!-- Interactive Studio Controls & IDE Monitor Display -->
+    <div class="lofi-modal-ctrl-pane">
+      
+      <div class="lofi-modal-header">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="status-dot"></span>
+          <span class="font-mono text-muted" id="lofiModalStatusLabel" style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em;">Daytime Coding &bull; 10 AM - 2 PM</span>
+        </div>
+        <h3>Parmeet's Coding Studio</h3>
+        <p>Full-Stack Python &amp; Django Engineering Space</p>
+      </div>
+
+      <!-- Live Code Monitor Simulation -->
+      <div class="lofi-soundtrack-card">
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-2" style="border-bottom:1px solid rgba(255,255,255,0.08);">
+          <span class="font-mono" style="font-size:0.78rem; color:#93c5fd;">
+            <i class="bi bi-terminal me-1"></i> active_session.py
+          </span>
+          <span class="badge-category" style="padding:0.15rem 0.6rem; font-size:0.7rem;">Django 5.x</span>
+        </div>
+        <div class="lofi-screen-viewer">
+<pre style="margin:0; font-size:0.76rem; color:#cbd5e1; overflow-x:auto;">
+<span style="color:#f472b6;">class</span> <span style="color:#60a5fa;">Developer</span>:
+    name = <span style="color:#a7f3d0;">"Parmeet Singh"</span>
+    stack = [<span style="color:#a7f3d0;">"Python"</span>, <span style="color:#a7f3d0;">"Django"</span>, <span style="color:#a7f3d0;">"PostgreSQL"</span>, <span style="color:#a7f3d0;">"JS"</span>]
+    status = <span style="color:#34d399;">"🟢 Building Scalable Web Platforms"</span>
+    philosophy = <span style="color:#fde047;">"Clean Architecture &amp; High Craft"</span>
+</pre>
+        </div>
+      </div>
+
+      <!-- Soundscape Controls -->
+      <div class="lofi-soundtrack-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div style="font-weight:700; font-size:0.92rem;">Lo-Fi Ambient Soundscape</div>
+            <div class="font-mono text-muted" style="font-size:0.75rem;">Lofi Coding Session &bull; 432Hz Tape Chords</div>
+          </div>
+          <button type="button" class="lofi-play-toggle-btn" id="lofiModalPlayBtn">
+            <i class="bi bi-play-fill" id="lofiModalPlayIcon"></i>
+            <span id="lofiModalPlayText">Play</span>
+          </button>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <i class="bi bi-volume-up text-muted" style="font-size:0.9rem;"></i>
+          <input type="range" class="form-range" id="lofiVolumeSlider" min="0" max="100" value="70" style="flex:1;">
+        </div>
+      </div>
+
+      <!-- Direct Shortcuts -->
+      <div class="d-flex gap-2 flex-wrap pt-2">
+        <a href="{% url 'portfolio:work' %}" class="btn-modern btn-primary-glow btn-sm">
+          <span>Explore Projects</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+        <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-secondary-outline btn-sm">
+          <i class="bi bi-file-earmark-arrow-down"></i>
+          <span>Resume</span>
+        </a>
+        <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-subtle btn-sm">
+          <span>Get in Touch</span>
+          <i class="bi bi-chat-dots"></i>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================================
+     SELECTED WORK SHOWCASE
+     ========================================================================== -->
+<section class="section-padding" style="border-top: 1px solid var(--border-subtle);" aria-label="Selected Projects">
+  <div class="site-container">
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span class="section-subtitle">Featured Engineering</span>
+        <h2 class="section-title">Selected Web Platforms</h2>
+        <p class="section-description">
+          A showcase of full-stack web applications, business platforms, and analytics systems engineered to solve real-world problems.
+        </p>
+      </div>
+      <div>
+        <a href="{% url 'portfolio:work' %}" class="btn-modern btn-secondary-outline">
+          <span>View All Work</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="grid-3">
+      {% for project in featured_projects %}
+        <article class="project-card">
+          <div class="project-card-image-wrap">
+            {% if project.featured_image %}
+              <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="{{ project.title }} Preview" class="project-card-image" loading="lazy">
+            {% else %}
+              <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--bg-surface-subtle); color:var(--text-muted); font-family:var(--font-mono); font-size:0.9rem;">
+                [ {{ project.title }} ]
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="project-card-body">
+            <div class="project-card-meta">
+              <span class="badge-category">{{ project.category.name|default:"Full-Stack" }}</span>
+              <span class="font-mono text-muted" style="font-size: 0.78rem;">
+                {% if project.client_type == 'freelance' %}Client Work{% else %}Full-Stack App{% endif %}
+              </span>
+            </div>
+
+            <h3 class="project-card-title">
+              <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+            </h3>
+
+            <p class="project-card-description">
+              {{ project.tagline }}
+            </p>
+
+            <div class="project-tech-tags mb-3">
+              {% for tech in project.technologies.all|slice:":4" %}
+                <span class="badge-tech">{{ tech.name }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between pt-3" style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-subtle); margin-top:auto; padding-top:1rem;">
+              <a href="{{ project.get_absolute_url }}" class="btn-modern btn-subtle btn-sm p-0" style="padding:0; font-weight:600;">
+                <span>View Case Study</span>
+                <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+
+              <div style="display: flex; gap: 0.5rem;">
+                {% if project.live_url %}
+                  <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="Live Website">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                  </a>
+                {% endif %}
+                {% if project.github_url %}
+                  <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="Source Code">
+                    <i class="bi bi-github"></i>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     FREELANCE & CLIENT SERVICES PREVIEW
+     ========================================================================== -->
+<section class="section-padding" style="background-color: var(--bg-surface-subtle); border-top: 1px solid var(--border-subtle);" aria-label="Services Preview">
+  <div class="site-container">
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span class="section-subtitle">What I Build</span>
+        <h2 class="section-title">Websites &amp; High-Impact Digital Solutions</h2>
+        <p class="section-description">
+          From custom business websites and high-conversion landing pages to full-scale modern redesigns, I help clients launch modern digital solutions.
+        </p>
+      </div>
+      <div>
+        <a href="{% url 'portfolio:services' %}" class="btn-modern btn-secondary-outline">
+          <span>Explore All Services</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      {% for service in services_preview %}
+        <article class="service-card" id="service-card-{{ service.slug }}">
+          <div class="service-card-image-wrap">
+            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
+            <div class="service-image-tag">
+              {% if service.icon == 'layout' %}
+                <i class="bi bi-layout-wtf"></i> <span>Business Sites</span>
+              {% elif service.icon == 'layers' %}
+                <i class="bi bi-layers"></i> <span>Landing Pages</span>
+              {% elif service.icon == 'refresh-cw' %}
+                <i class="bi bi-arrow-repeat"></i> <span>UI Modernization</span>
+              {% else %}
+                <i class="bi bi-laptop"></i> <span>Digital Solutions</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="service-card-body">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;">Offering 0{{ forloop.counter }}</span>
+            </div>
+            <h3 class="service-card-title">{{ service.title }}</h3>
+            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+              {{ service.short_summary }}
+            </p>
+            <div class="service-deliverable-box mt-auto">
+              <span class="font-mono text-muted" style="font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom: 0.25rem;">Core Deliverable</span>
+              <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">{{ service.what_delivered }}</span>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     CALL TO ACTION (NO DEAD ENDS)
+     ========================================================================== -->
+<section class="section-padding" aria-label="Call to Action">
+  <div class="site-container">
+    <div class="cta-banner">
+      <div class="cta-banner-content">
+        <span class="badge-category" style="margin-bottom: 0.75rem;">Let's Collaborate</span>
+        <h2 style="font-size: 2.15rem; margin-bottom: 1rem;">
+          Have an upcoming project or need a full-stack developer?
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.75rem;">
+          Whether you need a custom web application, dealership portal, landing page, or technical consultation, I'm ready to help bring your vision to life.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow btn-lg">
+            <span>Start a Conversation</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="{% url 'portfolio:resume' %}" class="btn-modern btn-secondary-outline btn-lg">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>View Resume</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

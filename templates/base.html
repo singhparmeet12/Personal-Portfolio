@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Anti-Flicker Theme Bootstrap (Default: Light Mode) -->
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('portfolio_theme_mode');
+      if (!savedTheme) {
+        savedTheme = 'light';
+        localStorage.setItem('portfolio_theme_mode', 'light');
+        localStorage.removeItem('theme');
+      }
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
+  <!-- Primary Meta Tags -->
+  <title>{% block title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}</title>
+  <meta name="title" content="{% block meta_title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}">
+  <meta name="description" content="{% block meta_description %}Portfolio of Parmeet Singh, Full-Stack Python & Django Engineer specializing in high-performance web applications, scalable platforms, and data systems.{% endblock %}">
+  <meta name="author" content="Parmeet Singh">
+  <meta name="keywords" content="Parmeet Singh, Python, Django, Full-Stack Developer, Web Applications, REST APIs, PostgreSQL, Data Science, Portfolio">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta property="og:title" content="{% block og_title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Full-Stack Python & Django Engineer building scalable web platforms, digital products, and high-performance applications.{% endblock %}">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Custom Stylesheet with Cache Buster -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260829_1745">
+  
+  <!-- Dynamic SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%232563eb'/><text x='50%' y='55%' dominant-baseline='central' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='800' font-size='50'>P</text></svg>">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Ambient Grid Background -->
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+  <div class="app-wrapper">
+    <!-- Navigation Bar -->
+    <header>
+      <nav class="site-navbar" aria-label="Main Navigation">
+        <div class="site-container nav-inner">
+          
+          <!-- Brand Logo -->
+          <a href="{% url 'portfolio:home' %}" class="brand-logo" title="Parmeet Singh - Home">
+            <div class="brand-icon">PS</div>
+            <span>{{ site_profile.name|default:"Parmeet Singh" }}</span>
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <ul class="nav-links" role="list">
+            <li>
+              <a href="{% url 'portfolio:home' %}" class="nav-link-item {% if active_page == 'home' %}active{% endif %}">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio:work' %}" class="nav-link-item {% if active_page == 'work' %}active{% endif %}">
+                Work
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio:about' %}" class="nav-link-item {% if active_page == 'about' %}active{% endif %}">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio:services' %}" class="nav-link-item {% if active_page == 'services' %}active{% endif %}">
+                Services
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio:resume' %}" class="nav-link-item {% if active_page == 'resume' %}active{% endif %}">
+                Resume
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'portfolio:contact' %}" class="nav-link-item {% if active_page == 'contact' %}active{% endif %}">
+                Contact
+              </a>
+            </li>
+          </ul>
+
+          <!-- Nav Actions: Theme Toggle, Resume & Mobile Menu -->
+          <div class="nav-actions">
+            <!-- Light/Dark Mode Switcher -->
+            <button type="button" class="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Theme">
+              <i class="bi bi-sun-fill icon-sun"></i>
+              <i class="bi bi-moon-stars-fill icon-moon"></i>
+            </button>
+
+            <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-sm d-none d-md-inline-flex" title="Download Resume PDF">
+              <i class="bi bi-file-earmark-arrow-down"></i>
+              <span>Download Resume</span>
+            </a>
+
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+              <i class="bi bi-list fs-4"></i>
+            </button>
+          </div>
+
+        </div>
+      </nav>
+
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-drawer" id="mobileDrawer">
+        <div class="d-flex justify-content-between align-items-center mb-2" style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="font-mono text-muted" style="font-size: 0.8rem; text-transform: uppercase;">Menu Navigation</span>
+          <button type="button" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+            <i class="bi bi-sun-fill icon-sun"></i>
+            <i class="bi bi-moon-stars-fill icon-moon"></i>
+          </button>
+        </div>
+        <a href="{% url 'portfolio:home' %}" class="nav-link-item {% if active_page == 'home' %}active{% endif %}">
+          <i class="bi bi-house-door me-2"></i> Home
+        </a>
+        <a href="{% url 'portfolio:work' %}" class="nav-link-item {% if active_page == 'work' %}active{% endif %}">
+          <i class="bi bi-grid me-2"></i> Work & Projects
+        </a>
+        <a href="{% url 'portfolio:about' %}" class="nav-link-item {% if active_page == 'about' %}active{% endif %}">
+          <i class="bi bi-person me-2"></i> About & Bio
+        </a>
+        <a href="{% url 'portfolio:services' %}" class="nav-link-item {% if active_page == 'services' %}active{% endif %}">
+          <i class="bi bi-briefcase me-2"></i> Services & Solutions
+        </a>
+        <a href="{% url 'portfolio:resume' %}" class="nav-link-item {% if active_page == 'resume' %}active{% endif %}">
+          <i class="bi bi-file-earmark-text me-2"></i> Resume
+        </a>
+        <a href="{% url 'portfolio:contact' %}" class="nav-link-item {% if active_page == 'contact' %}active{% endif %}">
+          <i class="bi bi-envelope me-2"></i> Contact
+        </a>
+        <div class="pt-2">
+          <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow w-100" style="width: 100%;">
+            <i class="bi bi-file-earmark-arrow-down"></i> Download Resume
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+      
+      <!-- Django Flash Messages -->
+      {% if messages %}
+        <div class="site-container pt-3" style="padding-top: 1rem;">
+          {% for message in messages %}
+            <div class="alert-modern {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% else %}alert-info{% endif %}" role="alert">
+              <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% elif message.tags == 'error' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="site-container">
+        <div class="footer-grid">
+          
+          <!-- Column 1: Brand & Philosophy -->
+          <div class="footer-col">
+            <a href="{% url 'portfolio:home' %}" class="brand-logo mb-3" style="display: inline-flex; margin-bottom: 0.85rem;">
+              <div class="brand-icon">PS</div>
+              <span>{{ site_profile.name|default:"Parmeet Singh" }}</span>
+            </a>
+            <p style="font-size: 0.9rem; line-height: 1.6; max-width: 320px; color: var(--text-secondary);">
+              Full-Stack Python & Django Developer engineering robust web applications, data workflows, and modern digital products.
+            </p>
+            <div class="status-indicator" style="margin-top: 1rem;">
+              <span class="status-dot"></span>
+              <span>Available for Full-Stack Roles &amp; Contracts</span>
+            </div>
+          </div>
+
+          <!-- Column 2: Navigation -->
+          <div class="footer-col">
+            <h5>Navigation</h5>
+            <ul class="footer-links">
+              <li><a href="{% url 'portfolio:home' %}">Home</a></li>
+              <li><a href="{% url 'portfolio:work' %}">Selected Work</a></li>
+              <li><a href="{% url 'portfolio:about' %}">About Me</a></li>
+              <li><a href="{% url 'portfolio:services' %}">Freelance & Services</a></li>
+              <li><a href="{% url 'portfolio:resume' %}">Resume</a></li>
+              <li><a href="{% url 'portfolio:contact' %}">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Connect & Socials -->
+          <div class="footer-col">
+            <h5>Connect</h5>
+            <ul class="footer-links">
+              <li>
+                <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-github me-1"></i> GitHub
+                </a>
+              </li>
+              <li>
+                <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-linkedin me-1"></i> LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="mailto:{{ site_profile.email }}">
+                  <i class="bi bi-envelope me-1"></i> {{ site_profile.email }}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Quick Actions -->
+          <div class="footer-col">
+            <h5>Resume & Opportunities</h5>
+            <p style="font-size: 0.88rem; margin-bottom: 1rem; color: var(--text-secondary);">
+              Looking for a skilled Django / Full-Stack Python engineer to build your next product?
+            </p>
+            <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-secondary-outline btn-sm w-100" style="width: 100%; margin-bottom: 0.5rem;">
+              <i class="bi bi-download"></i> Download Resume
+            </a>
+            <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow btn-sm w-100" style="width: 100%;">
+              Let's Build Together &rarr;
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+          <div>
+            &copy; {{ current_year }} Parmeet Singh. All rights reserved.
+          </div>
+          <div class="font-mono" style="font-size: 0.82rem; color: var(--text-muted);">
+            Powered by Python &bull; Django &bull; High-Performance Architecture
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript Engine with Cache Buster -->
+  <script src="{% static 'js/main.js' %}?v=20260829_1745"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

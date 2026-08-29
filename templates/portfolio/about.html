@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About — A Day Inside Parmeet's World | Parmeet Singh{% endblock %}
+{% block meta_description %}An interactive split-screen journey through Parmeet's world — B.Tech 2025 CSE (AI & Data Science), Python & Django Developer, and persistent builder.{% endblock %}
+
+{% block content %}
+<!-- ==========================================================================
+     PARMEET SINGH — SPLIT-SCREEN INTERACTIVE ABOUT EXPERIENCE (12 SCENES)
+     Left Half: Authentic Story & Timeline Chapters
+     Right Half: Sticky 4K Cinematic Visual Stage (Scene 01 to 12)
+     ========================================================================== -->
+<div class="split-about-wrapper" id="splitAboutWrapper">
+  <div class="site-container split-about-grid">
+
+    <!-- ========================================================================
+         LEFT HALF: SCROLLING STORY CHAPTERS (01 TO 12)
+         ======================================================================== -->
+    <div class="about-story-col" id="aboutStoryCol">
+
+      <!-- CHAPTER 01: THE FIRST MORNING / INTRO -->
+      <section class="story-chapter-block active" id="chapter-01" data-scene="1">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>08:00 AM &bull; MORNING SETUP</span>
+          </div>
+          <h1 class="chapter-title">Hey, I'm <span class="name-highlight">Parmeet</span>.</h1>
+          <p class="chapter-subtitle font-mono text-cyan">B.Tech CSE (AI &amp; Data Science) &bull; Class of 2025 &bull; Software Engineer</p>
+          <p class="chapter-lead">I build practical software, explore data systems, and turn ideas into dependable digital products. Welcome to a day inside my world.</p>
+          
+          <div class="chapter-chips-row">
+            <span class="c-chip chip-build"><i class="bi bi-hammer"></i> BUILDING</span>
+            <span class="c-chip chip-learn"><i class="bi bi-book"></i> LEARNING</span>
+            <span class="c-chip chip-explore"><i class="bi bi-compass"></i> EXPLORING</span>
+          </div>
+
+          <div class="chapter-meta-footer font-mono">
+            <span class="text-muted">LOCATION:</span> <strong style="color: #fff;">New Delhi, India</strong><br>
+            <span class="text-muted">STATUS:</span> <strong style="color: var(--accent-amber);">Actively Seeking Full-Time Roles &amp; Freelance Work</strong>
+          </div>
+
+          <!-- Refined Scroll Prompt Placement -->
+          <div class="scroll-prompt-container pt-3">
+            <div class="scroll-prompt-chip font-mono">
+              <i class="bi bi-chevron-double-down scroll-bounce-icon"></i>
+              <span>Scroll down to walk through the journey</span>
+              <i class="bi bi-arrow-down-short"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 02: THE ACADEMIC FOUNDATION -->
+      <section class="story-chapter-block" id="chapter-02" data-scene="2">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>09:15 AM &bull; ACADEMIC ROOTS</span>
+          </div>
+          <h2 class="chapter-title">The Academic <span class="name-highlight">Roots</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">B.Tech in Computer Science &bull; Specialization in AI &amp; Data Science</p>
+          <p class="chapter-lead">Graduating in 2025 with a rigorous foundation across core computer science, relational database theory, data structures, algorithms, and statistical machine learning. Academic theory gives me structure; building real code gives me intuition.</p>
+          
+          <div class="chapter-chips-row">
+            <span class="c-chip chip-learn"><i class="bi bi-mortarboard"></i> B.TECH 2025</span>
+            <span class="c-chip chip-build"><i class="bi bi-cpu"></i> ARTIFICIAL INTELLIGENCE</span>
+            <span class="c-chip chip-explore"><i class="bi bi-diagram-3"></i> DATA SCIENCE</span>
+          </div>
+          <p class="chapter-note font-mono text-muted">
+            <em>"Strong fundamentals make learning any new framework or system effortless."</em>
+          </p>
+        </div>
+      </section>
+
+      <!-- CHAPTER 03: EVALUATING CERTIFICATIONS (CLICKABLE POPUP) -->
+      <section class="story-chapter-block" id="chapter-03" data-scene="3">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>10:30 AM &bull; EVALUATING CERTIFICATIONS</span>
+          </div>
+          <h2 class="chapter-title">Evaluating <span class="name-highlight">Certifications</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">Infosys Springboard &bull; Udemy Technical Masteries</p>
+          <p class="chapter-lead">Learning didn't stop in university lecture halls. I dedicated hundreds of self-driven hours to industry certifications in Python development, scalable Django backends, and data science methodologies through Infosys and Udemy.</p>
+          
+          <p class="cert-instruction-text font-mono text-amber mb-2">
+            <i class="bi bi-hand-index-thumb"></i> Click any certification cue card below to view details &amp; verification:
+          </p>
+
+          <div class="chapter-chips-row">
+            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('Software Engineering & Database Architecture Foundations', 'Infosys Springboard', '2024', 'CERT_03 — Infosys', 'https://infyspringboard.onwingspan.com')">
+              <i class="bi bi-patch-check-fill text-amber"></i> Infosys Springboard &bull; Click to View &rarr;
+            </button>
+            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('Full-Stack Web Development with Python & Django', 'Udemy', '2024', 'CERT_01 — Udemy', 'https://www.udemy.com')">
+              <i class="bi bi-award-fill text-cyan"></i> Udemy Python &amp; Django &bull; Click to View &rarr;
+            </button>
+            <button type="button" class="c-chip chip-clickable chip-build" onclick="openCertLightbox('Python for Data Science & Machine Learning Bootcamp', 'Udemy', '2024', 'CERT_02 — Udemy', 'https://www.udemy.com')">
+              <i class="bi bi-database-check text-emerald"></i> Udemy Data Science &bull; Click to View &rarr;
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 04: THE CORE STACK -->
+      <section class="story-chapter-block" id="chapter-04" data-scene="4">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>11:45 AM &bull; CRAFT &amp; SYSTEMS</span>
+          </div>
+          <h2 class="chapter-title">Craft &amp; Core <span class="name-highlight">Architecture</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">Python &bull; Django &bull; PostgreSQL &bull; RESTful APIs</p>
+          <p class="chapter-lead">Hands on keyboard in deep flow. Structuring relational schemas, engineering testable Django APIs, managing authentication pipelines, and writing clean, scalable backend logic designed to handle real-world traffic.</p>
+          
+          <div class="chapter-chips-row">
+            <span class="c-chip chip-build"><i class="bi bi-code-slash"></i> PYTHON / DJANGO</span>
+            <span class="c-chip chip-learn"><i class="bi bi-database"></i> POSTGRESQL &amp; SQL</span>
+            <span class="c-chip chip-explore"><i class="bi bi-lightning-charge"></i> REST APIS &amp; ARCHITECTURE</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 05: THE DAILY HUSTLE & APPLICATIONS -->
+      <section class="story-chapter-block" id="chapter-05" data-scene="5">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>01:15 PM &bull; THE DAILY GRIND</span>
+          </div>
+          <h2 class="chapter-title">The Job Hunt <span class="name-highlight">&amp; Reality</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">Tailoring Resumes &bull; Daily Applications &bull; Relentless Consistency</p>
+          <p class="chapter-lead">The honest truth of a 2025 graduate: navigating the competitive tech market with discipline. Daily customized applications, cold outreach to engineering managers on LinkedIn, keeping a job tracker spreadsheet, and staying resilient through every response.</p>
+          
+          <div class="chapter-chips-row">
+            <span class="c-chip chip-build"><i class="bi bi-send-check"></i> DAILY APPLICATIONS</span>
+            <span class="c-chip chip-learn"><i class="bi bi-file-earmark-person"></i> RESUME TAILORING</span>
+            <span class="c-chip chip-explore"><i class="bi bi-linkedin"></i> LINKEDIN OUTREACH</span>
+          </div>
+
+          <div class="chapter-quote font-mono">
+            <em>"A typical struggle phase—facing uncertainty head-on, improving every single day, and refusing to give up."</em>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 06: OVERVIEW OF ALL PROJECTS (SEE MY WORK) -->
+      <section class="story-chapter-block" id="chapter-06" data-scene="6">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>02:45 PM &bull; ENGINEERING REAL PRODUCTS</span>
+          </div>
+          <h2 class="chapter-title">Turning Ideas into <span class="name-highlight">Production</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">TourCraze &bull; GaadiMandi &bull; TradeLab &bull; Full-Stack MVPs</p>
+          <p class="chapter-lead">
+            Rather than waiting idly, I prove my abilities by building complete platforms: from <strong>TourCraze</strong> (collaborative group travel with real-time budgets) and <strong>GaadiMandi</strong> (multi-dealer automotive B2B network) to <strong>TradeLab</strong> (AI market analytics with YOLOv5 computer vision).
+          </p>
+          
+          <div class="project-concise-summary mb-3">
+            <span class="mini-project-tag tag-tourcraze"><i class="bi bi-geo-alt text-amber"></i> TourCraze</span>
+            <span class="mini-project-tag tag-gaadimandi"><i class="bi bi-car-front text-cyan"></i> GaadiMandi</span>
+            <span class="mini-project-tag tag-tradelab"><i class="bi bi-graph-up-arrow text-emerald"></i> TradeLab</span>
+          </div>
+
+          <a href="{% url 'portfolio:work' %}" class="btn-modern btn-primary-glow btn-sm">
+            <i class="bi bi-collection"></i> See My Work &rarr;
+          </a>
+        </div>
+      </section>
+
+      <!-- CHAPTER 07: FREELANCE & SMALL BUSINESS OUTREACH -->
+      <section class="story-chapter-block" id="chapter-07" data-scene="7">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>04:15 PM &bull; FREELANCE &amp; CLIENT OUTREACH</span>
+          </div>
+          <h2 class="chapter-title">Active Outreach &amp; <span class="name-highlight" style="color: var(--accent-cyan);">Freelance</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">Direct Cold Calling &bull; Website Building &bull; Modern Web Upgrades</p>
+          <p class="chapter-lead">
+            I am actively looking for freelance projects. I daily call and reach out to local small businesses, identifying where their online presence is lagging and helping them build modern, high-converting websites or upgrading their existing web infrastructure with clean, fast code.
+          </p>
+
+          <div class="chapter-chips-row">
+            <span class="c-chip chip-build"><i class="bi bi-telephone-outbound"></i> DAILY OUTREACH</span>
+            <span class="c-chip chip-learn"><i class="bi bi-layout-text-window-reverse"></i> WEBSITE BUILDING</span>
+            <span class="c-chip chip-explore"><i class="bi bi-arrow-repeat"></i> WEBSITE UPDATES</span>
+          </div>
+          
+          <a href="{% url 'portfolio:services' %}" class="btn-modern btn-primary-glow btn-sm">
+            View My Freelance Services &rarr;
+          </a>
+        </div>
+      </section>
+
+      <!-- CHAPTER 08: SUNSET & QUIET REFLECTION -->
+      <section class="story-chapter-block" id="chapter-08" data-scene="8">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>05:30 PM &bull; BEYOND THE CODE</span>
+          </div>
+          <h2 class="chapter-title">There's More to Me <span class="name-highlight">Than Code</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">Human &bull; Curious &bull; Grounded</p>
+          <p class="chapter-lead">When the monitors dim at sunset, I recharge with ambient lo-fi soundscapes, study macroeconomic trends and market psychology, and reflect on where technology is heading next.</p>
+        </div>
+      </section>
+
+      <!-- CHAPTER 09: DEEP READING & COMPOUNDING -->
+      <section class="story-chapter-block" id="chapter-09" data-scene="9">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>07:15 PM &bull; CONTINUOUS LEARNING</span>
+          </div>
+          <h2 class="chapter-title">The Quiet <span class="name-highlight">Compounder</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">System Design &bull; Architecture Papers &bull; Self-Discipline</p>
+          <p class="chapter-lead">As dusk settles over the city and the warm desk lamp clicks on, I spend quiet hours reading engineering blogs, software design patterns, and distributed architecture papers.</p>
+        </div>
+      </section>
+
+      <!-- CHAPTER 10: LATE NIGHT PERSISTENCE -->
+      <section class="story-chapter-block" id="chapter-10" data-scene="10">
+        <div class="chapter-content-card">
+          <div class="terminal-os-badge font-mono mb-2">
+            <span class="status-dot"></span>
+            <span>09:00 PM &bull; THE NIGHT GRIND</span>
+          </div>
+          <h2 class="chapter-title">Late-Night <span class="name-highlight">Persistence</span>.</h2>
+          <p class="chapter-subtitle font-mono text-cyan">The Work Done When Nobody Is Watching</p>
+          <p class="chapter-lead">Back in front of the screens under the midnight crescent moon. Committing a daily GitHub push, resolving a tricky edge case, and submitting a final application for the day. Consistency is the only true competitive moat.</p>
+          
+          <div class="chapter-quote font-mono">
+            <em>"I don't have every answer yet—but I show up and build every single day."</em>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 11: THE TOAST / CLOSING APPRECIATION (FINAL SCENE) -->
+      <section class="story-chapter-block" id="chapter-11" data-scene="11">
+        <div class="chapter-content-card card-final">
+          <div class="terminal-os-badge font-mono mb-3">
+            <span class="status-dot"></span>
+            <span>12:30 AM &bull; THANK YOU</span>
+          </div>
+          <h2 class="chapter-title" style="font-size: clamp(2rem, 3.2vw, 2.9rem);">
+            Still building.<br><span class="name-highlight">Still exploring.</span>
+          </h2>
+          <p class="chapter-lead mb-3">
+            If you've scrolled this far—<strong>thank you</strong>. It takes genuine time to look past conventional bullet points and walk through someone's real world.
+          </p>
+          <p class="chapter-note font-mono text-muted mb-4">
+            Whether you have a full-time software engineering role, a freelance project, or just want to talk tech: <strong>the door is always open</strong>.
+          </p>
+
+          <!-- Direct Communication Terminals -->
+          <div class="split-terminals-grid">
+            <a href="https://linkedin.com/in/parmeetsingh" target="_blank" rel="noopener noreferrer" class="closing-btn btn-linkedin font-mono">
+              <i class="bi bi-linkedin"></i>
+              <span>LinkedIn &rarr;</span>
+            </a>
+            <a href="https://github.com/parmeetsingh" target="_blank" rel="noopener noreferrer" class="closing-btn btn-github font-mono">
+              <i class="bi bi-github"></i>
+              <span>GitHub &rarr;</span>
+            </a>
+            <a href="mailto:contact@parmeetsingh.dev" class="closing-btn btn-email font-mono">
+              <i class="bi bi-envelope"></i>
+              <span>Email Me &rarr;</span>
+            </a>
+            <a href="{% url 'portfolio:work' %}" class="closing-btn btn-work font-mono">
+              <i class="bi bi-collection"></i>
+              <span>Explore Work &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================================================
+         RIGHT HALF: STICKY 4K CINEMATIC VISUAL VIEWPORT (11 SCENES)
+         ======================================================================== -->
+    <div class="about-visual-col" id="aboutVisualCol">
+      <div class="sticky-visual-stage" id="stickyVisualStage">
+
+        <!-- Top Telemetry Header with Style Switcher (Single Line) -->
+        <div class="stage-telemetry-bar font-mono">
+          <div class="telemetry-left" title="Current Scene Timecode">
+            <span class="status-dot"></span>
+            <span id="stageTimecodeText" class="telemetry-timecode">08:00 AM &bull; SETUP</span>
+          </div>
+
+          <!-- Style Switcher: 3D Cinematic (Default) vs Lofi Anime -->
+          <div class="stage-style-pills" id="stageStylePills">
+            <span class="style-pills-label font-mono"><i class="bi bi-palette-fill"></i> STYLE:</span>
+            <button type="button" class="style-pill-btn active" data-style-target="real" title="Switch to 3D Cinematic Style (Default)">
+              <i class="bi bi-camera-reels"></i> <span>3D Cinematic</span>
+            </button>
+            <button type="button" class="style-pill-btn" data-style-target="lofi" title="Switch to Lofi Anime Style">
+              <i class="bi bi-brush"></i> <span>Lofi Anime</span>
+            </button>
+          </div>
+
+          <div class="telemetry-right">
+            <span id="stageSceneIndexText" class="scene-counter-badge font-mono">01 / 11</span>
+          </div>
+        </div>
+
+        <!-- Layered 4K Cinematic Scene Images (11 Scenes Total for Both Styles, 3D Cinematic Default) -->
+        <div class="stage-canvas-frame">
+          <!-- Style Set 1: 3D Cinematic (Realistic 3D - DEFAULT ACTIVE) -->
+          <img src="{% static 'img/about_scene_01_real.png' %}?v=20260829_1610" alt="Scene 01 (3D Cinematic)" class="stage-image style-real active" id="stage-img-real-1" data-style="real" data-scene="1">
+          <img src="{% static 'img/about_scene_02_real.png' %}?v=20260829_1610" alt="Scene 02 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-2" data-style="real" data-scene="2">
+          <img src="{% static 'img/about_scene_03_real.png' %}?v=20260829_1610" alt="Scene 03 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-3" data-style="real" data-scene="3">
+          <img src="{% static 'img/about_scene_04_real.png' %}?v=20260829_1610" alt="Scene 04 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-4" data-style="real" data-scene="4">
+          <img src="{% static 'img/about_scene_05_real.png' %}?v=20260829_1610" alt="Scene 05 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-5" data-style="real" data-scene="5">
+          <img src="{% static 'img/about_scene_06_real.png' %}?v=20260829_1610" alt="Scene 06 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-6" data-style="real" data-scene="6">
+          <img src="{% static 'img/about_scene_07_real.png' %}?v=20260829_1610" alt="Scene 07 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-7" data-style="real" data-scene="7">
+          <img src="{% static 'img/about_scene_08_real.png' %}?v=20260829_1610" alt="Scene 08 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-8" data-style="real" data-scene="8">
+          <img src="{% static 'img/about_scene_09_real.png' %}?v=20260829_1610" alt="Scene 09 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-9" data-style="real" data-scene="9">
+          <img src="{% static 'img/about_scene_10_real.png' %}?v=20260829_1610" alt="Scene 10 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-10" data-style="real" data-scene="10">
+          <img src="{% static 'img/about_scene_12_real.png' %}?v=20260829_1610" alt="Scene 11 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-11" data-style="real" data-scene="11">
+
+          <!-- Style Set 2: Lofi Anime (Illustrated) -->
+          <img src="{% static 'img/about_scene_01.png' %}?v=20260829_1610" alt="Scene 01 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-1" data-style="lofi" data-scene="1">
+          <img src="{% static 'img/about_scene_02.png' %}?v=20260829_1610" alt="Scene 02 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-2" data-style="lofi" data-scene="2">
+          <img src="{% static 'img/about_scene_03.png' %}?v=20260829_1610" alt="Scene 03 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-3" data-style="lofi" data-scene="3">
+          <img src="{% static 'img/about_scene_04.png' %}?v=20260829_1610" alt="Scene 04 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-4" data-style="lofi" data-scene="4">
+          <img src="{% static 'img/about_scene_05.png' %}?v=20260829_1610" alt="Scene 05 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-5" data-style="lofi" data-scene="5">
+          <img src="{% static 'img/about_scene_06.png' %}?v=20260829_1610" alt="Scene 06 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-6" data-style="lofi" data-scene="6">
+          <img src="{% static 'img/about_scene_07.png' %}?v=20260829_1610" alt="Scene 07 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-7" data-style="lofi" data-scene="7">
+          <img src="{% static 'img/about_scene_08.png' %}?v=20260829_1610" alt="Scene 08 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-8" data-style="lofi" data-scene="8">
+          <img src="{% static 'img/about_scene_09.png' %}?v=20260829_1610" alt="Scene 09 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-9" data-style="lofi" data-scene="9">
+          <img src="{% static 'img/about_scene_10.png' %}?v=20260829_1610" alt="Scene 10 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-10" data-style="lofi" data-scene="10">
+          <img src="{% static 'img/about_scene_12.png' %}?v=20260829_1610" alt="Scene 11 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-11" data-style="lofi" data-scene="11">
+
+          <!-- Living Room Cinemagraph Overlays -->
+          <div class="stage-window-breeze" id="stageWindowBreeze"></div>
+          <div class="stage-lamp-glow" id="stageLampGlow"></div>
+          <div class="stage-monitor-glow" id="stageMonitorGlow"></div>
+          
+          <!-- Coffee Steam Cinemagraph Plumes -->
+          <div class="stage-coffee-steam" id="stageCoffeeSteam" title="Ambient warm coffee steam">
+            <span class="steam-puff puff-1"></span>
+            <span class="steam-puff puff-2"></span>
+            <span class="steam-puff puff-3"></span>
+          </div>
+
+          <!-- Dynamic Atmospheric Breeze & Dust Mote Particle Canvas -->
+          <canvas id="stageAtmosphereCanvas" class="stage-atmosphere-canvas"></canvas>
+
+          <!-- Subtle Gradient Shading for Depth -->
+          <div class="stage-vignette-overlay"></div>
+        </div>
+
+        <!-- Bottom Telemetry Lens & Interactive 11-Node Dots -->
+        <div class="stage-footer-bar">
+          <div class="stage-lens-text font-mono text-cyan" id="stageLensText">
+            LENS: 35mm WIDE
+          </div>
+
+          <!-- Living Diorama Status Indicator -->
+          <div class="stage-vfx-badge font-mono" id="stageVfxBadge" title="Atmospheric particles, breeze, lamp warmth & 2.5D parallax active">
+            <span class="vfx-pulse-dot"></span>
+            <span>LIVING DIORAMA</span>
+          </div>
+          
+          <!-- Quick Chapter Selector Dots (11 Total) -->
+          <div class="stage-dots-row" id="stageDotsRow">
+            {% for i in "12345678901"|make_list %}
+              <button type="button" class="stage-dot {% if forloop.first %}active{% endif %}" data-target-scene="{{ forloop.counter }}" title="Scene {{ forloop.counter }}"></button>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================================
+     CERTIFICATE LIGHTBOX POPUP MODAL
+     ========================================================================== -->
+<div class="cert-modal-backdrop" id="certModalBackdrop">
+  <div class="cert-modal-dialog">
+    <button type="button" class="cert-modal-close" id="certModalClose" aria-label="Close certificate modal">
+      <i class="bi bi-x-lg"></i>
+    </button>
+    <div class="cert-modal-header font-mono">
+      <span class="cert-modal-code" id="modalCertCode">CERT_01</span>
+      <span class="cert-modal-year" id="modalCertYear">2024</span>
+    </div>
+    <div class="cert-modal-body">
+      <div class="cert-icon-seal">
+        <i class="bi bi-patch-check-fill text-cyan"></i>
+      </div>
+      <h3 class="cert-modal-title" id="modalCertTitle">Certificate Name</h3>
+      <p class="cert-modal-issuer font-mono text-cyan" id="modalCertIssuer">Issued by Platform</p>
+      
+      <div class="cert-badge-details">
+        <div class="cert-detail-row">
+          <span class="text-muted">Certified Recipient:</span>
+          <strong>Parmeet Singh</strong>
+        </div>
+        <div class="cert-detail-row">
+          <span class="text-muted">Domain / Program:</span>
+          <span id="modalCertBodyIssuer">Python / Django &bull; 2024</span>
+        </div>
+        <div class="cert-detail-row">
+          <span class="text-muted">Verification Status:</span>
+          <strong class="text-emerald"><i class="bi bi-check-circle-fill"></i> Verified Credential</strong>
+        </div>
+      </div>
+
+      <div class="cert-modal-actions">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm" id="modalCertUrlBtn">
+          <i class="bi bi-box-arrow-up-right"></i> Verify Credential &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

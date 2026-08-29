@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact — Parmeet Singh{% endblock %}
+{% block meta_description %}Get in touch with Parmeet Singh for software engineering opportunities, full-stack web development projects, or freelance inquiries.{% endblock %}
+
+{% block content %}
+<div class="site-container">
+  
+  <!-- Page Header -->
+  <section class="section-padding" style="padding-bottom: 2.5rem;" aria-label="Contact Header">
+    <div class="section-header" style="max-width: 700px;">
+      <span class="section-subtitle">Let's Connect</span>
+      <h1 class="section-title">Let's Build Something Useful</h1>
+      <p class="section-description">
+        Whether you have a full-time engineering opportunity, a freelance project, a technical question, or an idea to collaborate on, I'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Contact Grid -->
+  <section class="section-padding-sm" style="padding-top: 0;" aria-label="Contact Form & Info">
+    <div class="contact-grid">
+      
+      <!-- Left Column: Contact Methods & Status -->
+      <div class="modern-card" style="padding: 2rem;">
+        <h2 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 1rem;">Contact Information</h2>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.75rem;">
+          Feel free to reach out directly via email or connect with me across professional platforms.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <!-- Method 1: Email -->
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div class="arch-icon blue">
+              <i class="bi bi-envelope fs-5"></i>
+            </div>
+            <div>
+              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+                Email Address
+              </span>
+              <a href="mailto:{{ site_profile.email }}" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
+                {{ site_profile.email }}
+              </a>
+              <div class="pt-1">
+                <button 
+                  type="button" 
+                  class="btn-modern btn-subtle btn-sm p-0 font-mono" 
+                  data-copy-email="{{ site_profile.email }}" 
+                  style="font-size: 0.78rem; padding: 0;">
+                  <i class="bi bi-clipboard me-1"></i> Copy Email
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 2: LinkedIn -->
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div class="arch-icon cyan">
+              <i class="bi bi-linkedin fs-5"></i>
+            </div>
+            <div>
+              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+                Professional Network
+              </span>
+              <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
+                linkedin.com/in/parmeetsingh <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Method 3: GitHub -->
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div class="arch-icon emerald">
+              <i class="bi bi-github fs-5"></i>
+            </div>
+            <div>
+              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+                Source Code &amp; Repositories
+              </span>
+              <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
+                github.com/parmeetsingh <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Method 4: Location -->
+          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+            <div class="arch-icon amber">
+              <i class="bi bi-geo-alt fs-5"></i>
+            </div>
+            <div>
+              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+                Location
+              </span>
+              <span style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
+                {{ site_profile.location }} (Available for Remote &amp; Relocation)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Status -->
+        <div class="modern-card mt-4" style="background: var(--bg-surface-subtle); padding: 1.25rem; margin-top: 1.75rem;">
+          <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span style="color: var(--text-primary); font-weight: 600;">Current Availability:</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem; margin-bottom: 0;">
+            Actively evaluating full-stack software engineering roles, data-oriented opportunities, and select freelance web development projects.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Django Contact Form -->
+      <div class="modern-card" style="padding: 2rem;">
+        <h2 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.5rem;">Send a Direct Message</h2>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.75rem;">
+          Fill out this form and I will respond to your message promptly.
+        </p>
+
+        <form method="POST" action="{% url 'portfolio:contact' %}" novalidate>
+          {% csrf_token %}
+
+          <!-- Anti-bot honeypot field -->
+          <div style="display: none;" aria-hidden="true">
+            {{ form.bot_field }}
+          </div>
+
+          <div class="form-group">
+            <label for="id_name" class="form-label">
+              Your Name <span style="color: var(--accent-coral);">*</span>
+            </label>
+            {{ form.name }}
+            {% if form.name.errors %}
+              <div class="text-danger font-mono mt-1" style="font-size: 0.8rem; color: var(--accent-coral); margin-top: 0.3rem;">
+                {{ form.name.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="id_email" class="form-label">
+              Email Address <span style="color: var(--accent-coral);">*</span>
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="text-danger font-mono mt-1" style="font-size: 0.8rem; color: var(--accent-coral); margin-top: 0.3rem;">
+                {{ form.email.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="id_subject" class="form-label">
+              Subject <span style="color: var(--accent-coral);">*</span>
+            </label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+              <div class="text-danger font-mono mt-1" style="font-size: 0.8rem; color: var(--accent-coral); margin-top: 0.3rem;">
+                {{ form.subject.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="id_message" class="form-label">
+              Message <span style="color: var(--accent-coral);">*</span>
+            </label>
+            {{ form.message }}
+            {% if form.message.errors %}
+              <div class="text-danger font-mono mt-1" style="font-size: 0.8rem; color: var(--accent-coral); margin-top: 0.3rem;">
+                {{ form.message.errors.0 }}
+              </div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn-modern btn-primary-glow btn-lg w-100 mt-2" style="width: 100%; margin-top: 0.75rem;">
+            <span>Send Message</span>
+            <i class="bi bi-send-fill ms-1"></i>
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bottom Navigation Link -->
+  <div class="text-center py-4" style="text-align: center; padding: 2rem 0;">
+    <a href="{% url 'portfolio:home' %}" class="btn-modern btn-subtle">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

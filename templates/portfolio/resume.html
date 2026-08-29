@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Resume — Parmeet Singh{% endblock %}
+{% block meta_description %}View and download the official resume of Parmeet Singh, Full-Stack Python & Django Developer specializing in scalable web systems, data architectures, and digital products.{% endblock %}
+
+{% block content %}
+<div class="site-container">
+  
+  <!-- Resume Page Header & Actions -->
+  <section class="section-padding" style="padding-bottom: 2rem;" aria-label="Resume Header">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div>
+        <span class="section-subtitle">Curriculum Vitae</span>
+        <h1 class="section-title">Resume &amp; Qualifications</h1>
+        <p class="section-description">
+          Detailed overview of education, technical capabilities, projects, and practical full-stack engineering experience.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-lg">
+          <i class="bi bi-download"></i>
+          <span>Download Resume PDF</span>
+        </a>
+        <button onclick="window.print()" class="btn-modern btn-secondary-outline btn-lg" title="Print Resume">
+          <i class="bi bi-printer"></i>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded PDF Preview (If Active PDF exists) -->
+  {% if resume_doc and resume_doc.file %}
+    <section class="mb-5" aria-label="PDF Document Viewer" style="margin-bottom: 3rem;">
+      <div class="modern-card" style="padding: 1rem; border-radius: var(--radius-lg);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem 1rem 1rem; border-bottom: 1px solid var(--border-subtle); margin-bottom: 1rem;">
+          <span class="font-mono text-muted" style="font-size: 0.82rem;">
+            <i class="bi bi-file-earmark-pdf text-danger me-1"></i> {{ resume_doc.title }} (Updated: {{ resume_doc.updated_at|date:"M Y" }})
+          </span>
+          <a href="{{ resume_doc.file.url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm font-mono">
+            <span>Open in New Tab</span>
+            <i class="bi bi-box-arrow-up-right ms-1"></i>
+          </a>
+        </div>
+        <div style="width: 100%; height: 750px; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); overflow: hidden;">
+          <iframe 
+            src="{{ resume_doc.file.url }}#toolbar=1" 
+            style="width: 100%; height: 100%; border: none;"
+            title="Parmeet Singh Resume PDF">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  <!-- Structured Clean HTML Resume View -->
+  <section class="section-padding-sm" aria-label="Structured Resume">
+    <div class="resume-paper-preview">
+      
+      <!-- Resume Header -->
+      <header class="resume-header-block text-center" style="text-align: center;">
+        <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 0.25rem;">
+          {{ site_profile.name|default:"PARMEET SINGH" }}
+        </h2>
+        <div class="text-secondary font-mono" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--accent-primary);">
+          {{ site_profile.headline }}
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--text-secondary);">
+          <span><i class="bi bi-geo-alt text-muted"></i> {{ site_profile.location }}</span>
+          <span><i class="bi bi-envelope text-muted"></i> <a href="mailto:{{ site_profile.email }}">{{ site_profile.email }}</a></span>
+          <span><i class="bi bi-linkedin text-muted"></i> <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
+          <span><i class="bi bi-github text-muted"></i> <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+        </div>
+      </header>
+
+      <!-- Professional Summary -->
+      <section class="resume-section-block">
+        <h3 class="resume-section-title">Professional Summary</h3>
+        <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary);">
+          {{ site_profile.bio_full }}
+        </p>
+      </section>
+
+      <!-- Education Section -->
+      <section class="resume-section-block">
+        <h3 class="resume-section-title">Education</h3>
+        {% for edu in educations %}
+          <div class="mb-3" style="margin-bottom: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+              <strong style="color: var(--text-primary); font-size: 1.05rem;">{{ edu.degree }}</strong>
+              <span class="font-mono text-muted" style="font-size: 0.85rem;">{{ edu.period_text }}</span>
+            </div>
+            <div style="color: var(--accent-cyan); font-size: 0.92rem; margin-top: 0.2rem;">
+              {{ edu.institution }} &bull; {{ edu.field_of_study }}
+              {% if edu.grade %}&bull; <span style="color: var(--text-primary); font-weight: 600;">Grade: {{ edu.grade }}</span>{% endif %}
+            </div>
+            {% if edu.description %}
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.35rem; line-height: 1.6;">{{ edu.description }}</p>
+            {% endif %}
+          </div>
+        {% empty %}
+          <div>
+            <div style="display: flex; justify-content: space-between;">
+              <strong style="color: var(--text-primary);">B.Tech in Computer Science &amp; Engineering</strong>
+              <span class="font-mono text-muted">2021 - 2025</span>
+            </div>
+            <div class="text-secondary">Specialization: Artificial Intelligence &amp; Data Science</div>
+          </div>
+        {% endfor %}
+      </section>
+
+      <!-- Technical Skills Matrix -->
+      <section class="resume-section-block">
+        <h3 class="resume-section-title">Technical Skills</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.92rem;">
+          {% for category in skill_categories %}
+            <div>
+              <strong style="color: var(--text-primary); min-width: 170px; display: inline-block;">{{ category.name }}:</strong>
+              <span style="color: var(--text-secondary);">
+                {% for s in category.skills.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+              </span>
+            </div>
+          {% empty %}
+            <div><strong style="color: var(--text-primary);">Languages &amp; Frameworks:</strong> Python, Django, JavaScript, HTML5, CSS3, Bootstrap, REST APIs</div>
+            <div><strong style="color: var(--text-primary);">Data &amp; AI:</strong> Pandas, NumPy, Scikit-learn, SQL, Exploratory Data Analysis</div>
+            <div><strong style="color: var(--text-primary);">Databases &amp; Tools:</strong> SQLite, PostgreSQL, Git, GitHub, VS Code</div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <!-- Experience & Projects -->
+      <section class="resume-section-block">
+        <h3 class="resume-section-title">Experience &amp; Work</h3>
+        {% for exp in experiences %}
+          <div class="mb-3" style="margin-bottom: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+              <strong style="color: var(--text-primary); font-size: 1.05rem;">{{ exp.role }}</strong>
+              <span class="font-mono text-muted" style="font-size: 0.85rem;">
+                {{ exp.start_date|date:"M Y" }} - {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+              </span>
+            </div>
+            <div style="color: var(--accent-cyan); font-size: 0.9rem; margin-bottom: 0.35rem; margin-top: 0.2rem;">
+              {{ exp.company }} {% if exp.location %}&bull; {{ exp.location }}{% endif %}
+            </div>
+            <ul style="list-style: disc; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+              {% for bullet in exp.get_description_bullets %}
+                <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% empty %}
+          <div>
+            <div style="display: flex; justify-content: space-between;">
+              <strong style="color: var(--text-primary);">Full-Stack &amp; Web Developer (Freelance)</strong>
+              <span class="font-mono text-muted">2024 - Present</span>
+            </div>
+            <p class="text-secondary" style="font-size: 0.9rem;">Engineered automotive dealer platforms, expense calculation applications, and client web solutions.</p>
+          </div>
+        {% endfor %}
+      </section>
+
+      <!-- Certifications -->
+      {% if certifications %}
+        <section class="resume-section-block">
+          <h3 class="resume-section-title">Certifications</h3>
+          <ul style="list-style: disc; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem;">
+            {% for cert in certifications %}
+              <li class="mb-1" style="margin-bottom: 0.4rem;">
+                <strong style="color: var(--text-primary);">{{ cert.name }}</strong> &mdash; {{ cert.issuer }} ({{ cert.issue_date_text }})
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+    </div>
+  </section>
+
+  <!-- Bottom Action Banner (No Dead Ends) -->
+  <section class="section-padding" style="border-top: 1px solid var(--border-subtle);">
+    <div class="cta-banner text-center" style="text-align: center;">
+      <div class="cta-banner-content">
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.75rem;">
+          Explore Real Projects Behind This Resume
+        </h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+          Review in-depth case studies with architectures, code repositories, and implemented features.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="{% url 'portfolio:work' %}" class="btn-modern btn-primary-glow">
+            <span>View Selected Work</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-secondary-outline">
+            <span>Contact Parmeet</span>
+            <i class="bi bi-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
