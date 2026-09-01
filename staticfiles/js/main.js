@@ -245,38 +245,51 @@ function initLofiWorkspace() {
   function setupAtmosphericCanvas(targetCanvas) {
     if (!targetCanvas) return null;
     const ctx = targetCanvas.getContext('2d');
-    let width = (targetCanvas.width = targetCanvas.offsetWidth || 480);
-    let height = (targetCanvas.height = targetCanvas.offsetHeight || 480);
+    let dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    let width = targetCanvas.offsetWidth || targetCanvas.clientWidth || 480;
+    let height = targetCanvas.offsetHeight || targetCanvas.clientHeight || 480;
 
     const resize = () => {
-      width = targetCanvas.width = targetCanvas.offsetWidth || 480;
-      height = targetCanvas.height = targetCanvas.offsetHeight || 480;
+      dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      width = targetCanvas.offsetWidth || targetCanvas.clientWidth || 480;
+      height = targetCanvas.offsetHeight || targetCanvas.clientHeight || 480;
+      targetCanvas.width = Math.round(width * dpr);
+      targetCanvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    window.addEventListener('resize', resize);
 
-    // 1. Distant Birds in Sky (Day & Sunset)
+    resize();
+    window.addEventListener('resize', resize);
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => resize());
+      ro.observe(targetCanvas);
+    }
+
+    // 1. Distant Birds in Sky (Day & Sunset) - Normalized coordinates
     const birds = [
-      { x: width * 0.72, y: height * 0.12, speed: 0.45, wingPhase: 0, scale: 0.85 },
-      { x: width * 0.58, y: height * 0.16, speed: 0.38, wingPhase: 1.8, scale: 0.7 },
-      { x: width * 0.46, y: height * 0.09, speed: 0.42, wingPhase: 3.2, scale: 0.6 }
+      { u: 0.72, v: 0.12, speed: 0.0018, wingPhase: 0, scale: 0.85 },
+      { u: 0.58, v: 0.16, speed: 0.0015, wingPhase: 1.8, scale: 0.7 },
+      { u: 0.46, v: 0.09, speed: 0.0017, wingPhase: 3.2, scale: 0.6 }
     ];
 
-    // 2. Night Rain particles
-    const raindrops = Array.from({ length: 32 }, () => ({
-      x: width * 0.32 + Math.random() * (width * 0.44),
-      y: height * 0.04 + Math.random() * (height * 0.48),
-      speed: 1.8 + Math.random() * 2.2,
-      length: 8 + Math.random() * 12,
-      opacity: 0.25 + Math.random() * 0.35
+    // 2. Night Rain particles (Normalized coordinates for 100% identical density & speed across Web & Mobile viewports)
+    const raindropCount = 38;
+    const raindrops = Array.from({ length: raindropCount }, () => ({
+      u: 0.31 + Math.random() * 0.45,
+      v: 0.02 + Math.random() * 0.50,
+      speed: 0.0048 + Math.random() * 0.0052,
+      lengthRel: 0.026 + Math.random() * 0.030,
+      opacity: 0.32 + Math.random() * 0.42,
+      slant: 0.08 + Math.random() * 0.04
     }));
 
-    // 3. Coffee Steam particles
+    // 3. Coffee Steam particles - Normalized coordinates
     const steamParticles = Array.from({ length: 20 }, (_, i) => ({
-      x: width * 0.24 + (Math.random() - 0.5) * 8,
-      y: height * 0.72 - (i * 2.5),
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: -0.4 - Math.random() * 0.35,
-      size: 2 + Math.random() * 3,
+      u: 0.24,
+      v: 0.72 - (i * 0.006),
+      vxRel: (Math.random() - 0.5) * 0.0006,
+      vyRel: -0.0012 - Math.random() * 0.0010,
+      sizeRel: 0.004 + Math.random() * 0.005,
       alpha: 0.4,
       life: Math.random() * 100,
       maxLife: 80 + Math.random() * 50
@@ -295,42 +308,58 @@ function initLofiWorkspace() {
       // 1. Distant Birds (Gliding across window sky in Day & Sunset)
       if (!isNight) {
         ctx.fillStyle = isSunset ? 'rgba(55, 30, 60, 0.75)' : 'rgba(70, 95, 130, 0.65)';
+        const baseScale = width / 480;
         birds.forEach(b => {
-          b.x -= b.speed;
+          b.u -= b.speed;
           b.wingPhase += 0.08;
 
-          if (b.x < width * 0.33) {
-            b.x = width * 0.78;
-            b.y = height * (0.08 + Math.random() * 0.18);
+          if (b.u < 0.30) {
+            b.u = 0.78;
+            b.v = 0.08 + Math.random() * 0.18;
           }
 
-          const wingY = Math.sin(b.wingPhase) * 2.5 * b.scale;
+          const bx = b.u * width;
+          const by = b.v * height;
+          const sc = b.scale * baseScale;
+          const wingY = Math.sin(b.wingPhase) * 2.5 * sc;
+
           ctx.beginPath();
-          ctx.moveTo(b.x, b.y);
-          ctx.quadraticCurveTo(b.x - 3 * b.scale, b.y - 3 * b.scale + wingY, b.x - 6 * b.scale, b.y + wingY);
-          ctx.quadraticCurveTo(b.x - 3 * b.scale, b.y - 1 * b.scale, b.x, b.y);
-          ctx.quadraticCurveTo(b.x + 3 * b.scale, b.y - 3 * b.scale + wingY, b.x + 6 * b.scale, b.y + wingY);
-          ctx.quadraticCurveTo(b.x + 3 * b.scale, b.y - 1 * b.scale, b.x, b.y);
+          ctx.moveTo(bx, by);
+          ctx.quadraticCurveTo(bx - 3 * sc, by - 3 * sc + wingY, bx - 6 * sc, by + wingY);
+          ctx.quadraticCurveTo(bx - 3 * sc, by - 1 * sc, bx, by);
+          ctx.quadraticCurveTo(bx + 3 * sc, by - 3 * sc + wingY, bx + 6 * sc, by + wingY);
+          ctx.quadraticCurveTo(bx + 3 * sc, by - 1 * sc, bx, by);
           ctx.fill();
         });
       }
 
-      // 2. Window Rain (ONLY in Night Mode)
+      // 2. Window Rain (ONLY in Night Mode) - Crisp, synchronized raindrops on both Web & Mobile
       if (isNight) {
-        ctx.lineWidth = 1;
+        ctx.lineWidth = Math.max(1.15, width * 0.0026);
+        ctx.lineCap = 'round';
+
         raindrops.forEach(drop => {
+          const startX = drop.u * width;
+          const startY = drop.v * height;
+          const dropLen = drop.lengthRel * height;
+          const endX = startX - dropLen * drop.slant;
+          const endY = startY + dropLen;
+
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(180, 215, 255, ${drop.opacity})`;
-          ctx.moveTo(drop.x, drop.y);
-          ctx.lineTo(drop.x - 1.2, drop.y + drop.length);
+          ctx.strokeStyle = `rgba(185, 222, 255, ${drop.opacity})`;
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
           ctx.stroke();
 
-          drop.y += drop.speed;
-          drop.x -= 0.3;
+          drop.v += drop.speed;
+          drop.u -= drop.speed * drop.slant;
 
-          if (drop.y > height * 0.52 || drop.x < width * 0.3) {
-            drop.y = height * 0.04;
-            drop.x = width * 0.32 + Math.random() * (width * 0.44);
+          if (drop.v > 0.52 || drop.u < 0.28) {
+            drop.v = 0.02 + Math.random() * 0.04;
+            drop.u = 0.31 + Math.random() * 0.45;
+            drop.speed = 0.0048 + Math.random() * 0.0052;
+            drop.lengthRel = 0.026 + Math.random() * 0.030;
+            drop.opacity = 0.32 + Math.random() * 0.42;
           }
         });
       }
@@ -339,28 +368,30 @@ function initLofiWorkspace() {
       const cursorBlink = Math.floor(tick / 35) % 2 === 0;
       if (cursorBlink) {
         ctx.fillStyle = '#38bdf8';
-        ctx.fillRect(width * 0.28, height * 0.525, 2, 7);
+        ctx.fillRect(width * 0.28, height * 0.525, Math.max(1.5, width * 0.0045), Math.max(5, height * 0.015));
       }
 
       // 4. Coffee Steam
       steamParticles.forEach(p => {
         p.life++;
-        p.x += p.vx + Math.sin(p.life * 0.06) * 0.25;
-        p.y += p.vy;
-        p.size += 0.04;
+        p.u += p.vxRel + Math.sin(p.life * 0.06) * 0.0006;
+        p.v += p.vyRel;
         const maxA = isNight ? 0.38 : (isSunset ? 0.28 : 0.2);
         p.alpha = Math.max(0, maxA * (1 - p.life / p.maxLife));
 
+        const px = p.u * width;
+        const py = p.v * height;
+        const pSize = Math.max(1.5, p.sizeRel * width + p.life * 0.03);
+
         ctx.fillStyle = isSunset ? `rgba(255, 235, 210, ${p.alpha})` : `rgba(245, 245, 245, ${p.alpha})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(px, py, pSize, 0, Math.PI * 2);
         ctx.fill();
 
         if (p.life >= p.maxLife) {
-          p.x = width * 0.24 + (Math.random() - 0.5) * 8;
-          p.y = height * 0.72;
+          p.u = 0.24 + (Math.random() - 0.5) * 0.015;
+          p.v = 0.72;
           p.life = 0;
-          p.size = 2 + Math.random() * 3;
           p.alpha = maxA;
         }
       });
@@ -809,9 +840,8 @@ function initWindowRainEngine() {
 
     function loop() {
       const currentStyle = localStorage.getItem('parmeet_about_style') || 'real';
-      const isMobile = window.innerWidth <= 767;
-      // ONLY run when in Lofi Anime mode on desktop / web view
-      if (currentStyle !== 'lofi' || isMobile) {
+      // ONLY run when in Lofi Anime mode
+      if (currentStyle !== 'lofi') {
         ctx.clearRect(0, 0, width, height);
         animId = requestAnimationFrame(loop);
         return;

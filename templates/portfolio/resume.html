@@ -31,28 +31,28 @@
         </p>
       </div>
 
-      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-lg">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+        <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-sm" style="font-size: 0.82rem; padding: 0.42rem 0.95rem;">
           <i class="bi bi-download"></i>
           <span>Download Resume PDF</span>
         </a>
-        <button onclick="window.print()" class="btn-modern btn-secondary-outline btn-lg" title="Print Resume">
-          <i class="bi bi-printer"></i>
-          <span>Print</span>
-        </button>
       </div>
     </div>
   </section>
 
-  <!-- Embedded Nested PDF Viewer (Exact Aspect Ratio, No Black Void, No Scroll) -->
+  <!-- Embedded Nested PDF Viewer (Retina PDF.js Canvas for Mobile & Desktop) -->
   {% if resume_doc and resume_doc.file %}
     <section class="mb-4" aria-label="PDF Document Viewer">
-      <div class="resume-iframe-container">
-        <iframe 
-          src="{{ resume_doc.file.url }}#toolbar=0&navpanes=0&scrollbar=0&view=Fit" 
-          class="resume-iframe-exact"
-          title="Parmeet Singh Resume PDF">
-        </iframe>
+      <div class="resume-iframe-container" id="resumeViewerContainer">
+        <!-- Canvas for Crisp Mobile & Desktop PDF Rendering via PDF.js -->
+        <canvas id="resumePdfCanvas" class="resume-pdf-canvas" aria-label="Resume Document Preview"></canvas>
+        <div id="resumePdfFallback" class="resume-pdf-fallback" style="display:none;">
+          <iframe 
+            src="{{ resume_doc.file.url }}#toolbar=0&navpanes=0&scrollbar=0&view=Fit" 
+            class="resume-iframe-exact"
+            title="Parmeet Singh Resume PDF">
+          </iframe>
+        </div>
       </div>
     </section>
   {% endif %}
@@ -253,4 +253,67 @@
   </section>
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('resumePdfCanvas');
+    const fallback = document.getElementById('resumePdfFallback');
+    const pdfUrl = "{{ resume_doc.file.url|default:'' }}";
+    if (!canvas || !pdfUrl) return;
+
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      
+      let renderTask = null;
+      function renderPage() {
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+          pdf.getPage(1).then(function(page) {
+            const container = canvas.parentElement;
+            const containerWidth = container.clientWidth || 360;
+            const unscaledViewport = page.getViewport({ scale: 1.0 });
+            const scale = containerWidth / unscaledViewport.width;
+            const viewport = page.getViewport({ scale: scale });
+            const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.height = Math.floor(viewport.height * dpr);
+            canvas.style.width = '100%';
+            canvas.style.height = 'auto';
+
+            const ctx = canvas.getContext('2d');
+            const renderContext = {
+              canvasContext: ctx,
+              viewport: viewport,
+              transform: [dpr, 0, 0, dpr, 0, 0]
+            };
+            if (renderTask) {
+              renderTask.cancel();
+            }
+            renderTask = page.render(renderContext);
+          }).catch(function(err) {
+            if (err && err.name !== 'RenderingCancelledException') {
+              if (fallback) fallback.style.display = 'block';
+              canvas.style.display = 'none';
+            }
+          });
+        }).catch(function() {
+          if (fallback) fallback.style.display = 'block';
+          canvas.style.display = 'none';
+        });
+      }
+
+      renderPage();
+      let resizeTimer = null;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(renderPage, 150);
+      });
+    } else {
+      if (fallback) fallback.style.display = 'block';
+      canvas.style.display = 'none';
+    }
+  });
+</script>
 {% endblock %}
