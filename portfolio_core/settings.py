@@ -149,10 +149,16 @@ ENABLE_LAB = True
 
 # Email Configuration (for contact form dispatch)
 EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'parmeetssms@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Portfolio Contact <parmeetssms@gmail.com>')
+EMAIL_HOST = os.environ.get('EMAIL_HOST') or 'smtp.gmail.com'
+
+try:
+    raw_port = os.environ.get('EMAIL_PORT', '587')
+    EMAIL_PORT = int(raw_port) if raw_port and str(raw_port).strip().isdigit() else 587
+except Exception:
+    EMAIL_PORT = 587
+
+EMAIL_USE_TLS = (os.environ.get('EMAIL_USE_TLS') or 'True').lower() in ('true', '1')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') or 'parmeetssms@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') or ''
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL') or 'Portfolio Contact <parmeetssms@gmail.com>'
 
