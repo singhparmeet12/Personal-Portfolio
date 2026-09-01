@@ -168,6 +168,30 @@ function initLofiWorkspace() {
     applySceneMode(mode);
   };
 
+  // Synchronized image & atmospheric animation reveal (Loads image + effects together at exact same instant)
+  const bgDay = document.getElementById('lofiBgDay');
+  const bgSunset = document.getElementById('lofiBgSunset');
+  const bgNight = document.getElementById('lofiBgNight');
+  const targetImg = currentSceneMode === 'night' ? bgNight : (currentSceneMode === 'sunset' ? bgSunset : bgDay);
+
+  let isSceneRevealed = false;
+  function revealHeroWorkspace() {
+    if (isSceneRevealed) return;
+    isSceneRevealed = true;
+    if (card) card.classList.add('is-loaded');
+    if (tiltLayer) tiltLayer.classList.add('is-loaded');
+  }
+
+  if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
+    revealHeroWorkspace();
+  } else if (targetImg) {
+    targetImg.addEventListener('load', revealHeroWorkspace, { once: true });
+    targetImg.addEventListener('error', revealHeroWorkspace, { once: true });
+    setTimeout(revealHeroWorkspace, 250);
+  } else {
+    revealHeroWorkspace();
+  }
+
   // Initial render with time-based mode
   applySceneMode(currentSceneMode);
 

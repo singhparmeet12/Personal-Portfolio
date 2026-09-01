@@ -954,7 +954,7 @@ html[data-theme="dark"] .theme-toggle-btn .icon-moon {
   box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6), 0 0 50px -5px rgba(37, 99, 235, 0.35);
 }
 
-/* Isolated 3D Tilt Layer (Only artwork and canvas tilt, UI stays perfectly flat) */
+/* Isolated 3D Tilt Layer (Synchronized image + animation reveal) */
 .lofi-tilt-layer {
   position: absolute;
   top: 0;
@@ -962,8 +962,14 @@ html[data-theme="dark"] .theme-toggle-btn .icon-moon {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
+  transition: transform 0.15s ease-out, opacity 0.35s ease-in;
   pointer-events: none;
+  opacity: 0;
+}
+
+.lofi-card-wrap.is-loaded .lofi-tilt-layer,
+.lofi-tilt-layer.is-loaded {
+  opacity: 1;
 }
 
 /* Day, Sunset & Night Base Artworks (Smooth 1.2s Crossfade) */

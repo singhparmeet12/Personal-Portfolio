@@ -3,6 +3,13 @@
 
 {% block title %}Personal Portfolio{% endblock %}
 
+{% block extra_head %}
+  <!-- Preload Critical Hero Studio Workspace Visuals for Instant Synchronized Rendering -->
+  <link rel="preload" as="image" href="{% static 'img/lofi_workspace_day.jpg' %}" fetchpriority="high">
+  <link rel="preload" as="image" href="{% static 'img/lofi_workspace_sunset.jpg' %}">
+  <link rel="preload" as="image" href="{% static 'img/lofi_workspace_night.jpg' %}">
+{% endblock %}
+
 {% block content %}
 <!-- ==========================================================================
      HERO SECTION (ELEGANT, CLEAN PERSONAL DEVELOPER SHOWCASE)
