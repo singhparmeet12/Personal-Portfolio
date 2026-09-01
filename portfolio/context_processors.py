@@ -4,10 +4,18 @@ from .models import Profile, Resume, ProjectCategory, Service
 
 
 def portfolio_globals(request):
-    """Context processor providing site-wide global portfolio variables."""
-    profile = Profile.objects.first()
+    """Context processor providing site-wide global portfolio variables with zero-crash fallbacks."""
+    profile = None
+    active_resume = None
+    categories = []
+    featured_services = []
+
+    try:
+        profile = Profile.objects.first()
+    except Exception:
+        profile = None
+
     if not profile:
-        # Graceful fallback before DB is seeded
         profile = Profile(
             name="Parmeet Singh",
             headline="Building digital products, working with data, and exploring what's next.",
@@ -18,10 +26,21 @@ def portfolio_globals(request):
             linkedin_url="https://linkedin.com/in/parmeetsingh",
             is_available_for_work=True
         )
-    
-    active_resume = Resume.objects.filter(is_active=True).first()
-    categories = ProjectCategory.objects.all()
-    featured_services = Service.objects.all()[:5]
+
+    try:
+        active_resume = Resume.objects.filter(is_active=True).first()
+    except Exception:
+        active_resume = None
+
+    try:
+        categories = list(ProjectCategory.objects.all())
+    except Exception:
+        categories = []
+
+    try:
+        featured_services = list(Service.objects.all()[:5])
+    except Exception:
+        featured_services = []
 
     return {
         'site_profile': profile,
@@ -31,3 +50,4 @@ def portfolio_globals(request):
         'current_year': timezone.now().year,
         'enable_lab': getattr(settings, 'ENABLE_LAB', True),
     }
+

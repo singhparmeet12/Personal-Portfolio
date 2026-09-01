@@ -74,20 +74,35 @@ WSGI_APPLICATION = 'portfolio_core.wsgi.application'
 
 # Database
 # Uses SQLite for local development, automatically uses PostgreSQL when DATABASE_URL is configured
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 database_url = os.environ.get('DATABASE_URL')
 if database_url:
-    DATABASES['default'] = dj_database_url.config(
-        default=database_url,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Serverless SQLite handling: Vercel root is read-only, copy to /tmp for write/read safety
+    db_file = BASE_DIR / 'db.sqlite3'
+    if 'VERCEL' in os.environ or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+        import shutil
+        tmp_db = Path('/tmp/db.sqlite3')
+        if not tmp_db.exists() and db_file.exists():
+            try:
+                shutil.copyfile(db_file, tmp_db)
+            except Exception:
+                pass
+        if tmp_db.exists():
+            db_file = tmp_db
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': db_file,
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,6 +132,8 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
+WHITENOISE_USE_FINDERS = True
 
 # Media files (User uploads, project images, resume PDF)
 MEDIA_URL = '/media/'

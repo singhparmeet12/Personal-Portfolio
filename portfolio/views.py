@@ -26,12 +26,19 @@ from .forms import ContactForm
 
 def home_view(request):
     """Homepage: Hero with interactive visual, selected work, exploration snapshot, freelance preview, about teaser."""
-    featured_projects = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:4]
-    # Fallback to recent projects if none marked featured
-    if not featured_projects.exists():
-        featured_projects = Project.objects.all().prefetch_related('technologies', 'category')[:4]
-    
-    services_preview = Service.objects.exclude(slug='web-applications').order_by('display_order')[:3]
+    featured_projects = []
+    services_preview = []
+    try:
+        featured_projects = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:4]
+        if not featured_projects.exists():
+            featured_projects = Project.objects.all().prefetch_related('technologies', 'category')[:4]
+    except Exception:
+        featured_projects = []
+
+    try:
+        services_preview = Service.objects.exclude(slug='web-applications').order_by('display_order')[:3]
+    except Exception:
+        services_preview = []
 
     context = {
         'featured_projects': featured_projects,
@@ -44,12 +51,17 @@ def home_view(request):
 def work_view(request):
     """Work Showcase: Filterable project grid across categories."""
     selected_category_slug = request.GET.get('category', '').strip()
-    categories = ProjectCategory.objects.all()
-    
-    projects_qs = Project.objects.all().prefetch_related('technologies', 'category')
-    if selected_category_slug and selected_category_slug != 'all':
-        projects_qs = projects_qs.filter(category__slug=selected_category_slug)
-        
+    categories = []
+    projects_qs = []
+    try:
+        categories = list(ProjectCategory.objects.all())
+        projects_qs = Project.objects.all().prefetch_related('technologies', 'category')
+        if selected_category_slug and selected_category_slug != 'all':
+            projects_qs = projects_qs.filter(category__slug=selected_category_slug)
+    except Exception:
+        categories = []
+        projects_qs = []
+
     context = {
         'projects': projects_qs,
         'categories': categories,
@@ -61,14 +73,17 @@ def work_view(request):
 
 def project_detail_view(request, slug):
     """Case Study: In-depth project breakdown with metrics, challenges, and architecture."""
-    project = get_object_or_404(
-        Project.objects.prefetch_related('technologies', 'gallery_images', 'category'),
-        slug=slug
-    )
-    prev_project = project.get_prev_project()
-    next_project = project.get_next_project()
-    features_list = project.get_features_list()
-    
+    try:
+        project = get_object_or_404(
+            Project.objects.prefetch_related('technologies', 'gallery_images', 'category'),
+            slug=slug
+        )
+        prev_project = project.get_prev_project()
+        next_project = project.get_next_project()
+        features_list = project.get_features_list()
+    except Exception:
+        raise Http404("Project not found")
+
     context = {
         'project': project,
         'prev_project': prev_project,
@@ -81,10 +96,17 @@ def project_detail_view(request, slug):
 
 def about_view(request):
     """About Page: Bio, education, work experience, skill matrix, certifications, and tech exploration."""
-    skill_categories = SkillCategory.objects.prefetch_related('skills').all()
-    experiences = Experience.objects.all()
-    educations = Education.objects.all()
-    certifications = Certification.objects.all()
+    skill_categories = []
+    experiences = []
+    educations = []
+    certifications = []
+    try:
+        skill_categories = list(SkillCategory.objects.prefetch_related('skills').all())
+        experiences = list(Experience.objects.all())
+        educations = list(Education.objects.all())
+        certifications = list(Certification.objects.all())
+    except Exception:
+        pass
 
     context = {
         'skill_categories': skill_categories,
@@ -98,7 +120,11 @@ def about_view(request):
 
 def services_view(request):
     """Services Page: Freelance web development, landing pages, custom digital solutions, workflow."""
-    services = Service.objects.exclude(slug='web-applications').order_by('display_order')[:3]
+    services = []
+    try:
+        services = list(Service.objects.exclude(slug='web-applications').order_by('display_order')[:3])
+    except Exception:
+        services = []
 
     context = {
         'services': services,
@@ -109,12 +135,21 @@ def services_view(request):
 
 def resume_view(request):
     """Resume Page: Embedded viewer & structured resume representation."""
-    resume_doc = Resume.objects.filter(is_active=True).first()
-    experiences = Experience.objects.all()
-    educations = Education.objects.all()
-    skill_categories = SkillCategory.objects.prefetch_related('skills').all()
-    certifications = Certification.objects.all()
-    projects = Project.objects.all()
+    resume_doc = None
+    experiences = []
+    educations = []
+    skill_categories = []
+    certifications = []
+    projects = []
+    try:
+        resume_doc = Resume.objects.filter(is_active=True).first()
+        experiences = list(Experience.objects.all())
+        educations = list(Education.objects.all())
+        skill_categories = list(SkillCategory.objects.prefetch_related('skills').all())
+        certifications = list(Certification.objects.all())
+        projects = list(Project.objects.all())
+    except Exception:
+        pass
 
     context = {
         'resume_doc': resume_doc,
@@ -126,6 +161,7 @@ def resume_view(request):
         'active_page': 'resume',
     }
     return render(request, 'portfolio/resume.html', context)
+
 
 
 def resume_download_view(request):

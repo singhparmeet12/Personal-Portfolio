@@ -9,6 +9,9 @@ python3 -m pip install -r requirements.txt --break-system-packages
 echo "Collecting static files..."
 python3 manage.py collectstatic --noinput --clear || true
 
+echo "Applying database migrations..."
+python3 manage.py migrate --noinput || true
+
 echo "Ensuring staticfiles output directory exists..."
 mkdir -p staticfiles
 
