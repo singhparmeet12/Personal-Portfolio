@@ -316,10 +316,10 @@
       <div class="stage-outer-controls" id="stageOuterControls">
         <span class="outer-style-label font-mono"><i class="bi bi-palette-fill"></i> STYLE:</span>
         <div class="stage-style-pills" id="stageStylePills">
-          <button type="button" class="style-pill-btn active" data-style-target="real" title="Switch to 3D Cinematic Style (Default)">
+          <button type="button" class="style-pill-btn" data-style-target="real" title="Switch to 3D Cinematic Style">
             <i class="bi bi-camera-reels"></i> <span class="style-name-full">3D Cinematic</span><span class="style-name-short">3D</span>
           </button>
-          <button type="button" class="style-pill-btn" data-style-target="lofi" title="Switch to Lofi Anime Style">
+          <button type="button" class="style-pill-btn active" data-style-target="lofi" title="Switch to Lofi Anime Style (Default)">
             <i class="bi bi-brush"></i> <span class="style-name-full">Lofi Anime</span><span class="style-name-short">Lofi</span>
           </button>
         </div>
@@ -339,10 +339,10 @@
           </div>
         </div>
 
-        <!-- Layered 4K Cinematic Scene Images (11 Scenes Total for Both Styles, 3D Cinematic Default) -->
-        <div class="stage-canvas-frame" data-active-style="real">
-          <!-- Style Set 1: 3D Cinematic (Realistic 3D - DEFAULT ACTIVE) -->
-          <img src="{% static 'img/about_scene_01_real.png' %}?v=20260829_1820" alt="Scene 01 (3D Cinematic)" class="stage-image style-real active" id="stage-img-real-1" data-style="real" data-scene="1">
+        <!-- Layered 4K Cinematic Scene Images (11 Scenes Total for Both Styles, Lofi Anime Default) -->
+        <div class="stage-canvas-frame" data-active-style="lofi">
+          <!-- Style Set 1: 3D Cinematic (Realistic 3D) -->
+          <img src="{% static 'img/about_scene_01_real.png' %}?v=20260829_1820" alt="Scene 01 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-1" data-style="real" data-scene="1">
           <img src="{% static 'img/about_scene_02_real.png' %}?v=20260829_1820" alt="Scene 02 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-2" data-style="real" data-scene="2">
           <img src="{% static 'img/about_scene_03_real.png' %}?v=20260829_1820" alt="Scene 03 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-3" data-style="real" data-scene="3">
           <img src="{% static 'img/about_scene_04_real.png' %}?v=20260829_1820" alt="Scene 04 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-4" data-style="real" data-scene="4">
@@ -354,8 +354,8 @@
           <img src="{% static 'img/about_scene_10_real.png' %}?v=20260829_1820" alt="Scene 10 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-10" data-style="real" data-scene="10">
           <img src="{% static 'img/about_scene_12_real.png' %}?v=20260829_1820" alt="Scene 11 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-11" data-style="real" data-scene="11">
 
-          <!-- Style Set 2: Lofi Anime (Illustrated) -->
-          <img src="{% static 'img/about_scene_01.png' %}?v=20260829_1820" alt="Scene 01 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-1" data-style="lofi" data-scene="1">
+          <!-- Style Set 2: Lofi Anime (Illustrated - DEFAULT ACTIVE) -->
+          <img src="{% static 'img/about_scene_01.png' %}?v=20260829_1820" alt="Scene 01 (Lofi Anime)" class="stage-image style-lofi active" id="stage-img-lofi-1" data-style="lofi" data-scene="1">
           <img src="{% static 'img/about_scene_02.png' %}?v=20260829_1820" alt="Scene 02 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-2" data-style="lofi" data-scene="2">
           <img src="{% static 'img/about_scene_03.png' %}?v=20260829_1820" alt="Scene 03 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-3" data-style="lofi" data-scene="3">
           <img src="{% static 'img/about_scene_04.png' %}?v=20260829_1820" alt="Scene 04 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-4" data-style="lofi" data-scene="4">
@@ -368,7 +368,7 @@
           <img src="{% static 'img/about_scene_12.png' %}?v=20260830_0105" alt="Scene 11 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-11" data-style="lofi" data-scene="11">
 
           <!-- The Living Window: Dynamic Animated Sky & City View (LOFI ANIME ONLY) -->
-          <div class="stage-living-window living-window-hidden" id="stageLivingWindow" aria-hidden="true">
+          <div class="stage-living-window" id="stageLivingWindow" aria-hidden="true">
             <!-- Upper Glass Pane: Sky, Anime Clouds, Birds & Starlight -->
             <div class="window-pane window-pane-upper">
               <!-- Daytime Sky Elements -->

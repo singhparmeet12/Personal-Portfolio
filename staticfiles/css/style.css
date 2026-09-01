@@ -1785,11 +1785,19 @@ html[data-theme="dark"] .theme-toggle-btn .icon-moon {
   font-family: var(--font-mono);
 }
 
+.project-card-image-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  width: 100%;
+}
+
 /* --------------------------------------------------------------------------
    INTERACTIVE STANDING COMPANION AVATAR (A Day in My Life - Parmeet Mascot)
    -------------------------------------------------------------------------- */
 .stage-companion-avatar {
-  display: flex;
+  display: none !important; /* Hidden on Desktop/Web view, enabled only on Mobile */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -3053,6 +3061,185 @@ textarea.form-control {
     line-height: 1.38 !important;
     color: var(--text-secondary) !important;
     margin-bottom: 0 !important;
+  }
+
+  /* ==========================================================================
+     MOBILE RESPONSIVE CASE STUDY & PROJECT DETAIL (GaadiMandi, TourCraze, TradeLab)
+     ========================================================================== */
+  .case-study-hero {
+    padding: 1.25rem 0 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .case-study-hero .hero-title {
+    font-size: clamp(1.45rem, 5.5vw, 1.95rem) !important;
+    line-height: 1.2 !important;
+    margin: 0.5rem 0 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .case-study-hero .lead {
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+  }
+
+  .project-meta-strip {
+    padding: 0.85rem 1rem !important;
+    gap: 0.75rem !important;
+    margin-top: 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .project-meta-strip .meta-strip-item {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .interactive-showcase-container {
+    margin-bottom: 2rem !important;
+    border-radius: var(--radius-md) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .showcase-control-bar {
+    padding: 0.55rem 0.65rem !important;
+    gap: 0.45rem !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .showcase-nav-tabs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.35rem !important;
+    width: 100% !important;
+  }
+
+  .showcase-tab-btn {
+    padding: 0.32rem 0.6rem !important;
+    font-size: 0.68rem !important;
+    gap: 0.3rem !important;
+  }
+
+  .showcase-status-badge {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+  }
+
+  .showcase-auto-btn {
+    font-size: 0.68rem !important;
+    padding: 0.28rem 0.65rem !important;
+  }
+
+  .showcase-caption-bar {
+    padding: 0.85rem !important;
+  }
+
+  .showcase-caption-item {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .project-detail-layout {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    margin-top: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .case-study-main {
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .case-study-block {
+    padding: 1.25rem 1rem !important;
+    border-radius: var(--radius-md) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .case-study-block h3 {
+    font-size: 1.15rem !important;
+    margin-bottom: 0.85rem !important;
+    padding-bottom: 0.65rem !important;
+    word-break: break-word !important;
+  }
+
+  .case-study-block p,
+  .case-study-block li {
+    font-size: 0.85rem !important;
+    line-height: 1.55 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .cs-workflow-grid,
+  .cs-metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cs-workflow-card,
+  .cs-metric-card {
+    padding: 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cs-flow-strip {
+    padding: 0.75rem 0.85rem !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cs-flow-node {
+    font-size: 0.72rem !important;
+    padding: 0.3rem 0.6rem !important;
+  }
+
+  .case-study-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .sidebar-card {
+    padding: 1.25rem 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   /* Resume Page Mobile PDF Preview (Zero Black Space, Zero Scroll Trap) & Compact Grids */
@@ -6638,28 +6825,56 @@ textarea.form-control {
     pointer-events: none !important;
   }
 
-  /* Compact Mobile Cert Chips */
+  /* Compact Mobile Cert Chips (Full-Width Stack to Guarantee Zero Card Overflow) */
   .cert-chips-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.35rem !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.32rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .cert-chip-card {
-    padding: 0.32rem 0.45rem !important;
-    gap: 0.35rem !important;
+    padding: 0.32rem 0.5rem !important;
+    gap: 0.4rem !important;
     border-radius: var(--radius-sm) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .cert-chip-card i {
-    font-size: 0.85rem !important;
+    font-size: 0.88rem !important;
+    flex-shrink: 0;
+  }
+
+  .cert-chip-info {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    gap: 0.3rem !important;
+    line-height: 1.2 !important;
   }
 
   .cert-chip-info strong {
     font-size: 0.65rem !important;
+    white-space: nowrap !important;
+    color: #f8fafc;
   }
 
   .cert-chip-info span {
-    font-size: 0.55rem !important;
+    font-size: 0.56rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    color: #94a3b8;
   }
 
   /* Interactive Standing Companion Avatar on Mobile */

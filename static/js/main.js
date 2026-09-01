@@ -983,7 +983,7 @@ function initAboutWorldExperience() {
     { timecode: '12:30 AM • THANK YOU', lens: 'LENS: 50mm PORTRAIT', label: 'A TOAST TO YOU' }
   ];
 
-  let currentStyle = localStorage.getItem('parmeet_about_style') || 'real';
+  let currentStyle = localStorage.getItem('parmeet_about_style') || 'lofi';
   let currentActiveScene = 1;
   let prevActiveScene = null;
   let prevActiveStyle = currentStyle;
