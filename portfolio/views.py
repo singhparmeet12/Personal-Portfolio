@@ -29,14 +29,15 @@ def home_view(request):
     featured_projects = []
     services_preview = []
     try:
-        featured_projects = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:4]
-        if not featured_projects.exists():
-            featured_projects = Project.objects.all().prefetch_related('technologies', 'category')[:4]
+        qs = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:4]
+        if not qs.exists():
+            qs = Project.objects.all().prefetch_related('technologies', 'category')[:4]
+        featured_projects = list(qs)
     except Exception:
         featured_projects = []
 
     try:
-        services_preview = Service.objects.exclude(slug='web-applications').order_by('display_order')[:3]
+        services_preview = list(Service.objects.exclude(slug='web-applications').order_by('display_order')[:3])
     except Exception:
         services_preview = []
 

@@ -34,8 +34,7 @@ venv.bak/
 !.env.example
 secrets.json
 
-# Django local database (DO NOT commit local SQLite databases containing test passwords)
-*.sqlite3
+# SQLite database journal
 db.sqlite3-journal
 
 # Logs
