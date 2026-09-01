@@ -38,8 +38,7 @@ secrets.json
 *.sqlite3
 db.sqlite3-journal
 
-# Django static files cache
-staticfiles/
+# Logs
 *.log
 
 # IDE & Editor files
