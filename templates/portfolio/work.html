@@ -8,6 +8,14 @@
 <section class="section-padding" aria-label="Projects Portfolio">
   <div class="site-container">
     
+    <!-- Dedicated Page Navigation Breadcrumb -->
+    <div class="page-nav-bar mb-3">
+      <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+        <i class="bi bi-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+    </div>
+
     <!-- Page Header -->
     <div class="section-header">
       <span class="section-subtitle">Portfolio &amp; Case Studies</span>
@@ -17,26 +25,6 @@
       </p>
     </div>
 
-    <!-- Category Filter Tabs -->
-    <div class="filter-tabs" role="tablist" aria-label="Project Category Filters">
-      <button 
-        type="button" 
-        class="filter-btn {% if selected_category_slug == 'all' or not selected_category_slug %}active{% endif %}" 
-        data-filter="all"
-        role="tab">
-        All Projects
-      </button>
-      
-      {% for cat in categories %}
-        <button 
-          type="button" 
-          class="filter-btn {% if selected_category_slug == cat.slug %}active{% endif %}" 
-          data-filter="{{ cat.slug }}"
-          role="tab">
-          {{ cat.name }}
-        </button>
-      {% endfor %}
-    </div>
 
     <!-- Projects Grid -->
     <div class="grid-3" id="projectsGrid">
@@ -57,12 +45,6 @@
           </div>
 
           <div class="project-card-body">
-            <div class="project-card-meta">
-              <span class="badge-category">{{ project.category.name|default:"Web Application" }}</span>
-              <span class="font-mono text-muted" style="font-size: 0.78rem;">
-                {% if project.client_type == 'freelance' %}Client Work{% else %}Full-Stack App{% endif %}
-              </span>
-            </div>
 
             <h2 class="project-card-title" style="font-size: 1.3rem;">
               <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
@@ -94,6 +76,10 @@
                   <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="View Code on GitHub">
                     <i class="bi bi-github"></i>
                   </a>
+                {% elif project.slug == 'gaadimandi' %}
+                  <button type="button" class="btn-modern btn-subtle btn-sm" onclick="openPrivateRepoModal('GaadiMandi')" title="Private Repository Notice">
+                    <i class="bi bi-github"></i>
+                  </button>
                 {% endif %}
               </div>
             </div>

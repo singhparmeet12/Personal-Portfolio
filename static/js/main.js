@@ -258,16 +258,6 @@ function initLofiWorkspace() {
       maxLife: 80 + Math.random() * 50
     }));
 
-    // 4. Ambient dust / sunbeam particles
-    const dustParticles = Array.from({ length: 24 }, () => ({
-      x: width * 0.12 + Math.random() * (width * 0.58),
-      y: height * 0.25 + Math.random() * (height * 0.55),
-      vx: (Math.random() - 0.5) * 0.2,
-      vy: -0.15 - Math.random() * 0.25,
-      size: 1 + Math.random() * 1.8,
-      alpha: 0.15 + Math.random() * 0.45
-    }));
-
     let animFrame = null;
     let tick = 0;
 
@@ -348,26 +338,6 @@ function initLofiWorkspace() {
           p.life = 0;
           p.size = 2 + Math.random() * 3;
           p.alpha = maxA;
-        }
-      });
-
-      // 5. Sunbeams & Ambient Dust Motes
-      dustParticles.forEach(d => {
-        d.x += d.vx;
-        d.y += d.vy;
-
-        let particleColor = `rgba(255, 248, 220, ${d.alpha * 0.75})`;
-        if (isNight) particleColor = `rgba(242, 182, 109, ${d.alpha})`;
-        else if (isSunset) particleColor = `rgba(251, 146, 60, ${d.alpha * 0.85})`;
-
-        ctx.fillStyle = particleColor;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        if (d.y < height * 0.2 || d.x < width * 0.08 || d.x > width * 0.7) {
-          d.y = height * 0.8;
-          d.x = width * 0.12 + Math.random() * (width * 0.5);
         }
       });
 
@@ -585,16 +555,30 @@ function initMobileNav() {
   const drawer = document.querySelector('.mobile-drawer');
   if (!toggleBtn || !drawer) return;
 
+  const icon = toggleBtn.querySelector('i');
+
   toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = drawer.classList.toggle('open');
     toggleBtn.setAttribute('aria-expanded', isOpen);
+    if (icon) {
+      icon.className = isOpen ? 'bi bi-x-lg fs-4' : 'bi bi-list fs-4';
+    }
   });
 
   document.addEventListener('click', (e) => {
     if (drawer.classList.contains('open') && !drawer.contains(e.target) && !toggleBtn.contains(e.target)) {
       drawer.classList.remove('open');
       toggleBtn.setAttribute('aria-expanded', 'false');
+      if (icon) icon.className = 'bi bi-list fs-4';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) {
+      drawer.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      if (icon) icon.className = 'bi bi-list fs-4';
     }
   });
 
@@ -603,6 +587,7 @@ function initMobileNav() {
     link.addEventListener('click', () => {
       drawer.classList.remove('open');
       toggleBtn.setAttribute('aria-expanded', 'false');
+      if (icon) icon.className = 'bi bi-list fs-4';
     });
   });
 }
@@ -747,6 +732,174 @@ function initInteractiveShowcase() {
 }
 
 /* --------------------------------------------------------------------------
+   8B. COZY RAIN ON THE GLASS ENGINE (Lofi Anime Diorama Window)
+   -------------------------------------------------------------------------- */
+function initWindowRainEngine() {
+  const canvasUpper = document.getElementById('windowRainUpper');
+  const canvasLower = document.getElementById('windowRainLower');
+  if (!canvasUpper && !canvasLower) return null;
+
+  function setupPaneRain(canvas, isUpper) {
+    if (!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas.offsetWidth || 300;
+      height = canvas.offsetHeight || 300;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // 1. Background fast rain streaks
+    const streakCount = isUpper ? 36 : 30;
+    const streaks = Array.from({ length: streakCount }, () => ({
+      x: width * 0.75 + Math.random() * (width * 0.24),
+      y: Math.random() * height,
+      len: 16 + Math.random() * 24,
+      speed: 7 + Math.random() * 6,
+      alpha: 0.45 + Math.random() * 0.45
+    }));
+
+    // 2. Condensation beads and dripping droplets
+    const dropCount = isUpper ? 18 : 15;
+    const drops = Array.from({ length: dropCount }, () => ({
+      x: width * 0.76 + Math.random() * (width * 0.22),
+      y: Math.random() * height,
+      radius: 1.4 + Math.random() * 2.0,
+      speed: 0,
+      targetDistance: 0,
+      traveled: 0,
+      state: 'idle', // 'idle' | 'trickling'
+      idleTimer: Math.floor(Math.random() * 120),
+      trail: []
+    }));
+
+    let animId = null;
+
+    function loop() {
+      const currentStyle = localStorage.getItem('parmeet_about_style') || 'real';
+      const isMobile = window.innerWidth <= 767;
+      // ONLY run when in Lofi Anime mode on desktop / web view
+      if (currentStyle !== 'lofi' || isMobile) {
+        ctx.clearRect(0, 0, width, height);
+        animId = requestAnimationFrame(loop);
+        return;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Check current scene for amber lighting
+      const stageFrame = document.querySelector('.stage-canvas-frame');
+      const isNightScene = stageFrame && stageFrame.classList.contains('ambient-night');
+
+      // 1. Draw fast angled rain streaks
+      streaks.forEach(s => {
+        s.y += s.speed;
+        s.x -= s.speed * 0.12; // Slight natural vertical falling rain
+
+        if (s.y > height + s.len) {
+          s.y = -s.len;
+          s.x = width * 0.75 + Math.random() * (width * 0.24);
+        }
+
+        const isNearLamp = isNightScene && s.x > width * 0.86;
+        ctx.strokeStyle = isNearLamp 
+          ? `rgba(254, 215, 170, ${s.alpha * 0.85})`
+          : `rgba(220, 240, 255, ${s.alpha * 0.8})`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.len * 0.12, s.y + s.len);
+        ctx.stroke();
+      });
+
+      // 2. Dripping droplets with wet trails & tear beads
+      drops.forEach(d => {
+        if (d.state === 'idle') {
+          d.idleTimer--;
+          if (d.idleTimer <= 0) {
+            d.state = 'trickling';
+            d.speed = 1.3 + Math.random() * 1.8;
+            d.targetDistance = 35 + Math.random() * 95;
+            d.traveled = 0;
+          }
+        } else if (d.state === 'trickling') {
+          d.y += d.speed;
+          d.x += (Math.sin(d.y * 0.1) * 0.3); // Subtle surface tension wobble
+          d.traveled += d.speed;
+
+          // Record trail point
+          d.trail.push({ x: d.x, y: d.y, alpha: 0.5 });
+          if (d.trail.length > 24) d.trail.shift();
+
+          if (d.traveled >= d.targetDistance) {
+            d.state = 'idle';
+            d.idleTimer = 70 + Math.floor(Math.random() * 180);
+          }
+
+          if (d.y > height + 10) {
+            d.y = -5;
+            d.x = width * 0.76 + Math.random() * (width * 0.22);
+            d.radius = 1.4 + Math.random() * 2.0;
+            d.state = 'idle';
+            d.idleTimer = 40 + Math.floor(Math.random() * 120);
+            d.trail = [];
+          }
+        }
+
+        // Draw fading wet trail
+        if (d.trail.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(d.trail[0].x, d.trail[0].y);
+          for (let i = 1; i < d.trail.length; i++) {
+            ctx.lineTo(d.trail[i].x, d.trail[i].y);
+          }
+          const isNearLamp = isNightScene && d.x > width * 0.86;
+          ctx.strokeStyle = isNearLamp 
+            ? 'rgba(254, 215, 170, 0.38)'
+            : 'rgba(220, 240, 255, 0.35)';
+          ctx.lineWidth = d.radius * 0.7;
+          ctx.stroke();
+
+          // Fade trail points
+          d.trail.forEach(p => p.alpha *= 0.96);
+        }
+
+        // Draw droplet bead
+        const isNearLamp = isNightScene && d.x > width * 0.86;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isNearLamp 
+          ? 'rgba(254, 240, 215, 0.92)' 
+          : 'rgba(240, 248, 255, 0.92)';
+        ctx.fill();
+
+        // Droplet specular highlight
+        ctx.beginPath();
+        ctx.arc(d.x - d.radius * 0.35, d.y - d.radius * 0.35, d.radius * 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+      });
+
+      animId = requestAnimationFrame(loop);
+    }
+
+    loop();
+    return () => cancelAnimationFrame(animId);
+  }
+
+  setupPaneRain(canvasUpper, true);
+  setupPaneRain(canvasLower, false);
+}
+
+/* --------------------------------------------------------------------------
    8. PARMEET SINGH — SINGLE CONTINUOUS CINEMATIC SCROLLYTELLING ENGINE
    -------------------------------------------------------------------------- */
 function initAboutWorldExperience() {
@@ -786,7 +939,103 @@ function initAboutWorldExperience() {
     stylePills.forEach(pill => {
       pill.classList.toggle('active', pill.getAttribute('data-style-target') === currentStyle);
     });
+
+    const stageFrame = document.querySelector('.stage-canvas-frame');
+    if (stageFrame) {
+      stageFrame.setAttribute('data-active-style', currentStyle);
+    }
+
+    const livingWindow = document.getElementById('stageLivingWindow');
+    if (livingWindow) {
+      if (currentStyle === 'lofi') {
+        livingWindow.classList.remove('living-window-hidden');
+      } else {
+        livingWindow.classList.add('living-window-hidden');
+      }
+    }
+
+    update3DWindowExterior(currentActiveScene);
   }
+
+  function update3DWindowExterior(sceneNum) {
+    const windowExterior = document.getElementById('stageWindowExterior');
+    if (!windowExterior) return;
+
+    if (currentStyle !== 'real') {
+      windowExterior.classList.add('exterior-hidden');
+      return;
+    }
+
+    windowExterior.classList.remove('exterior-hidden');
+    windowExterior.classList.remove('exterior-state-day', 'exterior-state-sunset', 'exterior-state-night');
+
+    if (sceneNum >= 9) {
+      // Scenes 09-11: Night (Luminous Moon Halo, Twinkling Stars, Skyscraper Lights, Aviation Beacons)
+      windowExterior.classList.add('exterior-state-night');
+    } else if (sceneNum === 8) {
+      // Scene 08: Sunset (Volumetric Sunset God-Rays, Twilight Hue, Warm Horizon)
+      windowExterior.classList.add('exterior-state-sunset');
+    } else {
+      // Scenes 01-07: Daytime (Daylight Sky Drift, Soaring Birds, Tree Foliage Rustle, Tower Glints)
+      windowExterior.classList.add('exterior-state-day');
+    }
+  }
+
+  // ========================================================================
+  // WHISPERING THERMAL COFFEE STEAM PER-SCENE ACCURATE COORDINATE MANIFEST
+  // Steam only activates on photos that actually contain a coffee mug:
+  // Scene 1: In hand sipping coffee (Parmeet's mouth)
+  // Scene 2 & 3: Table mug (left, next to speaker)
+  // Scene 4, 5, 6: No mug (water bottle/glass) -> Completely hidden!
+  // Scene 7: Table mug (coaster)
+  // Scene 8: Table mug (coaster) + In-hand warm mug
+  // Scene 9 & 10: Table mug (coaster)
+  // Scene 11: Table mug (coaster) + In-hand cheers mug
+  // ========================================================================
+  const coffeeSteamCoordinates = {
+    1: { primary: { left: '52.5%', top: '46.0%' }, secondary: null },
+    2: { primary: { left: '14.0%', top: '54.2%' }, secondary: null },
+    3: { primary: { left: '14.0%', top: '54.2%' }, secondary: null },
+    4: { primary: null, secondary: null },
+    5: { primary: null, secondary: null },
+    6: { primary: null, secondary: null },
+    7: { primary: { left: '17.2%', top: '55.1%' }, secondary: null },
+    8: { primary: { left: '17.2%', top: '55.1%' }, secondary: { left: '55.0%', top: '51.6%' } },
+    9: { primary: { left: '17.2%', top: '55.1%' }, secondary: null },
+    10: { primary: { left: '17.2%', top: '55.1%' }, secondary: null },
+    11: { primary: { left: '17.2%', top: '55.1%' }, secondary: { left: '50.9%', top: '49.0%' } },
+  };
+
+  function updateCoffeeSteamPosition(sceneNum) {
+    const steamPrimary = document.getElementById('coffeeSteamPrimary');
+    const steamSecondary = document.getElementById('coffeeSteamSecondary');
+    if (!steamPrimary && !steamSecondary) return;
+
+    const config = coffeeSteamCoordinates[sceneNum];
+    if (!config) {
+      if (steamPrimary) steamPrimary.classList.add('steam-hidden');
+      if (steamSecondary) steamSecondary.classList.add('steam-hidden');
+      return;
+    }
+
+    if (config.primary && steamPrimary) {
+      steamPrimary.style.left = config.primary.left;
+      steamPrimary.style.top = config.primary.top;
+      steamPrimary.classList.remove('steam-hidden');
+    } else if (steamPrimary) {
+      steamPrimary.classList.add('steam-hidden');
+    }
+
+    if (config.secondary && steamSecondary) {
+      steamSecondary.style.left = config.secondary.left;
+      steamSecondary.style.top = config.secondary.top;
+      steamSecondary.classList.remove('steam-hidden');
+    } else if (steamSecondary) {
+      steamSecondary.classList.add('steam-hidden');
+    }
+  }
+
+
 
   function setActiveScene(sceneNum, forceStyleSwitch = false) {
     if (sceneNum < 1 || sceneNum > 11) return;
@@ -856,9 +1105,34 @@ function initAboutWorldExperience() {
         stageFrame.classList.add('ambient-day');
       }
     }
+
+    // Update The Living Window Dynamic Sky & City State (Lofi Anime only)
+    const livingWindow = document.getElementById('stageLivingWindow');
+    if (livingWindow) {
+      if (currentStyle !== 'lofi') {
+        livingWindow.classList.add('living-window-hidden');
+      } else {
+        livingWindow.classList.remove('living-window-hidden');
+        livingWindow.classList.remove('window-state-day', 'window-state-sunset', 'window-state-night');
+        if (sceneNum >= 9) {
+          livingWindow.classList.add('window-state-night');
+        } else if (sceneNum === 8) {
+          livingWindow.classList.add('window-state-sunset');
+        } else {
+          livingWindow.classList.add('window-state-day');
+        }
+      }
+    }
+
     if (window.setAtmosphereScene) {
       window.setAtmosphereScene(sceneNum);
     }
+
+    // Dynamically update Whispering Thermal Coffee Steam position and visibility
+    updateCoffeeSteamPosition(sceneNum);
+
+    // Dynamically update 3D Living Window Exterior (Day, Sunset Volumetric Rays, and Night Star/Moon/City)
+    update3DWindowExterior(sceneNum);
   }
 
   // Style toggle event listeners
@@ -879,11 +1153,38 @@ function initAboutWorldExperience() {
   updateStylePillUI();
   setActiveScene(1, true);
 
+  // Synchronized Scene 1 Photo & Cinemagraph Overlay Gate:
+  // Ensures animations and overlays never render ahead of the photograph on a black screen
+  const stageFrame = document.querySelector('.stage-canvas-frame');
+  function markStageAsReady() {
+    if (stageFrame) {
+      stageFrame.classList.add('stage-ready');
+    }
+  }
+
+  const initialImg = currentStyle === 'real'
+    ? document.getElementById('stage-img-real-1')
+    : document.getElementById('stage-img-lofi-1');
+
+  if (initialImg && initialImg.complete && initialImg.naturalWidth > 0) {
+    markStageAsReady();
+  } else if (initialImg) {
+    initialImg.addEventListener('load', markStageAsReady, { once: true });
+    initialImg.addEventListener('error', markStageAsReady, { once: true });
+    // Safety fallback: reveal after 1.2s max if load event is deferred
+    setTimeout(markStageAsReady, 1200);
+  } else {
+    markStageAsReady();
+  }
+
   // Sticky Visual Stage is locked to 100% stable stationary coordinates
   const visualStage = document.getElementById('stickyVisualStage');
   if (visualStage) {
     visualStage.style.transform = 'none';
   }
+
+  // Initialize Cozy Rain on Glass Engine (Lofi Anime Diorama Window)
+  initWindowRainEngine();
 
   // ========================================================================
   // ATMOSPHERIC BREEZE & DUST MOTE PARTICLE CANVAS ENGINE
@@ -1041,6 +1342,16 @@ function initAboutWorldExperience() {
         }
       }
 
+      // Smoothly hide onboarding scroll prompt when user initiates scrolling
+      const storyScrollHint = document.getElementById('storyScrollHint');
+      if (storyScrollHint) {
+        if (window.scrollY > 40) {
+          storyScrollHint.classList.add('hint-hidden');
+        } else {
+          storyScrollHint.classList.remove('hint-hidden');
+        }
+      }
+
       scrollTicking = false;
     });
   }
@@ -1077,7 +1388,7 @@ function initAboutWorldExperience() {
 }
 
 // Global helper for opening Certificate Lightbox
-window.openCertLightbox = function(title, issuer, year, code, url) {
+window.openCertLightbox = function(title, issuer, year, code, pdfUrl, onlineUrl) {
   const modalBackdrop = document.getElementById('certModalBackdrop');
   const modalCertCode = document.getElementById('modalCertCode');
   const modalCertYear = document.getElementById('modalCertYear');
@@ -1085,6 +1396,7 @@ window.openCertLightbox = function(title, issuer, year, code, url) {
   const modalCertIssuer = document.getElementById('modalCertIssuer');
   const modalCertBodyTitle = document.getElementById('modalCertBodyTitle');
   const modalCertBodyIssuer = document.getElementById('modalCertBodyIssuer');
+  const modalCertPdfBtn = document.getElementById('modalCertPdfBtn');
   const modalCertUrlBtn = document.getElementById('modalCertUrlBtn');
 
   if (modalCertCode) modalCertCode.textContent = code || 'CERT';
@@ -1093,9 +1405,19 @@ window.openCertLightbox = function(title, issuer, year, code, url) {
   if (modalCertIssuer) modalCertIssuer.textContent = `Issued by ${issuer}`;
   if (modalCertBodyTitle) modalCertBodyTitle.textContent = title;
   if (modalCertBodyIssuer) modalCertBodyIssuer.textContent = `${issuer} • ${year}`;
+  
+  if (modalCertPdfBtn) {
+    if (pdfUrl && pdfUrl !== '#' && pdfUrl !== 'None' && pdfUrl.length > 3) {
+      modalCertPdfBtn.href = pdfUrl;
+      modalCertPdfBtn.style.display = 'inline-flex';
+    } else {
+      modalCertPdfBtn.style.display = 'none';
+    }
+  }
+
   if (modalCertUrlBtn) {
-    if (url && url !== '#' && url !== 'None' && url.length > 5) {
-      modalCertUrlBtn.href = url;
+    if (onlineUrl && onlineUrl !== '#' && onlineUrl !== 'None' && onlineUrl.length > 5) {
+      modalCertUrlBtn.href = onlineUrl;
       modalCertUrlBtn.style.display = 'inline-flex';
     } else {
       modalCertUrlBtn.style.display = 'none';
@@ -1121,4 +1443,226 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Global helpers for Proprietary Private Repository Modal
+window.openPrivateRepoModal = function(projectName) {
+  const modal = document.getElementById('privateRepoModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('open'), 10);
+  }
+};
+
+window.closePrivateRepoModal = function() {
+  const modal = document.getElementById('privateRepoModal');
+  if (modal) {
+    modal.classList.remove('open');
+    setTimeout(() => { modal.style.display = 'none'; }, 250);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('privateRepoModal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) window.closePrivateRepoModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        window.closePrivateRepoModal();
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // GENERATIVE AI & PROMPT ENGINEERING LAB MODAL + BEFORE/AFTER SLIDER
+  // ------------------------------------------------------------------------
+  const aiModal = document.getElementById('aiLabModal');
+  if (!aiModal) return;
+
+  const openBtns = document.querySelectorAll('.ai-lab-open-btn, [data-ai-modal-trigger], #openAiLabModalBtn');
+  const closeBtn = document.getElementById('closeAiLabModalBtn');
+  const tabBtns = aiModal.querySelectorAll('.ai-lab-tab-btn');
+  const tabPanels = aiModal.querySelectorAll('.ai-lab-tab-panel');
+
+  function openAiModal() {
+    aiModal.classList.add('active');
+    aiModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    initComparisonSlider();
+  }
+
+  function closeAiModal() {
+    aiModal.classList.remove('active');
+    aiModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openAiModal();
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeAiModal);
+  }
+
+  aiModal.addEventListener('click', (e) => {
+    if (e.target === aiModal) {
+      closeAiModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && aiModal.classList.contains('active')) {
+      closeAiModal();
+    }
+  });
+
+  // Tab switching
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tab');
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const activePanel = aiModal.querySelector(`#aiTab${targetTab.charAt(0).toUpperCase() + targetTab.slice(1)}`);
+      if (activePanel) {
+        activePanel.classList.add('active');
+      }
+
+      if (targetTab === 'comparison') {
+        setTimeout(initComparisonSlider, 50);
+      }
+    });
+  });
+
+  // Prompt Copy Buttons
+  const copyBtns = aiModal.querySelectorAll('.ai-copy-btn');
+  copyBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textToCopy = btn.getAttribute('data-copy');
+      if (textToCopy && navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalHtml = btn.innerHTML;
+          btn.innerHTML = '<i class="bi bi-check2"></i> <span>Copied!</span>';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = originalHtml;
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    });
+  });
+
+  // Draggable Before/After Comparison Slider
+  let isDragging = false;
+  const compBox = document.getElementById('aiComparisonBox');
+  const compOverlay = document.getElementById('aiCompOverlay');
+  const compDivider = document.getElementById('aiCompDivider');
+
+  function updateSliderPosition(clientX) {
+    if (!compBox || !compOverlay || !compDivider) return;
+    const rect = compBox.getBoundingClientRect();
+    let offsetX = clientX - rect.left;
+    if (offsetX < 0) offsetX = 0;
+    if (offsetX > rect.width) offsetX = rect.width;
+
+    const percentage = (offsetX / rect.width) * 100;
+    compOverlay.style.width = `${percentage}%`;
+    compDivider.style.left = `${percentage}%`;
+  }
+
+  function initComparisonSlider() {
+    if (!compBox || !compOverlay || !compDivider) return;
+    compOverlay.style.width = '50%';
+    compDivider.style.left = '50%';
+  }
+
+  if (compBox) {
+    const onStart = (e) => {
+      isDragging = true;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      updateSliderPosition(clientX);
+    };
+
+    const onMove = (e) => {
+      if (!isDragging) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      updateSliderPosition(clientX);
+    };
+
+    const onEnd = () => {
+      isDragging = false;
+    };
+
+    compBox.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+
+    compBox.addEventListener('touchstart', onStart, { passive: true });
+    window.addEventListener('touchmove', onMove, { passive: true });
+    window.addEventListener('touchend', onEnd);
+  }
+
+  // Mobile PDF Canvas Renderer
+  initMobilePdfRenderer();
+
+  // Check URL query param ?open=ai-lab
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('open') === 'ai-lab') {
+    setTimeout(openAiModal, 150);
+  }
+});
+
+/* --------------------------------------------------------------------------
+   MOBILE RESUME PDF CANVAS RENDERER (100% Touch-Friendly Native Scroll)
+   -------------------------------------------------------------------------- */
+function initMobilePdfRenderer() {
+  const container = document.getElementById('mobilePdfContainer');
+  const canvas = document.getElementById('mobileResumeCanvas');
+  const fallback = document.getElementById('mobilePdfFallback');
+  if (!container || !canvas) return;
+
+  const pdfUrl = container.getAttribute('data-pdf-url');
+  if (!pdfUrl) return;
+
+  if (typeof pdfjsLib === 'undefined') {
+    if (fallback) fallback.classList.remove('d-none');
+    return;
+  }
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    return pdf.getPage(1);
+  }).then(page => {
+    const parentWidth = container.clientWidth || (window.innerWidth - 32);
+    const initialViewport = page.getViewport({ scale: 1 });
+    const scale = (parentWidth / initialViewport.width) * (window.devicePixelRatio > 1 ? 2 : 1.5);
+    const viewport = page.getViewport({ scale: scale });
+
+    const context = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto';
+    canvas.style.display = 'block';
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport
+    };
+    return page.render(renderContext).promise;
+  }).catch(err => {
+    console.warn('PDF.js mobile render fallback:', err);
+    if (fallback) fallback.classList.remove('d-none');
+  });
+}
+
+
 

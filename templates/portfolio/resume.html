@@ -4,11 +4,24 @@
 {% block title %}Resume — Parmeet Singh{% endblock %}
 {% block meta_description %}View and download the official resume of Parmeet Singh, Full-Stack Python & Django Developer specializing in scalable web systems, data architectures, and digital products.{% endblock %}
 
+{% block extra_head %}
+  <!-- PDF.js for Touch-Friendly Non-Trapping Mobile Resume Preview -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+{% endblock %}
+
 {% block content %}
 <div class="site-container">
   
+  <!-- Dedicated Page Navigation Breadcrumb -->
+  <div class="page-nav-bar pt-4 mb-2">
+    <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+  </div>
+
   <!-- Resume Page Header & Actions -->
-  <section class="section-padding" style="padding-bottom: 2rem;" aria-label="Resume Header">
+  <section class="section-padding" style="padding-top: 1rem; padding-bottom: 2rem;" aria-label="Resume Header">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
       <div>
         <span class="section-subtitle">Curriculum Vitae</span>
@@ -31,26 +44,15 @@
     </div>
   </section>
 
-  <!-- Embedded PDF Preview (If Active PDF exists) -->
+  <!-- Embedded Nested PDF Viewer (Exact Aspect Ratio, No Black Void, No Scroll) -->
   {% if resume_doc and resume_doc.file %}
-    <section class="mb-5" aria-label="PDF Document Viewer" style="margin-bottom: 3rem;">
-      <div class="modern-card" style="padding: 1rem; border-radius: var(--radius-lg);">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem 1rem 1rem; border-bottom: 1px solid var(--border-subtle); margin-bottom: 1rem;">
-          <span class="font-mono text-muted" style="font-size: 0.82rem;">
-            <i class="bi bi-file-earmark-pdf text-danger me-1"></i> {{ resume_doc.title }} (Updated: {{ resume_doc.updated_at|date:"M Y" }})
-          </span>
-          <a href="{{ resume_doc.file.url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm font-mono">
-            <span>Open in New Tab</span>
-            <i class="bi bi-box-arrow-up-right ms-1"></i>
-          </a>
-        </div>
-        <div style="width: 100%; height: 750px; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); overflow: hidden;">
-          <iframe 
-            src="{{ resume_doc.file.url }}#toolbar=1" 
-            style="width: 100%; height: 100%; border: none;"
-            title="Parmeet Singh Resume PDF">
-          </iframe>
-        </div>
+    <section class="mb-4" aria-label="PDF Document Viewer">
+      <div class="resume-iframe-container">
+        <iframe 
+          src="{{ resume_doc.file.url }}#toolbar=0&navpanes=0&scrollbar=0&view=Fit" 
+          class="resume-iframe-exact"
+          title="Parmeet Singh Resume PDF">
+        </iframe>
       </div>
     </section>
   {% endif %}
@@ -68,7 +70,7 @@
           {{ site_profile.headline }}
         </div>
         
-        <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--text-secondary);">
+        <div class="resume-contact-bar">
           <span><i class="bi bi-geo-alt text-muted"></i> {{ site_profile.location }}</span>
           <span><i class="bi bi-envelope text-muted"></i> <a href="mailto:{{ site_profile.email }}">{{ site_profile.email }}</a></span>
           <span><i class="bi bi-linkedin text-muted"></i> <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
@@ -87,59 +89,61 @@
       <!-- Education Section -->
       <section class="resume-section-block">
         <h3 class="resume-section-title">Education</h3>
-        {% for edu in educations %}
-          <div class="mb-3" style="margin-bottom: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
-              <strong style="color: var(--text-primary); font-size: 1.05rem;">{{ edu.degree }}</strong>
-              <span class="font-mono text-muted" style="font-size: 0.85rem;">{{ edu.period_text }}</span>
+        <div class="resume-edu-list">
+          {% for edu in educations %}
+            <div class="resume-edu-card mb-3">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                <strong style="color: var(--text-primary); font-size: 1.05rem;">{{ edu.degree }}</strong>
+                <span class="font-mono text-muted" style="font-size: 0.85rem;">{{ edu.period_text }}</span>
+              </div>
+              <div style="color: var(--accent-cyan); font-size: 0.92rem; margin-top: 0.2rem;">
+                {{ edu.institution }} &bull; {{ edu.field_of_study }}
+                {% if edu.grade %}&bull; <span style="color: var(--text-primary); font-weight: 600;">Grade: {{ edu.grade }}</span>{% endif %}
+              </div>
+              {% if edu.description %}
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.35rem; line-height: 1.6;">{{ edu.description }}</p>
+              {% endif %}
             </div>
-            <div style="color: var(--accent-cyan); font-size: 0.92rem; margin-top: 0.2rem;">
-              {{ edu.institution }} &bull; {{ edu.field_of_study }}
-              {% if edu.grade %}&bull; <span style="color: var(--text-primary); font-weight: 600;">Grade: {{ edu.grade }}</span>{% endif %}
+          {% empty %}
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <strong style="color: var(--text-primary);">B.Tech in Computer Science &amp; Engineering</strong>
+                <span class="font-mono text-muted">2021 - 2025</span>
+              </div>
+              <div class="text-secondary">Specialization: Artificial Intelligence &amp; Data Science</div>
             </div>
-            {% if edu.description %}
-              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.35rem; line-height: 1.6;">{{ edu.description }}</p>
-            {% endif %}
-          </div>
-        {% empty %}
-          <div>
-            <div style="display: flex; justify-content: space-between;">
-              <strong style="color: var(--text-primary);">B.Tech in Computer Science &amp; Engineering</strong>
-              <span class="font-mono text-muted">2021 - 2025</span>
-            </div>
-            <div class="text-secondary">Specialization: Artificial Intelligence &amp; Data Science</div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </section>
 
       <!-- Technical Skills Matrix -->
       <section class="resume-section-block">
         <h3 class="resume-section-title">Technical Skills</h3>
-        <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.92rem;">
+        <div class="resume-skills-grid">
           {% for category in skill_categories %}
-            <div>
-              <strong style="color: var(--text-primary); min-width: 170px; display: inline-block;">{{ category.name }}:</strong>
-              <span style="color: var(--text-secondary);">
+            <div class="resume-skill-cat-card">
+              <strong class="skill-cat-label">{{ category.name }}:</strong>
+              <span class="skill-cat-items">
                 {% for s in category.skills.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
               </span>
             </div>
           {% empty %}
-            <div><strong style="color: var(--text-primary);">Languages &amp; Frameworks:</strong> Python, Django, JavaScript, HTML5, CSS3, Bootstrap, REST APIs</div>
-            <div><strong style="color: var(--text-primary);">Data &amp; AI:</strong> Pandas, NumPy, Scikit-learn, SQL, Exploratory Data Analysis</div>
-            <div><strong style="color: var(--text-primary);">Databases &amp; Tools:</strong> SQLite, PostgreSQL, Git, GitHub, VS Code</div>
+            <div class="resume-skill-cat-card"><strong class="skill-cat-label">Languages &amp; Frameworks:</strong> <span class="skill-cat-items">Python, Django, JavaScript, HTML5, CSS3, Bootstrap, REST APIs</span></div>
+            <div class="resume-skill-cat-card"><strong class="skill-cat-label">Data &amp; AI:</strong> <span class="skill-cat-items">Pandas, NumPy, Scikit-learn, SQL, Exploratory Data Analysis</span></div>
+            <div class="resume-skill-cat-card"><strong class="skill-cat-label">Databases &amp; Tools:</strong> <span class="skill-cat-items">SQLite, PostgreSQL, Git, GitHub, VS Code</span></div>
           {% endfor %}
         </div>
       </section>
 
-      <!-- Experience & Projects -->
+      <!-- Experience -->
       <section class="resume-section-block">
-        <h3 class="resume-section-title">Experience &amp; Work</h3>
+        <h3 class="resume-section-title">Experience</h3>
         {% for exp in experiences %}
           <div class="mb-3" style="margin-bottom: 1.25rem;">
             <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
               <strong style="color: var(--text-primary); font-size: 1.05rem;">{{ exp.role }}</strong>
               <span class="font-mono text-muted" style="font-size: 0.85rem;">
-                {{ exp.start_date|date:"M Y" }} - {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
+                Jul 2023 &ndash; Aug 2023
               </span>
             </div>
             <div style="color: var(--accent-cyan); font-size: 0.9rem; margin-bottom: 0.35rem; margin-top: 0.2rem;">
@@ -151,15 +155,60 @@
               {% endfor %}
             </ul>
           </div>
-        {% empty %}
-          <div>
-            <div style="display: flex; justify-content: space-between;">
-              <strong style="color: var(--text-primary);">Full-Stack &amp; Web Developer (Freelance)</strong>
-              <span class="font-mono text-muted">2024 - Present</span>
-            </div>
-            <p class="text-secondary" style="font-size: 0.9rem;">Engineered automotive dealer platforms, expense calculation applications, and client web solutions.</p>
-          </div>
         {% endfor %}
+      </section>
+
+      <!-- Key Engineering Projects -->
+      <section class="resume-section-block">
+        <h3 class="resume-section-title">Projects</h3>
+        <div class="mb-3" style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+            <strong style="color: var(--text-primary); font-size: 1.05rem;">
+              TourCraze &ndash; Full-Stack Travel Planner &amp; Group Expense Platform
+            </strong>
+          </div>
+          <div class="text-muted font-mono" style="font-size: 0.82rem; margin-top: 0.2rem; margin-bottom: 0.35rem;">
+            Python, Django, JavaScript, SQLite, Bootstrap &bull; 
+            <a href="https://tour-craze.vercel.app/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan);">Live Demo &nearr;</a> &bull; 
+            <a href="https://github.com/singhparmeet12/TourCraze" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan);">GitHub &nearr;</a> &bull; 
+            <a href="{% url 'portfolio:project_detail' slug='tourcraze' %}" style="color: var(--text-secondary);">Case Study</a>
+          </div>
+          <ul style="list-style: disc; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+            <li>Developed a full-stack travel platform with automated itinerary generation, destination discovery, hotel search, and travel community features.</li>
+            <li>Built TripSplit, a group expense management system using a greedy debt-simplification algorithm to reduce the number of settlement transactions.</li>
+            <li>Implemented responsive interfaces with JavaScript, AJAX/Fetch API, Django ORM, and REST APIs, including search, social feeds, interactive maps, and user authentication.</li>
+          </ul>
+        </div>
+
+        <div class="mb-3" style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+            <strong style="color: var(--text-primary); font-size: 1.05rem;">
+              TradeLab &ndash; AI Trading Platform &amp; Automated Chart Pattern Detection
+            </strong>
+          </div>
+          <div class="text-muted font-mono" style="font-size: 0.82rem; margin-top: 0.2rem; margin-bottom: 0.35rem;">
+            Python, Django, PyTorch, OpenCV, Gemini API, Pine Script &bull; 
+            <a href="https://tradelab-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan);">Live Demo &nearr;</a> &bull; 
+            <a href="https://github.com/singhparmeet12/TradeLab" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan);">GitHub &nearr;</a> &bull; 
+            <a href="{% url 'portfolio:project_detail' slug='tradelab' %}" style="color: var(--text-secondary);">Case Study</a>
+          </div>
+          <ul style="list-style: disc; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+            <li>Developed a full-stack trading analysis platform using Django, integrating automated chart pattern detection and custom TradingView indicators.</li>
+            <li>Built a YOLOv5 computer vision model trained on 1,450+ annotated trading charts to detect 20 technical chart patterns.</li>
+            <li>Developed Pine Script indicators with EMA-based trend filters, candlestick pattern detection, and ATR-based stop-loss and take-profit calculations.</li>
+          </ul>
+        </div>
+
+        <div class="mb-3" style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+            <strong style="color: var(--text-primary); font-size: 1.05rem;">
+              Stock Market Analysis
+            </strong>
+          </div>
+          <ul style="list-style: disc; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-top: 0.35rem;">
+            <li>Analyzed datasets of various stocks, using Python libraries to visualize patterns in charts. Applied machine learning models to predict next-day buy/sell signals, enhancing stock market analysis and decision-making.</li>
+          </ul>
+        </div>
       </section>
 
       <!-- Certifications -->

@@ -20,6 +20,7 @@ if settings.DEBUG:
 # Custom error handlers
 handler404 = 'portfolio.views.custom_404_view'
 handler500 = 'portfolio.views.custom_500_view'
+handler403 = 'portfolio.views.custom_403_view'
 
 # Admin header branding
 admin.site.site_header = "Parmeet Singh — Portfolio Admin"

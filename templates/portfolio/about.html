@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About — A Day Inside Parmeet's World | Parmeet Singh{% endblock %}
-{% block meta_description %}An interactive split-screen journey through Parmeet's world — B.Tech 2025 CSE (AI & Data Science), Python & Django Developer, and persistent builder.{% endblock %}
+{% block title %}A Day in My Life — Parmeet Singh{% endblock %}
+{% block meta_description %}An interactive split-screen journey through A Day in My Life — B.Tech 2025 CSE (AI & Data Science), Python & Django Developer, and builder.{% endblock %}
+
+{% block extra_head %}
+  <!-- High Priority Preloads for Scene 01 Images -->
+  <link rel="preload" as="image" href="{% static 'img/about_scene_01_real.png' %}?v=20260829_1820" fetchpriority="high">
+  <link rel="preload" as="image" href="{% static 'img/about_scene_01.png' %}?v=20260829_1820" fetchpriority="high">
+{% endblock %}
 
 {% block content %}
 <!-- ==========================================================================
@@ -11,6 +17,16 @@
      Right Half: Sticky 4K Cinematic Visual Stage (Scene 01 to 12)
      ========================================================================== -->
 <div class="split-about-wrapper" id="splitAboutWrapper">
+  <div class="site-container pt-3 pb-1">
+    <!-- Dedicated Page Navigation Breadcrumb (Identical to other pages) -->
+    <div class="page-nav-bar mb-1">
+      <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+        <i class="bi bi-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+    </div>
+  </div>
+
   <div class="site-container split-about-grid">
 
     <!-- ========================================================================
@@ -39,15 +55,6 @@
             <span class="text-muted">LOCATION:</span> <strong style="color: #fff;">New Delhi, India</strong><br>
             <span class="text-muted">STATUS:</span> <strong style="color: var(--accent-amber);">Actively Seeking Full-Time Roles &amp; Freelance Work</strong>
           </div>
-
-          <!-- Refined Scroll Prompt Placement -->
-          <div class="scroll-prompt-container pt-3">
-            <div class="scroll-prompt-chip font-mono">
-              <i class="bi bi-chevron-double-down scroll-bounce-icon"></i>
-              <span>Scroll down to walk through the journey</span>
-              <i class="bi bi-arrow-down-short"></i>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -60,15 +67,15 @@
           </div>
           <h2 class="chapter-title">The Academic <span class="name-highlight">Roots</span>.</h2>
           <p class="chapter-subtitle font-mono text-cyan">B.Tech in Computer Science &bull; Specialization in AI &amp; Data Science</p>
-          <p class="chapter-lead">Graduating in 2025 with a rigorous foundation across core computer science, relational database theory, data structures, algorithms, and statistical machine learning. Academic theory gives me structure; building real code gives me intuition.</p>
+          <p class="chapter-lead">Graduating in 2025 with a dedicated specialization in Artificial Intelligence and Data Science. My academic focus centered on applied machine learning, statistical data analytics, computer vision, and relational database systems. Academic theory gives me structure; extracting insights and building real-world AI solutions gives me intuition.</p>
           
           <div class="chapter-chips-row">
             <span class="c-chip chip-learn"><i class="bi bi-mortarboard"></i> B.TECH 2025</span>
             <span class="c-chip chip-build"><i class="bi bi-cpu"></i> ARTIFICIAL INTELLIGENCE</span>
-            <span class="c-chip chip-explore"><i class="bi bi-diagram-3"></i> DATA SCIENCE</span>
+            <span class="c-chip chip-explore"><i class="bi bi-graph-up-arrow"></i> DATA ANALYTICS &amp; ML</span>
           </div>
           <p class="chapter-note font-mono text-muted">
-            <em>"Strong fundamentals make learning any new framework or system effortless."</em>
+            <em>"Strong data and AI fundamentals make turning complex patterns into practical solutions effortless."</em>
           </p>
         </div>
       </section>
@@ -89,14 +96,17 @@
           </p>
 
           <div class="chapter-chips-row">
-            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('Software Engineering & Database Architecture Foundations', 'Infosys Springboard', '2024', 'CERT_03 — Infosys', 'https://infyspringboard.onwingspan.com')">
-              <i class="bi bi-patch-check-fill text-amber"></i> Infosys Springboard &bull; Click to View &rarr;
+            <button type="button" class="c-chip chip-clickable chip-build" onclick="openCertLightbox('Python Web Developer', 'Infosys Foundation & ICT Academy', '2024', 'C.No: G-2024-G3997-0027', '/media/certificates/Infosys_Python_Web_Developer_Certificate.pdf', 'https://verify.ictacademy.in')">
+              <i class="bi bi-patch-check-fill text-amber"></i> Infosys &bull; Python Web Dev
             </button>
-            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('Full-Stack Web Development with Python & Django', 'Udemy', '2024', 'CERT_01 — Udemy', 'https://www.udemy.com')">
-              <i class="bi bi-award-fill text-cyan"></i> Udemy Python &amp; Django &bull; Click to View &rarr;
+            <button type="button" class="c-chip chip-clickable chip-build" onclick="openCertLightbox('Associate Engineer – Intern (Data Analytics)', 'Proeffico Solutions Pvt Ltd', '2023', 'PROEFFICO — RECOGNITION', '/media/certificates/Proeffico_Internship_Certificate.pdf', 'mailto:contact@proeffico.com')">
+              <i class="bi bi-award-fill text-amber"></i> Proeffico &bull; Data Analytics
             </button>
-            <button type="button" class="c-chip chip-clickable chip-build" onclick="openCertLightbox('Python for Data Science & Machine Learning Bootcamp', 'Udemy', '2024', 'CERT_02 — Udemy', 'https://www.udemy.com')">
-              <i class="bi bi-database-check text-emerald"></i> Udemy Data Science &bull; Click to View &rarr;
+            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('AI Algorithmic Trading: Buy /Sell Signal [Python]', 'Udemy (Instructor: Ali Abdoli)', '2024', 'UC-6abbfe68-f33f-4c93-95f1-6a7d3d4261ad', '/media/certificates/Udemy_AI_Algorithmic_Trading.pdf', 'https://ude.my/UC-6abbfe68-f33f-4c93-95f1-6a7d3d4261ad')">
+              <i class="bi bi-graph-up text-cyan"></i> Udemy &bull; Algorithmic Trading
+            </button>
+            <button type="button" class="c-chip chip-clickable chip-learn" onclick="openCertLightbox('Complete Machine Learning & Data Science Bootcamp 2023', 'Udemy (Instructors: Andrei Neagoie, Daniel Bourke)', '2023', 'UC-61c2b217-e981-4eb0-b9a0-79e0b2948dbb', '/media/certificates/Udemy_Complete_Machine_Learning.pdf', 'https://ude.my/UC-61c2b217-e981-4eb0-b9a0-79e0b2948dbb')">
+              <i class="bi bi-cpu text-emerald"></i> Udemy &bull; ML &amp; Data Science
             </button>
           </div>
         </div>
@@ -260,13 +270,17 @@
               <i class="bi bi-linkedin"></i>
               <span>LinkedIn &rarr;</span>
             </a>
-            <a href="https://github.com/parmeetsingh" target="_blank" rel="noopener noreferrer" class="closing-btn btn-github font-mono">
+            <a href="https://github.com/singhparmeet12" target="_blank" rel="noopener noreferrer" class="closing-btn btn-github font-mono">
               <i class="bi bi-github"></i>
               <span>GitHub &rarr;</span>
             </a>
             <a href="mailto:contact@parmeetsingh.dev" class="closing-btn btn-email font-mono">
               <i class="bi bi-envelope"></i>
               <span>Email Me &rarr;</span>
+            </a>
+            <a href="{% url 'portfolio:home' %}" class="closing-btn btn-home font-mono" style="background: rgba(37, 99, 235, 0.15); border-color: rgba(37, 99, 235, 0.4); color: var(--accent-primary);">
+              <i class="bi bi-house-door"></i>
+              <span>Return Home &rarr;</span>
             </a>
             <a href="{% url 'portfolio:work' %}" class="closing-btn btn-work font-mono">
               <i class="bi bi-collection"></i>
@@ -282,24 +296,26 @@
          RIGHT HALF: STICKY 4K CINEMATIC VISUAL VIEWPORT (11 SCENES)
          ======================================================================== -->
     <div class="about-visual-col" id="aboutVisualCol">
+      <!-- Outer Style Switcher (Prominently Placed at the Top Right Outside the Photo for Both Web & Mobile) -->
+      <div class="stage-outer-controls" id="stageOuterControls">
+        <span class="outer-style-label font-mono"><i class="bi bi-palette-fill"></i> STYLE:</span>
+        <div class="stage-style-pills" id="stageStylePills">
+          <button type="button" class="style-pill-btn active" data-style-target="real" title="Switch to 3D Cinematic Style (Default)">
+            <i class="bi bi-camera-reels"></i> <span class="style-name-full">3D Cinematic</span><span class="style-name-short">3D</span>
+          </button>
+          <button type="button" class="style-pill-btn" data-style-target="lofi" title="Switch to Lofi Anime Style">
+            <i class="bi bi-brush"></i> <span class="style-name-full">Lofi Anime</span><span class="style-name-short">Lofi</span>
+          </button>
+        </div>
+      </div>
+
       <div class="sticky-visual-stage" id="stickyVisualStage">
 
-        <!-- Top Telemetry Header with Style Switcher (Single Line) -->
+        <!-- Top Telemetry Header (Inside Photo Frame) -->
         <div class="stage-telemetry-bar font-mono">
           <div class="telemetry-left" title="Current Scene Timecode">
             <span class="status-dot"></span>
             <span id="stageTimecodeText" class="telemetry-timecode">08:00 AM &bull; SETUP</span>
-          </div>
-
-          <!-- Style Switcher: 3D Cinematic (Default) vs Lofi Anime -->
-          <div class="stage-style-pills" id="stageStylePills">
-            <span class="style-pills-label font-mono"><i class="bi bi-palette-fill"></i> STYLE:</span>
-            <button type="button" class="style-pill-btn active" data-style-target="real" title="Switch to 3D Cinematic Style (Default)">
-              <i class="bi bi-camera-reels"></i> <span>3D Cinematic</span>
-            </button>
-            <button type="button" class="style-pill-btn" data-style-target="lofi" title="Switch to Lofi Anime Style">
-              <i class="bi bi-brush"></i> <span>Lofi Anime</span>
-            </button>
           </div>
 
           <div class="telemetry-right">
@@ -308,7 +324,7 @@
         </div>
 
         <!-- Layered 4K Cinematic Scene Images (11 Scenes Total for Both Styles, 3D Cinematic Default) -->
-        <div class="stage-canvas-frame">
+        <div class="stage-canvas-frame" data-active-style="real">
           <!-- Style Set 1: 3D Cinematic (Realistic 3D - DEFAULT ACTIVE) -->
           <img src="{% static 'img/about_scene_01_real.png' %}?v=20260829_1820" alt="Scene 01 (3D Cinematic)" class="stage-image style-real active" id="stage-img-real-1" data-style="real" data-scene="1">
           <img src="{% static 'img/about_scene_02_real.png' %}?v=20260829_1820" alt="Scene 02 (3D Cinematic)" class="stage-image style-real" id="stage-img-real-2" data-style="real" data-scene="2">
@@ -331,20 +347,179 @@
           <img src="{% static 'img/about_scene_06.png' %}?v=20260829_1820" alt="Scene 06 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-6" data-style="lofi" data-scene="6">
           <img src="{% static 'img/about_scene_07.png' %}?v=20260829_1820" alt="Scene 07 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-7" data-style="lofi" data-scene="7">
           <img src="{% static 'img/about_scene_08.png' %}?v=20260829_1820" alt="Scene 08 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-8" data-style="lofi" data-scene="8">
-          <img src="{% static 'img/about_scene_09.png' %}?v=20260829_1820" alt="Scene 09 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-9" data-style="lofi" data-scene="9">
-          <img src="{% static 'img/about_scene_10.png' %}?v=20260829_1820" alt="Scene 10 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-10" data-style="lofi" data-scene="10">
-          <img src="{% static 'img/about_scene_12.png' %}?v=20260829_1820" alt="Scene 11 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-11" data-style="lofi" data-scene="11">
+          <img src="{% static 'img/about_scene_09.png' %}?v=20260830_0105" alt="Scene 09 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-9" data-style="lofi" data-scene="9">
+          <img src="{% static 'img/about_scene_10.png' %}?v=20260830_0105" alt="Scene 10 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-10" data-style="lofi" data-scene="10">
+          <img src="{% static 'img/about_scene_12.png' %}?v=20260830_0105" alt="Scene 11 (Lofi Anime)" class="stage-image style-lofi" id="stage-img-lofi-11" data-style="lofi" data-scene="11">
+
+          <!-- The Living Window: Dynamic Animated Sky & City View (LOFI ANIME ONLY) -->
+          <div class="stage-living-window living-window-hidden" id="stageLivingWindow" aria-hidden="true">
+            <!-- Upper Glass Pane: Sky, Anime Clouds, Birds & Starlight -->
+            <div class="window-pane window-pane-upper">
+              <!-- Daytime Sky Elements -->
+              <div class="window-time-layer layer-day">
+                <div class="cloud-track cloud-track-1">
+                  <div class="anime-cloud cloud-1"></div>
+                  <div class="anime-cloud cloud-2"></div>
+                </div>
+                <div class="cloud-track cloud-track-2">
+                  <div class="anime-cloud cloud-3"></div>
+                </div>
+                <!-- Gliding Silhouette Birds -->
+                <div class="window-birds-flock">
+                  <span class="v-bird bird-1"></span>
+                  <span class="v-bird bird-2"></span>
+                  <span class="v-bird bird-3"></span>
+                </div>
+                <div class="window-sun-sheen"></div>
+              </div>
+
+              <!-- Sunset Sky Elements -->
+              <div class="window-time-layer layer-sunset">
+                <div class="cloud-track cloud-track-1">
+                  <div class="anime-cloud cloud-sunset-1"></div>
+                </div>
+                <div class="window-sunset-glow"></div>
+              </div>
+
+              <!-- Night Sky Elements -->
+              <div class="window-time-layer layer-night">
+                <div class="window-stars-cluster">
+                  <span class="n-star star-1"></span>
+                  <span class="n-star star-2"></span>
+                  <span class="n-star star-3"></span>
+                  <span class="n-star star-4"></span>
+                  <span class="n-star star-5"></span>
+                  <span class="n-star star-6"></span>
+                </div>
+                <div class="shooting-star-streak"></div>
+              </div>
+
+              <!-- Cozy Rain on Glass: Upper Pane Droplets & Streaks -->
+              <canvas class="window-rain-canvas" id="windowRainUpper" aria-hidden="true"></canvas>
+            </div>
+
+            <!-- Lower Glass Pane: Skyline, Clouds, City Twinkle & Aviation Beacons -->
+            <div class="window-pane window-pane-lower">
+              <!-- Daytime Lower Sky Elements -->
+              <div class="window-time-layer layer-day">
+                <div class="cloud-track cloud-track-3">
+                  <div class="anime-cloud cloud-4"></div>
+                </div>
+              </div>
+
+              <!-- Sunset Lower Sky Elements -->
+              <div class="window-time-layer layer-sunset">
+                <div class="window-sunset-lower-glow"></div>
+              </div>
+
+              <!-- Night City Skyline Elements -->
+              <div class="window-time-layer layer-night">
+                <!-- Twinkling Skyscraper Windows in Distant City -->
+                <div class="city-twinkle-cluster">
+                  <span class="c-light cl-1"></span>
+                  <span class="c-light cl-2"></span>
+                  <span class="c-light cl-3"></span>
+                  <span class="c-light cl-4"></span>
+                  <span class="c-light cl-5"></span>
+                  <span class="c-light cl-6"></span>
+                  <span class="c-light cl-7"></span>
+                  <span class="c-light cl-8"></span>
+                  <span class="c-light cl-9"></span>
+                  <span class="c-light cl-10"></span>
+                </div>
+                <!-- Pulsing Red Aviation Safety Beacons on Tower Spires -->
+                <div class="tower-beacons">
+                  <span class="beacon-light beacon-1" title="Tower Beacon Alpha"></span>
+                  <span class="beacon-light beacon-2" title="Tower Beacon Beta"></span>
+                  <span class="beacon-light beacon-3" title="Tower Beacon Gamma"></span>
+                </div>
+              </div>
+
+              <!-- Cozy Rain on Glass: Lower Pane Droplets & Streaks -->
+              <canvas class="window-rain-canvas" id="windowRainLower" aria-hidden="true"></canvas>
+            </div>
+          </div>
+
+          <!-- 3D Cinematic Living Window Exterior (Strictly Contained Inside Window Glass Panes - Zero Room Spill) -->
+          <div class="stage-window-exterior exterior-hidden" id="stageWindowExterior" aria-hidden="true">
+            <!-- Upper Glass Pane: Stars, Birds & Night Sky -->
+            <div class="exterior-pane exterior-pane-upper">
+              <!-- Day Layer (Scenes 01-07) -->
+              <div class="exterior-time-layer ext-layer-day">
+                <div class="exterior-bird bird-alpha"></div>
+                <div class="exterior-bird bird-beta"></div>
+              </div>
+
+              <!-- Night Layer (Scenes 09-11): Twinkling Stars & Shooting Star -->
+              <div class="exterior-time-layer ext-layer-night">
+                <div class="exterior-stars-cluster">
+                  <span class="ext-star star-1"></span>
+                  <span class="ext-star star-2"></span>
+                  <span class="ext-star star-3"></span>
+                  <span class="ext-star star-4"></span>
+                  <span class="ext-star star-5"></span>
+                  <span class="ext-star star-6"></span>
+                </div>
+                <div class="exterior-shooting-star"></div>
+              </div>
+            </div>
+
+            <!-- Lower Glass Pane: Tree Canopy, Skyline & City Twinkles -->
+            <div class="exterior-pane exterior-pane-lower">
+              <!-- Day Layer (Scenes 01-07) -->
+              <div class="exterior-time-layer ext-layer-day">
+                <div class="exterior-foliage-rustle"></div>
+                <span class="exterior-glint glint-tower-1" title="Skyscraper Facade Reflection"></span>
+                <span class="exterior-glint glint-tower-2" title="Skyscraper Facade Reflection"></span>
+                <span class="exterior-glint glint-tower-3" title="Tower Aerial Glint"></span>
+              </div>
+
+              <!-- Night Layer (Scenes 09-11): Twinkling Skyline Windows & Pulsing Aviation Red Beacons -->
+              <div class="exterior-time-layer ext-layer-night">
+                <div class="exterior-city-lights">
+                  <span class="city-dot c-dot-1"></span>
+                  <span class="city-dot c-dot-2"></span>
+                  <span class="city-dot c-dot-3"></span>
+                  <span class="city-dot c-dot-4"></span>
+                  <span class="city-dot c-dot-5"></span>
+                  <span class="city-dot c-dot-6"></span>
+                  <span class="city-dot c-dot-7"></span>
+                  <span class="city-dot c-dot-8"></span>
+                </div>
+                <div class="exterior-tower-beacons">
+                  <span class="ext-beacon beacon-tower-1" title="Skyscraper Warning Beacon"></span>
+                  <span class="ext-beacon beacon-tower-2" title="Skyscraper Warning Beacon"></span>
+                  <span class="ext-beacon beacon-tower-3" title="Antenna Spire Beacon"></span>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Living Room Cinemagraph Overlays -->
           <div class="stage-window-breeze" id="stageWindowBreeze"></div>
           <div class="stage-lamp-glow" id="stageLampGlow"></div>
           <div class="stage-monitor-glow" id="stageMonitorGlow"></div>
           
-          <!-- Coffee Steam Cinemagraph Plumes -->
-          <div class="stage-coffee-steam" id="stageCoffeeSteam" title="Ambient warm coffee steam">
+          <!-- Computer Screen Cinemagraph: Ambient Mouse Arrow Pointer -->
+          <div class="stage-screen-fx" id="stageScreenFx" aria-hidden="true">
+            <div class="screen-mouse-pointer" id="screenMousePointer">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L6 14L8.5 8.5L14 6L1 1Z" fill="#ffffff" stroke="#0f172a" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <!-- Whispering Thermal Coffee Steam Cinemagraph Overlays -->
+          <div class="stage-coffee-steam steam-hidden" id="coffeeSteamPrimary" aria-hidden="true" title="Ambient warm coffee steam">
             <span class="steam-puff puff-1"></span>
             <span class="steam-puff puff-2"></span>
             <span class="steam-puff puff-3"></span>
+            <span class="steam-wisp wisp-1"></span>
+          </div>
+          <div class="stage-coffee-steam steam-hidden" id="coffeeSteamSecondary" aria-hidden="true" title="Secondary ambient coffee steam">
+            <span class="steam-puff puff-1"></span>
+            <span class="steam-puff puff-2"></span>
+            <span class="steam-puff puff-3"></span>
+            <span class="steam-wisp wisp-1"></span>
           </div>
 
           <!-- Dynamic Atmospheric Breeze & Dust Mote Particle Canvas -->
@@ -414,9 +589,12 @@
         </div>
       </div>
 
-      <div class="cert-modal-actions">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm" id="modalCertUrlBtn">
-          <i class="bi bi-box-arrow-up-right"></i> Verify Credential &rarr;
+      <div class="cert-modal-actions" style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem;">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm" id="modalCertPdfBtn">
+          <i class="bi bi-file-earmark-pdf-fill"></i> View Official PDF &rarr;
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modern btn-secondary-outline btn-sm" id="modalCertUrlBtn">
+          <i class="bi bi-box-arrow-up-right"></i> Verify Online &rarr;
         </a>
       </div>
     </div>

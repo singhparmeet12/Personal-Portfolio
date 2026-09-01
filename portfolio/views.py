@@ -114,6 +114,7 @@ def resume_view(request):
     educations = Education.objects.all()
     skill_categories = SkillCategory.objects.prefetch_related('skills').all()
     certifications = Certification.objects.all()
+    projects = Project.objects.all()
 
     context = {
         'resume_doc': resume_doc,
@@ -121,6 +122,7 @@ def resume_view(request):
         'educations': educations,
         'skill_categories': skill_categories,
         'certifications': certifications,
+        'projects': projects,
         'active_page': 'resume',
     }
     return render(request, 'portfolio/resume.html', context)
@@ -156,13 +158,83 @@ def contact_view(request):
                 contact_msg.ip_address = request.META.get('REMOTE_ADDR')
             contact_msg.save()
             
+            # Send direct email notification to Parmeet (parmeetssms@gmail.com)
+            recipient_email = "parmeetssms@gmail.com"
+            email_subject = f"[Portfolio Contact] {contact_msg.subject} — from {contact_msg.name}"
+            email_body = f"""Hello Parmeet,
+
+You have received a new direct message through your portfolio website contact form!
+
+--------------------------------------------------
+Sender Details:
+--------------------------------------------------
+Name:    {contact_msg.name}
+Email:   {contact_msg.email}
+Subject: {contact_msg.subject}
+IP:      {contact_msg.ip_address or 'Unknown'}
+Time:    {contact_msg.created_at.strftime('%Y-%m-%d %H:%M:%S UTC') if contact_msg.created_at else 'Just now'}
+
+--------------------------------------------------
+Message:
+--------------------------------------------------
+{contact_msg.message}
+
+--------------------------------------------------
+You can reply directly to {contact_msg.name} at: {contact_msg.email}
+"""
+            # 1. Dispatch directly to parmeetssms@gmail.com via FormSubmit Cloud Gateway
+            try:
+                import urllib.request
+                import json
+
+                formsubmit_data = json.dumps({
+                    'name': contact_msg.name,
+                    'email': contact_msg.email,
+                    '_replyto': contact_msg.email,
+                    'subject': f"Portfolio Contact: {contact_msg.subject}",
+                    'message': contact_msg.message,
+                    '_template': 'table',
+                    '_captcha': 'false'
+                }).encode('utf-8')
+
+                req = urllib.request.Request(
+                    'https://formsubmit.co/ajax/parmeetssms@gmail.com',
+                    data=formsubmit_data,
+                    headers={
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Referer': request.build_absolute_uri(),
+                        'Origin': request.build_absolute_uri('/'),
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+                    }
+                )
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    resp_body = resp.read().decode('utf-8')
+            except Exception as forward_err:
+                pass
+
+            # 2. Also attempt standard Django send_mail if SMTP is configured
+            try:
+                from django.core.mail import send_mail
+                from django.conf import settings
+                from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'webmaster@localhost')
+                send_mail(
+                    subject=email_subject,
+                    message=email_body,
+                    from_email=from_email,
+                    recipient_list=[recipient_email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+
             messages.success(
                 request,
-                f"Thank you, {contact_msg.name}! Your message has been sent successfully. I will get back to you soon."
+                f"Thank you, {contact_msg.name}! Your message has been sent successfully. I have received your note and will contact you directly at {contact_msg.email} shortly."
             )
             return redirect('portfolio:contact')
         else:
-            messages.error(request, "Please check the form for errors and try again.")
+            messages.error(request, "Please ensure all fields are filled out correctly with a valid email address.")
     else:
         form = ContactForm()
 
@@ -171,6 +243,14 @@ def contact_view(request):
         'active_page': 'contact',
     }
     return render(request, 'portfolio/contact.html', context)
+
+
+def lab_view(request):
+    """Experimental Sandbox / Skills Playground: A free-form area for creative tech demos."""
+    context = {
+        'active_page': 'lab',
+    }
+    return render(request, 'portfolio/lab.html', context)
 
 
 def custom_404_view(request, exception=None):
@@ -296,4 +376,20 @@ def query_simulator_api(request):
         "status_code": 200,
         "data": results,
     })
+
+
+def custom_404_view(request, exception=None):
+    """Custom 404 Not Found error page with clear guidance and home/contact links."""
+    return render(request, '404.html', {'active_page': ''}, status=404)
+
+
+def custom_500_view(request):
+    """Custom 500 Internal Server Error page with helpful error messaging."""
+    return render(request, '500.html', {'active_page': ''}, status=500)
+
+
+def custom_403_view(request, exception=None):
+    """Custom 403 Forbidden error page."""
+    return render(request, '403.html', {'active_page': ''}, status=403)
+
 

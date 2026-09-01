@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}
+{% block title %}Personal Portfolio — Parmeet Singh{% endblock %}
 
 {% block content %}
 <!-- ==========================================================================
@@ -15,7 +15,7 @@
       <div class="hero-content">
         <div class="hero-tag">
           <span class="status-dot"></span>
-          <span>Full-Stack Python &bull; Django Architecture &bull; Web Systems</span>
+          <span class="hero-tag-text">Full-Stack Python &bull; Django Architecture &bull; Web Systems</span>
         </div>
 
         <h1 class="hero-title">
@@ -226,12 +226,6 @@
           </div>
           
           <div class="project-card-body">
-            <div class="project-card-meta">
-              <span class="badge-category">{{ project.category.name|default:"Full-Stack" }}</span>
-              <span class="font-mono text-muted" style="font-size: 0.78rem;">
-                {% if project.client_type == 'freelance' %}Client Work{% else %}Full-Stack App{% endif %}
-              </span>
-            </div>
 
             <h3 class="project-card-title">
               <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
@@ -263,6 +257,10 @@
                   <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-subtle btn-sm" title="Source Code">
                     <i class="bi bi-github"></i>
                   </a>
+                {% elif project.slug == 'gaadimandi' %}
+                  <button type="button" class="btn-modern btn-subtle btn-sm" onclick="openPrivateRepoModal('GaadiMandi')" title="Private Repository Notice">
+                    <i class="bi bi-github"></i>
+                  </button>
                 {% endif %}
               </div>
             </div>
@@ -303,8 +301,10 @@
           <div class="service-card-image-wrap">
             <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
             <div class="service-image-tag">
-              {% if service.icon == 'layout' %}
-                <i class="bi bi-layout-wtf"></i> <span>Business Sites</span>
+              {% if service.icon == 'magic' %}
+                <i class="bi bi-stars"></i> <span>Generative AI</span>
+              {% elif service.icon == 'layout' %}
+                <i class="bi bi-layout-wtf"></i> <span>Websites</span>
               {% elif service.icon == 'layers' %}
                 <i class="bi bi-layers"></i> <span>Landing Pages</span>
               {% elif service.icon == 'refresh-cw' %}
@@ -332,6 +332,78 @@
       {% endfor %}
     </div>
 
+  </div>
+</section>
+
+<!-- ==========================================================================
+     DAY IN THE LIFE — INTERACTIVE VISUAL STORY TEASER
+     ========================================================================== -->
+<section class="section-padding day-in-life-teaser-section" aria-label="A Day in the Life Teaser">
+  <div class="site-container">
+    <div class="teaser-card-wrapper">
+      <div class="teaser-grid">
+        
+        <!-- Left Column: Story Teaser & Key Milestones -->
+        <div class="teaser-content-col">
+          <div class="teaser-badge-row">
+            <span class="teaser-pill"><i class="bi bi-camera-reels"></i> Interactive Visual Story</span>
+            <span class="teaser-pill teaser-pill-scenes"><i class="bi bi-film"></i> 12 Continuous Scenes</span>
+          </div>
+
+          <h2 class="teaser-title">Step Inside: A Day in the Life of a Developer</h2>
+          <p class="teaser-description">
+            Rather than reading a standard bio, explore an interactive split-screen journey tracking my 24-hour routine — from morning algorithms and AI lectures to deep full-stack architecture and late-night digital craft.
+          </p>
+
+          <!-- 4-Chapter Highlights Grid -->
+          <div class="teaser-timeline-grid">
+            <div class="teaser-timeline-box">
+              <span class="teaser-time-tag"><span class="status-dot"></span> 08:00 AM</span>
+              <span class="teaser-scene-label">Morning Brew &amp; Setup</span>
+            </div>
+            <div class="teaser-timeline-box">
+              <span class="teaser-time-tag"><span class="status-dot"></span> 01:30 PM</span>
+              <span class="teaser-scene-label">AI &amp; Data Science</span>
+            </div>
+            <div class="teaser-timeline-box">
+              <span class="teaser-time-tag"><span class="status-dot"></span> 06:00 PM</span>
+              <span class="teaser-scene-label">Full-Stack Building</span>
+            </div>
+            <div class="teaser-timeline-box">
+              <span class="teaser-time-tag"><span class="status-dot"></span> 11:45 PM</span>
+              <span class="teaser-scene-label">Night Owl Digital Craft</span>
+            </div>
+          </div>
+
+          <!-- Strategic CTA -->
+          <a href="{% url 'portfolio:about' %}" class="btn-modern btn-primary-glow btn-lg teaser-cta-btn">
+            <i class="bi bi-camera-reels" style="font-size: 1.1em; color: var(--accent-cyan);"></i>
+            <span>Experience Visual Story</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Right Column: Visual Stage Reel Frame -->
+        <div class="teaser-visual-col">
+          <a href="{% url 'portfolio:about' %}" class="teaser-film-frame" title="Click to explore A Day in the Life">
+            <img src="{% static 'img/about_scene_01_real.png' %}" alt="A Day Inside Parmeet's World Preview" class="teaser-film-img" loading="lazy">
+            <div class="teaser-film-overlay">
+              <div class="teaser-film-header-badge">
+                <span class="status-dot" style="background: var(--accent-cyan);"></span>
+                <span>Scene 01 / 12 &bull; 08:00 AM</span>
+              </div>
+              <div class="teaser-film-center-badge">
+                <i class="bi bi-camera-reels"></i>
+              </div>
+              <p class="teaser-film-caption">
+                <i class="bi bi-arrow-up-right-circle"></i> Enter Interactive Story
+              </p>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 

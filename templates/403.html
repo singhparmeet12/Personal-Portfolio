@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Server Error (500) — Personal Portfolio{% endblock %}
-{% block meta_description %}An unexpected server error occurred on Personal Portfolio.{% endblock %}
+{% block title %}Access Forbidden (403) — Personal Portfolio{% endblock %}
+{% block meta_description %}Access is forbidden to this resource on Personal Portfolio.{% endblock %}
 
 {% block content %}
 <div class="site-container">
   <div class="section-padding text-center" style="text-align: center; max-width: 640px; margin: 2rem auto; min-height: 55vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
     
     <div class="modern-card" style="padding: 2.5rem 2rem; border-radius: var(--radius-lg); width: 100%; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-lg);">
-      <div class="font-mono" style="font-size: clamp(3.5rem, 9vw, 6rem); font-weight: 800; color: var(--accent-coral); line-height: 1; letter-spacing: -0.04em; margin-bottom: 0.75rem;">
-        500
+      <div class="font-mono" style="font-size: clamp(3.5rem, 9vw, 6rem); font-weight: 800; color: #f59e0b; line-height: 1; letter-spacing: -0.04em; margin-bottom: 0.75rem;">
+        403
       </div>
       <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.65rem;">
-        Unexpected Server Error
+        Access Forbidden
       </h1>
       <p style="color: var(--text-secondary); font-size: 0.96rem; line-height: 1.6; margin-bottom: 1.75rem;">
-        Something went wrong while processing your request. The issue has been logged. Please return to the home page or contact me directly if the problem persists.
+        You don't have permission to access this resource or administrative endpoint. Please return to the homepage or contact the site administrator.
       </p>
 
       <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
@@ -28,14 +28,9 @@
           <i class="bi bi-grid-fill"></i>
           <span>Explore Projects</span>
         </a>
-        <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-secondary-outline">
-          <i class="bi bi-envelope-fill"></i>
-          <span>Report an Issue</span>
-        </a>
       </div>
     </div>
 
   </div>
 </div>
 {% endblock %}
-

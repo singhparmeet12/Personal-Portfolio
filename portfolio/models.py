@@ -21,7 +21,7 @@ class Profile(models.Model):
     )
     email = models.EmailField(default="contact@parmeetsingh.dev")
     location = models.CharField(max_length=100, default="Punjab, India")
-    github_url = models.URLField(default="https://github.com/parmeetsingh")
+    github_url = models.URLField(default="https://github.com/singhparmeet12")
     linkedin_url = models.URLField(default="https://linkedin.com/in/parmeetsingh")
     is_available_for_work = models.BooleanField(default=True)
     avatar = models.ImageField(upload_to="profile/", blank=True, null=True)

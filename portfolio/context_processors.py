@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils import timezone
 from .models import Profile, Resume, ProjectCategory, Service
 
@@ -13,7 +14,7 @@ def portfolio_globals(request):
             subheadline="I'm a Computer Science graduate specializing in AI & Data Science, building web applications, exploring data-driven solutions, and working on digital projects for businesses.",
             email="contact@parmeetsingh.dev",
             location="Punjab, India",
-            github_url="https://github.com/parmeetsingh",
+            github_url="https://github.com/singhparmeet12",
             linkedin_url="https://linkedin.com/in/parmeetsingh",
             is_available_for_work=True
         )
@@ -28,4 +29,5 @@ def portfolio_globals(request):
         'global_categories': categories,
         'global_services': featured_services,
         'current_year': timezone.now().year,
+        'enable_lab': getattr(settings, 'ENABLE_LAB', True),
     }

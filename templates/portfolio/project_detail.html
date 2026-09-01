@@ -23,7 +23,6 @@
     </a>
 
     <div class="mt-2" style="margin-top: 0.75rem;">
-      <span class="badge-category">{{ project.category.name|default:"Web Application" }}</span>
       <h1 class="hero-title mt-2 mb-2" style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.75rem 0;">
         {{ project.title }}
       </h1>
@@ -32,27 +31,10 @@
       </p>
     </div>
 
-    <!-- Metadata Quick Strip -->
-    <div class="project-meta-strip">
-      <div class="meta-strip-item">
-        <span class="meta-strip-label">Project Type</span>
-        <span class="meta-strip-val">{{ project.get_client_type_display }}</span>
-      </div>
-
-      {% if project.completion_date %}
-        <div class="meta-strip-item">
-          <span class="meta-strip-label">Completed</span>
-          <span class="meta-strip-val">{{ project.completion_date|date:"F Y" }}</span>
-        </div>
-      {% endif %}
-
-      <div class="meta-strip-item">
-        <span class="meta-strip-label">Category</span>
-        <span class="meta-strip-val">{{ project.category.name }}</span>
-      </div>
-
-      {% if project.live_url or project.github_url %}
-        <div class="meta-strip-item" style="margin-left: auto;">
+    <!-- Metadata Quick Strip (Only Project Links) -->
+    {% if project.live_url or project.github_url or project.slug == 'gaadimandi' %}
+      <div class="project-meta-strip" style="justify-content: flex-start;">
+        <div class="meta-strip-item" style="margin-left: 0;">
           <span class="meta-strip-label">Project Links</span>
           <div style="display: flex; gap: 0.75rem; margin-top: 0.35rem;">
             {% if project.live_url %}
@@ -66,11 +48,16 @@
                 <i class="bi bi-github"></i>
                 <span>View Source</span>
               </a>
+            {% elif project.slug == 'gaadimandi' %}
+              <button type="button" class="btn-modern btn-secondary-outline btn-sm" onclick="openPrivateRepoModal('GaadiMandi')" title="Private Repository Notice">
+                <i class="bi bi-shield-lock"></i>
+                <span>Private Codebase</span>
+              </button>
             {% endif %}
           </div>
         </div>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
 
   </div>
 

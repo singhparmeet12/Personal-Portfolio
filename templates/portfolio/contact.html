@@ -7,8 +7,16 @@
 {% block content %}
 <div class="site-container">
   
+  <!-- Dedicated Page Navigation Breadcrumb -->
+  <div class="page-nav-bar pt-4 mb-2">
+    <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+  </div>
+
   <!-- Page Header -->
-  <section class="section-padding" style="padding-bottom: 2.5rem;" aria-label="Contact Header">
+  <section class="section-padding" style="padding-top: 1rem; padding-bottom: 2.5rem;" aria-label="Contact Header">
     <div class="section-header" style="max-width: 700px;">
       <span class="section-subtitle">Let's Connect</span>
       <h1 class="section-title">Let's Build Something Useful</h1>
@@ -29,72 +37,76 @@
           Feel free to reach out directly via email or connect with me across professional platforms.
         </p>
 
-        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div class="contact-methods-list">
           <!-- Method 1: Email -->
-          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+          <div class="contact-method-card">
             <div class="arch-icon blue">
               <i class="bi bi-envelope fs-5"></i>
             </div>
-            <div>
-              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+            <div class="contact-method-content">
+              <span class="font-mono text-muted contact-method-label">
                 Email Address
               </span>
-              <a href="mailto:{{ site_profile.email }}" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
+              <a href="mailto:{{ site_profile.email }}" class="contact-method-link contact-email-link">
                 {{ site_profile.email }}
               </a>
               <div class="pt-1">
                 <button 
                   type="button" 
-                  class="btn-modern btn-subtle btn-sm p-0 font-mono" 
+                  class="btn-modern btn-subtle btn-sm p-0 font-mono btn-copy-email" 
                   data-copy-email="{{ site_profile.email }}" 
-                  style="font-size: 0.78rem; padding: 0;">
-                  <i class="bi bi-clipboard me-1"></i> Copy Email
+                  title="Copy email to clipboard">
+                  <i class="bi bi-clipboard me-1"></i> <span>Copy Email</span>
                 </button>
               </div>
             </div>
           </div>
 
           <!-- Method 2: LinkedIn -->
-          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+          <div class="contact-method-card">
             <div class="arch-icon cyan">
               <i class="bi bi-linkedin fs-5"></i>
             </div>
-            <div>
-              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+            <div class="contact-method-content">
+              <span class="font-mono text-muted contact-method-label">
                 Professional Network
               </span>
-              <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
-                linkedin.com/in/parmeetsingh <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
+              <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="contact-method-link">
+                <span class="d-none d-sm-inline">linkedin.com/in/parmeetsingh</span>
+                <span class="d-inline d-sm-none">LinkedIn Profile</span>
+                <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
               </a>
             </div>
           </div>
 
           <!-- Method 3: GitHub -->
-          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+          <div class="contact-method-card">
             <div class="arch-icon emerald">
               <i class="bi bi-github fs-5"></i>
             </div>
-            <div>
-              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+            <div class="contact-method-content">
+              <span class="font-mono text-muted contact-method-label">
                 Source Code &amp; Repositories
               </span>
-              <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
-                github.com/parmeetsingh <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
+              <a href="{{ site_profile.github_url|default:'https://github.com/singhparmeet12' }}" target="_blank" rel="noopener noreferrer" class="contact-method-link">
+                <span class="d-none d-sm-inline">github.com/singhparmeet12</span>
+                <span class="d-inline d-sm-none">GitHub Profile</span>
+                <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 0.75rem;"></i>
               </a>
             </div>
           </div>
 
           <!-- Method 4: Location -->
-          <div style="display: flex; gap: 1rem; align-items: flex-start;">
+          <div class="contact-method-card">
             <div class="arch-icon amber">
               <i class="bi bi-geo-alt fs-5"></i>
             </div>
-            <div>
-              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; display: block;">
+            <div class="contact-method-content">
+              <span class="font-mono text-muted contact-method-label">
                 Location
               </span>
-              <span style="color: var(--text-primary); font-weight: 600; font-size: 0.95rem;">
-                {{ site_profile.location }} (Available for Remote &amp; Relocation)
+              <span class="contact-method-text">
+                {{ site_profile.location }} <span class="text-muted d-none d-sm-inline">(Available for Remote &amp; Relocation)</span>
               </span>
             </div>
           </div>
@@ -106,8 +118,8 @@
             <span class="status-dot"></span>
             <span style="color: var(--text-primary); font-weight: 600;">Current Availability:</span>
           </div>
-          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem; margin-bottom: 0;">
-            Actively evaluating full-stack software engineering roles, data-oriented opportunities, and select freelance web development projects.
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem; margin-bottom: 0; line-height: 1.6;">
+            Actively evaluating <strong>Data Analyst projects</strong>, <strong>Data &amp; AI engineering opportunities</strong>, full-stack software roles, and select freelance web solutions.
           </p>
         </div>
 
@@ -115,10 +127,18 @@
 
       <!-- Right Column: Django Contact Form -->
       <div class="modern-card" style="padding: 2rem;">
-        <h2 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.5rem;">Send a Direct Message</h2>
-        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.75rem;">
-          Fill out this form and I will respond to your message promptly.
-        </p>
+        <h2 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 1.25rem;">Send a Direct Message</h2>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert-modern {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% else %}alert-info{% endif %} mb-4" role="alert" style="margin-bottom: 1.5rem;">
+              <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill text-emerald{% elif message.tags == 'error' %}bi-exclamation-triangle-fill text-coral{% else %}bi-info-circle-fill text-cyan{% endif %}" style="font-size: 1.15rem;"></i>
+              <div style="font-size: 0.92rem; line-height: 1.5;">
+                {{ message }}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
 
         <form method="POST" action="{% url 'portfolio:contact' %}" novalidate>
           {% csrf_token %}

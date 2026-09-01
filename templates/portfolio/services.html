@@ -7,8 +7,16 @@
 {% block content %}
 <div class="site-container">
   
+  <!-- Dedicated Page Navigation Breadcrumb -->
+  <div class="page-nav-bar pt-4 mb-2">
+    <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+  </div>
+
   <!-- Page Header -->
-  <section class="section-padding" style="padding-bottom: 2.5rem;" aria-label="Services Header">
+  <section class="section-padding" style="padding-top: 1rem; padding-bottom: 2.5rem;" aria-label="Services Header">
     <div class="section-header" style="max-width: 720px;">
       <span class="section-subtitle">Client &amp; Freelance Offerings</span>
       <h1 class="section-title">Websites &amp; Digital Products Built for Impact</h1>
@@ -26,8 +34,10 @@
           <div class="service-card-image-wrap">
             <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
             <div class="service-image-tag">
-              {% if service.icon == 'layout' %}
-                <i class="bi bi-layout-wtf"></i> <span>Business Sites</span>
+              {% if service.icon == 'magic' %}
+                <i class="bi bi-stars"></i> <span>Generative AI</span>
+              {% elif service.icon == 'layout' %}
+                <i class="bi bi-layout-wtf"></i> <span>Websites</span>
               {% elif service.icon == 'layers' %}
                 <i class="bi bi-layers"></i> <span>Landing Pages</span>
               {% elif service.icon == 'refresh-cw' %}
@@ -82,7 +92,7 @@
         <!-- Fallback if not seeded yet -->
         <article class="service-card">
           <div class="service-icon-box"><i class="bi bi-layout-wtf fs-4"></i></div>
-          <h2 class="service-card-title">Business Websites</h2>
+          <h2 class="service-card-title">Websites &amp; Landing Pages</h2>
           <p class="text-secondary">Modern responsive websites built for businesses with fast loading and SEO.</p>
         </article>
       {% endfor %}
@@ -93,43 +103,43 @@
   <section class="section-padding" style="border-top: 1px solid var(--border-subtle);" aria-label="Development Process">
     <div class="section-header text-center" style="max-width: 650px; margin-left: auto; margin-right: auto; text-align: center;">
       <span class="section-subtitle">How We Work</span>
-      <h2 class="section-title">The Development Process</h2>
+      <h2 class="section-title">A Simple, Risk-Free Process</h2>
       <p class="section-description" style="margin-left: auto; margin-right: auto;">
-        A straightforward, collaborative workflow ensuring rapid delivery, transparency, and top-tier code quality.
+        From understanding your idea to delivering your finished project — a clean, transparent workflow with zero guesswork.
       </p>
     </div>
 
-    <div class="grid-4">
+    <div class="grid-4 process-workflow-grid">
       
       <div class="process-step-card">
         <div class="process-step-number">01</div>
-        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Discovery &amp; Scope</h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
-          We discuss your objectives, target audience, core features, and design preferences to map out clear technical requirements.
+        <h3 class="process-card-title">Listen &amp; Understand</h3>
+        <p class="process-card-desc">
+          We start with a quick chat to understand your requirements, ideas, and what you want your website or digital assets to achieve.
         </p>
       </div>
 
       <div class="process-step-card">
         <div class="process-step-number">02</div>
-        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Design &amp; Architecture</h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
-          Crafting modern UI layouts, responsive styling, and database schema structures optimized for speed and maintainability.
+        <h3 class="process-card-title">Free Sample Prototype</h3>
+        <p class="process-card-desc">
+          I create a free initial preview or design sample so you can see the visual quality, layout, and style before making any commitment.
         </p>
       </div>
 
       <div class="process-step-card">
         <div class="process-step-number">03</div>
-        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Build &amp; Integrate</h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
-          Writing clean full-stack code using Django, Python, and JavaScript with regular progress demos and interactive checkpoints.
+        <h3 class="process-card-title">Refine &amp; Customize</h3>
+        <p class="process-card-desc">
+          Once you love the direction and approve it, we build out the full project, incorporating all your custom preferences, content, and features.
         </p>
       </div>
 
       <div class="process-step-card">
         <div class="process-step-number">04</div>
-        <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-primary);">Testing &amp; Launch</h3>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
-          Cross-browser testing, SEO optimization, responsive audit, and production deployment with handover documentation.
+        <h3 class="process-card-title">Final Review &amp; Launch</h3>
+        <p class="process-card-desc">
+          We test everything across mobile and desktop. Once you are 100% satisfied, I deliver all final files, source code, and launch it live.
         </p>
       </div>
 
@@ -155,5 +165,242 @@
     </div>
   </section>
 
+</div>
+
+<!-- ==========================================================================
+     INTERACTIVE GENERATIVE AI PROMPT & ASSET LAB MODAL
+     ========================================================================== -->
+<div class="ai-lab-modal-overlay" id="aiLabModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aiLabModalTitle">
+  <div class="ai-lab-modal-dialog">
+    <div class="ai-lab-modal-content">
+      
+      <!-- Modal Header -->
+      <div class="ai-lab-modal-header">
+        <div class="d-flex align-items-center gap-3">
+          <div class="ai-lab-icon-box">
+            <i class="bi bi-stars"></i>
+          </div>
+          <div>
+            <h3 class="ai-lab-modal-title" id="aiLabModalTitle">Generative AI &amp; Prompt Engineering Lab</h3>
+            <p class="ai-lab-modal-subtitle">Custom multi-modal prompt architectures, master retouching, and photorealistic asset synthesis by Parmeet Singh.</p>
+          </div>
+        </div>
+        <button type="button" class="ai-lab-modal-close" id="closeAiLabModalBtn" aria-label="Close Modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="ai-lab-tab-nav">
+        <button type="button" class="ai-lab-tab-btn active" data-tab="prompts">
+          <i class="bi bi-terminal"></i>
+          <span>Prompt Blueprints &amp; Recipes</span>
+        </button>
+        <button type="button" class="ai-lab-tab-btn" data-tab="comparison">
+          <i class="bi bi-sliders"></i>
+          <span>Before &amp; After Retouching</span>
+        </button>
+        <button type="button" class="ai-lab-tab-btn" data-tab="capabilities">
+          <i class="bi bi-grid-fill"></i>
+          <span>Creation Capabilities Matrix</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="ai-lab-modal-body">
+        
+        <!-- Tab 1: Prompt Blueprints & Recipes -->
+        <div class="ai-lab-tab-panel active" id="aiTabPrompts">
+          <div class="ai-tab-intro">
+            <p>
+              Anyone can type a single sentence, but crafting production-ready visuals requires <strong>systematic prompt architecture</strong>: specifying camera lenses, aperture depth, volumetric lighting tokens, ambient color science, and structural weights.
+            </p>
+          </div>
+
+          <div class="ai-prompts-grid">
+            
+            <!-- Recipe 1: Cyberpunk Techwear Nomad -->
+            <div class="ai-prompt-card">
+              <div class="ai-prompt-preview-wrap">
+                <img src="{% static 'img/generative_ai/prompt_portrait.jpg' %}" alt="Cybernetic Nomad Portrait" class="ai-prompt-preview-img" loading="lazy">
+                <span class="ai-prompt-tag">Character &amp; Cinematic Concept</span>
+              </div>
+              <div class="ai-prompt-details">
+                <div class="ai-prompt-header-row">
+                  <h4 class="ai-prompt-title">Cybernetic Techwear Nomad (Neo-Tokyo)</h4>
+                  <span class="font-mono text-muted" style="font-size: 0.72rem;">Model: SDXL / Midjourney v6</span>
+                </div>
+                
+                <div class="ai-token-tags">
+                  <span class="ai-token"><i class="bi bi-camera"></i> 85mm f/1.4 Lens</span>
+                  <span class="ai-token"><i class="bi bi-brightness-high"></i> Anamorphic Flares</span>
+                  <span class="ai-token"><i class="bi bi-droplet"></i> Volumetric Rain</span>
+                  <span class="ai-token"><i class="bi bi-palette"></i> Neon Cyan &amp; Amber</span>
+                </div>
+
+                <div class="ai-code-block-wrap">
+                  <pre class="ai-prompt-code"><code>Cinematic 8k portrait of a cybernetic nomad in techwear jacket with glowing fiber-optic embroidery, rainy cyberpunk alleyway, neon reflections, 85mm lens f/1.4 shallow depth of field, anamorphic lighting, photorealistic rendering --ar 1:1 --style raw --v 6.0</code></pre>
+                  <button type="button" class="ai-copy-btn" data-copy="Cinematic 8k portrait of a cybernetic nomad in techwear jacket with glowing fiber-optic embroidery, rainy cyberpunk alleyway, neon reflections, 85mm lens f/1.4 shallow depth of field, anamorphic lighting, photorealistic rendering --ar 1:1 --style raw --v 6.0" title="Copy Prompt">
+                    <i class="bi bi-clipboard"></i>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe 2: Cantilevered Alpine Sanctuary -->
+            <div class="ai-prompt-card">
+              <div class="ai-prompt-preview-wrap">
+                <img src="{% static 'img/generative_ai/prompt_architecture.jpg' %}" alt="Alpine Brutalist Sanctuary" class="ai-prompt-preview-img" loading="lazy">
+                <span class="ai-prompt-tag">Architectural &amp; Landscape Concept</span>
+              </div>
+              <div class="ai-prompt-details">
+                <div class="ai-prompt-header-row">
+                  <h4 class="ai-prompt-title">Brutalist Glass Sanctuary (Alpine Mist)</h4>
+                  <span class="font-mono text-muted" style="font-size: 0.72rem;">Model: Midjourney / Flux.1</span>
+                </div>
+                
+                <div class="ai-token-tags">
+                  <span class="ai-token"><i class="bi bi-building"></i> Cantilevered Concrete</span>
+                  <span class="ai-token"><i class="bi bi-sun"></i> Golden Hour Sunrise</span>
+                  <span class="ai-token"><i class="bi bi-water"></i> Mirror Lake Reflection</span>
+                  <span class="ai-token"><i class="bi bi-aspect-ratio"></i> Hasselblad 50mm</span>
+                </div>
+
+                <div class="ai-code-block-wrap">
+                  <pre class="ai-prompt-code"><code>Futuristic brutalist glass and concrete sanctuary cantilevered over a serene mirror-calm alpine mountain lake at sunrise, ethereal morning mist, soft golden hour lighting, hyper-realistic architectural photography, 8k ultra-sharp detail --ar 1:1 --v 6.0</code></pre>
+                  <button type="button" class="ai-copy-btn" data-copy="Futuristic brutalist glass and concrete sanctuary cantilevered over a serene mirror-calm alpine mountain lake at sunrise, ethereal morning mist, soft golden hour lighting, hyper-realistic architectural photography, 8k ultra-sharp detail --ar 1:1 --v 6.0" title="Copy Prompt">
+                    <i class="bi bi-clipboard"></i>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab 2: Interactive Before / After Retouching Slider -->
+        <div class="ai-lab-tab-panel" id="aiTabComparison">
+          <div class="ai-tab-intro text-center" style="max-width: 650px; margin: 0 auto 1.5rem;">
+            <p>
+              AI generates the initial foundation, but raw generations often lack professional color grading, contrast balance, and tactile depth. <strong>Drag the slider</strong> below to see how raw AI assets are transformed into high-impact commercial media.
+            </p>
+          </div>
+
+          <div class="ai-comparison-container">
+            <div class="ai-comparison-box" id="aiComparisonBox">
+              <!-- After Image (Background) -->
+              <img src="{% static 'img/generative_ai/after_retouched.jpg' %}" alt="Master Color-Graded Product" class="ai-comp-img ai-comp-after">
+              <span class="ai-comp-badge badge-after">After: Master Retouched &amp; Graded</span>
+
+              <!-- Before Image (Clipped Overlay) -->
+              <div class="ai-comp-overlay" id="aiCompOverlay">
+                <img src="{% static 'img/generative_ai/before_raw.jpg' %}" alt="Raw AI Generation" class="ai-comp-img ai-comp-before">
+                <span class="ai-comp-badge badge-before">Before: Raw AI Output</span>
+              </div>
+
+              <!-- Draggable Divider Handle -->
+              <div class="ai-comp-divider" id="aiCompDivider">
+                <div class="ai-comp-handle">
+                  <i class="bi bi-chevron-left"></i>
+                  <i class="bi bi-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparison Workflow Steps -->
+            <div class="ai-comp-workflow-grid">
+              <div class="ai-workflow-item">
+                <span class="ai-workflow-num">01</span>
+                <h5>Prompt Architecture</h5>
+                <p>Engineered multi-modal keywords for lighting tokens, camera geometry, and surface textures.</p>
+              </div>
+              <div class="ai-workflow-item">
+                <span class="ai-workflow-num">02</span>
+                <h5>Photoshop Retouching</h5>
+                <p>Manual artifact cleanup, edge enhancement, micro-dial luminescence, and focal sharpening.</p>
+              </div>
+              <div class="ai-workflow-item">
+                <span class="ai-workflow-num">03</span>
+                <h5>Color Grading &amp; Lighting</h5>
+                <p>Commercial luxury LUT color grading, rim lighting warmth on rock, and obsidian contrast depth.</p>
+              </div>
+              <div class="ai-workflow-item">
+                <span class="ai-workflow-num">04</span>
+                <h5>4K/8K Upscaling</h5>
+                <p>Neural noise-free upscaling ready for hero banners, product ads, and high-DPI retina displays.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab 3: Creation Capabilities Matrix -->
+        <div class="ai-lab-tab-panel" id="aiTabCapabilities">
+          <div class="ai-tab-intro text-center" style="max-width: 650px; margin: 0 auto 1.5rem;">
+            <p>
+              Whether you need product mockups for a pitch deck, custom banners for a web platform, or cinematic concept art, I can engineer and refine tailored prompts for virtually any aesthetic.
+            </p>
+          </div>
+
+          <div class="ai-capabilities-grid">
+            
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-box-seam"></i></div>
+              <h4>Commercial Product Photography</h4>
+              <p>Studio lighting, hyper-detailed materials (glass, matte carbon, brushed titanium), and studio-grade backgrounds.</p>
+            </div>
+
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-person-bounding-box"></i></div>
+              <h4>Stylized Characters &amp; Portraits</h4>
+              <p>Cyberpunk, futuristic techwear, corporate editorial, fantasy concept art with precise facial lighting.</p>
+            </div>
+
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-buildings"></i></div>
+              <h4>Architectural &amp; Spatial Concepts</h4>
+              <p>Brutalist, biophilic, modern glass pavillions, interior design concepts with realistic ambient illumination.</p>
+            </div>
+
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-images"></i></div>
+              <h4>Web &amp; Marketing Banners</h4>
+              <p>Cohesive brand illustration sets, hero section visual assets, and high-impact social media creatives.</p>
+            </div>
+
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-magic"></i></div>
+              <h4>Inpainting &amp; Image Outpainting</h4>
+              <p>Extending backgrounds for responsive web layouts, replacing unwanted elements, and localized modifications.</p>
+            </div>
+
+            <div class="ai-capability-card">
+              <div class="ai-cap-icon"><i class="bi bi-brush"></i></div>
+              <h4>Photo Retouching &amp; Color Grading</h4>
+              <p>Adobe Photoshop &amp; Lightroom mastery for curve adjustments, cinematic grading, and selective sharpening.</p>
+            </div>
+
+          </div>
+
+          <!-- Bottom Action in Modal -->
+          <div class="ai-modal-bottom-cta">
+            <div>
+              <h4 style="margin-bottom: 0.25rem; font-size: 1.1rem; color: var(--text-primary);">Need custom AI visual assets or tailored prompt recipes?</h4>
+              <p style="margin-bottom: 0; font-size: 0.88rem; color: var(--text-secondary);">I can craft bespoke prompts and production-ready images for your brand or product.</p>
+            </div>
+            <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-primary-glow" style="white-space: nowrap;">
+              <span>Request Custom AI Assets</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -20,17 +20,17 @@
   </script>
 
   <!-- Primary Meta Tags -->
-  <title>{% block title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}</title>
-  <meta name="title" content="{% block meta_title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}">
-  <meta name="description" content="{% block meta_description %}Portfolio of Parmeet Singh, Full-Stack Python & Django Engineer specializing in high-performance web applications, scalable platforms, and data systems.{% endblock %}">
+  <title>{% block title %}Personal Portfolio — Parmeet Singh{% endblock %}</title>
+  <meta name="title" content="{% block meta_title %}Personal Portfolio — Parmeet Singh{% endblock %}">
+  <meta name="description" content="{% block meta_description %}Personal Portfolio of Parmeet Singh, Full-Stack Python & Django Engineer specializing in high-performance web applications, scalable platforms, and data systems.{% endblock %}">
   <meta name="author" content="Parmeet Singh">
-  <meta name="keywords" content="Parmeet Singh, Python, Django, Full-Stack Developer, Web Applications, REST APIs, PostgreSQL, Data Science, Portfolio">
+  <meta name="keywords" content="Parmeet Singh, Personal Portfolio, Python, Django, Full-Stack Developer, Web Applications, REST APIs, PostgreSQL, Data Science">
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
-  <meta property="og:title" content="{% block og_title %}Parmeet Singh — Full-Stack Python & Django Developer{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}Full-Stack Python & Django Engineer building scalable web platforms, digital products, and high-performance applications.{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Personal Portfolio — Parmeet Singh{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Personal Portfolio of Parmeet Singh — Full-Stack Python & Django Developer building scalable web platforms, digital products, and high-performance systems.{% endblock %}">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260829_1745">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260902_0053">
   
   <!-- Dynamic SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%232563eb'/><text x='50%' y='55%' dominant-baseline='central' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='800' font-size='50'>P</text></svg>">
@@ -61,7 +61,9 @@
           
           <!-- Brand Logo -->
           <a href="{% url 'portfolio:home' %}" class="brand-logo" title="Parmeet Singh - Home">
-            <div class="brand-icon">PS</div>
+            <div class="brand-icon">
+              <img src="{% static 'img/avatar_logo.png' %}?v=2" alt="Parmeet Singh" class="brand-avatar-img" width="42" height="42">
+            </div>
             <span>{{ site_profile.name|default:"Parmeet Singh" }}</span>
           </a>
 
@@ -78,13 +80,14 @@
               </a>
             </li>
             <li>
-              <a href="{% url 'portfolio:about' %}" class="nav-link-item {% if active_page == 'about' %}active{% endif %}">
-                About
+              <a href="{% url 'portfolio:services' %}" class="nav-link-item {% if active_page == 'services' %}active{% endif %}">
+                Services
               </a>
             </li>
             <li>
-              <a href="{% url 'portfolio:services' %}" class="nav-link-item {% if active_page == 'services' %}active{% endif %}">
-                Services
+              <a href="{% url 'portfolio:about' %}" class="nav-link-item {% if active_page == 'about' %}active{% endif %}" title="A Day in My Life — Interactive Visual Story">
+                <i class="bi bi-camera-reels me-1"></i>
+                <span>A Day in My Life</span>
               </a>
             </li>
             <li>
@@ -99,67 +102,62 @@
             </li>
           </ul>
 
-          <!-- Nav Actions: Theme Toggle, Resume & Mobile Menu -->
+          <!-- Nav Actions: Resume Download & Theme Toggle (Accessible on Mobile & Desktop) -->
           <div class="nav-actions">
+            <!-- Download Resume Button -->
+            <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-sm nav-resume-btn" title="Download Resume PDF">
+              <i class="bi bi-file-earmark-arrow-down"></i>
+              <span class="nav-resume-text">Resume</span>
+            </a>
+
             <!-- Light/Dark Mode Switcher -->
             <button type="button" class="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Theme">
               <i class="bi bi-sun-fill icon-sun"></i>
               <i class="bi bi-moon-stars-fill icon-moon"></i>
             </button>
-
-            <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow btn-sm d-none d-md-inline-flex" title="Download Resume PDF">
-              <i class="bi bi-file-earmark-arrow-down"></i>
-              <span>Download Resume</span>
-            </a>
-
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-              <i class="bi bi-list fs-4"></i>
-            </button>
           </div>
 
         </div>
       </nav>
-
-      <!-- Mobile Navigation Drawer -->
-      <div class="mobile-drawer" id="mobileDrawer">
-        <div class="d-flex justify-content-between align-items-center mb-2" style="display: flex; justify-content: space-between; align-items: center;">
-          <span class="font-mono text-muted" style="font-size: 0.8rem; text-transform: uppercase;">Menu Navigation</span>
-          <button type="button" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
-            <i class="bi bi-sun-fill icon-sun"></i>
-            <i class="bi bi-moon-stars-fill icon-moon"></i>
-          </button>
-        </div>
-        <a href="{% url 'portfolio:home' %}" class="nav-link-item {% if active_page == 'home' %}active{% endif %}">
-          <i class="bi bi-house-door me-2"></i> Home
-        </a>
-        <a href="{% url 'portfolio:work' %}" class="nav-link-item {% if active_page == 'work' %}active{% endif %}">
-          <i class="bi bi-grid me-2"></i> Work & Projects
-        </a>
-        <a href="{% url 'portfolio:about' %}" class="nav-link-item {% if active_page == 'about' %}active{% endif %}">
-          <i class="bi bi-person me-2"></i> About & Bio
-        </a>
-        <a href="{% url 'portfolio:services' %}" class="nav-link-item {% if active_page == 'services' %}active{% endif %}">
-          <i class="bi bi-briefcase me-2"></i> Services & Solutions
-        </a>
-        <a href="{% url 'portfolio:resume' %}" class="nav-link-item {% if active_page == 'resume' %}active{% endif %}">
-          <i class="bi bi-file-earmark-text me-2"></i> Resume
-        </a>
-        <a href="{% url 'portfolio:contact' %}" class="nav-link-item {% if active_page == 'contact' %}active{% endif %}">
-          <i class="bi bi-envelope me-2"></i> Contact
-        </a>
-        <div class="pt-2">
-          <a href="{% url 'portfolio:resume_download' %}" class="btn-modern btn-primary-glow w-100" style="width: 100%;">
-            <i class="bi bi-file-earmark-arrow-down"></i> Download Resume
-          </a>
-        </div>
-      </div>
     </header>
+
+    <!-- Mobile App-Style Bottom Navigation Dock (Fixed at bottom for Mobile App Experience) -->
+    <nav class="mobile-bottom-dock" aria-label="Mobile App Navigation">
+      <div class="mobile-bottom-dock-inner">
+        {% if active_page != 'home' %}
+          <a href="{% url 'portfolio:home' %}" class="dock-item dock-item-home" title="Return to Homepage">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Home</span>
+          </a>
+        {% endif %}
+        <a href="{% url 'portfolio:work' %}" class="dock-item {% if active_page == 'work' %}active{% endif %}">
+          <i class="bi bi-grid-fill"></i>
+          <span>Work</span>
+        </a>
+        <a href="{% url 'portfolio:services' %}" class="dock-item {% if active_page == 'services' %}active{% endif %}">
+          <i class="bi bi-briefcase-fill"></i>
+          <span>Services</span>
+        </a>
+        <a href="{% url 'portfolio:about' %}" class="dock-item {% if active_page == 'about' %}active{% endif %}" title="A Day in My Life">
+          <i class="bi bi-camera-reels-fill"></i>
+          <span>A Day in My Life</span>
+        </a>
+        <a href="{% url 'portfolio:resume' %}" class="dock-item {% if active_page == 'resume' %}active{% endif %}">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <span>Resume</span>
+        </a>
+        <a href="{% url 'portfolio:contact' %}" class="dock-item {% if active_page == 'contact' %}active{% endif %}">
+          <i class="bi bi-envelope-fill"></i>
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
 
     <!-- Main Content Area -->
     <main class="main-content" id="mainContent">
       
-      <!-- Django Flash Messages -->
-      {% if messages %}
+      <!-- Django Flash Messages (on all pages except contact where it is placed directly above the form) -->
+      {% if messages and active_page != 'contact' %}
         <div class="site-container pt-3" style="padding-top: 1rem;">
           {% for message in messages %}
             <div class="alert-modern {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% else %}alert-info{% endif %}" role="alert">
@@ -181,7 +179,9 @@
           <!-- Column 1: Brand & Philosophy -->
           <div class="footer-col">
             <a href="{% url 'portfolio:home' %}" class="brand-logo mb-3" style="display: inline-flex; margin-bottom: 0.85rem;">
-              <div class="brand-icon">PS</div>
+              <div class="brand-icon">
+                <img src="{% static 'img/avatar_logo.png' %}?v=2" alt="Parmeet Singh" class="brand-avatar-img" width="42" height="42">
+              </div>
               <span>{{ site_profile.name|default:"Parmeet Singh" }}</span>
             </a>
             <p style="font-size: 0.9rem; line-height: 1.6; max-width: 320px; color: var(--text-secondary);">
@@ -256,9 +256,45 @@
       </div>
     </footer>
   </div>
+ 
+  <!-- Proprietary / Private Repository Modal -->
+  <div class="private-repo-modal-backdrop" id="privateRepoModal" aria-hidden="true" style="display: none;">
+    <div class="private-repo-modal-dialog">
+      <button type="button" class="private-repo-modal-close" onclick="closePrivateRepoModal()" aria-label="Close modal">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <div class="private-repo-modal-icon">
+        <i class="bi bi-shield-lock-fill text-amber"></i>
+      </div>
+      <h3 class="private-repo-title">Proprietary Business Project</h3>
+      <p class="private-repo-lead">
+        The source code for <strong>GaadiMandi</strong> is currently maintained in a private repository due to proprietary business algorithms, dealer network integrations, and active commercial development.
+      </p>
+      <div class="private-repo-box font-mono">
+        <div class="private-repo-item">
+          <i class="bi bi-check2-circle text-emerald"></i>
+          <span>Live working platform deployed on Vercel</span>
+        </div>
+        <div class="private-repo-item">
+          <i class="bi bi-check2-circle text-emerald"></i>
+          <span>Architecture overview &amp; case study available</span>
+        </div>
+      </div>
+      <div class="private-repo-actions">
+        <a href="https://car-trade-gamma.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm">
+          <i class="bi bi-box-arrow-up-right"></i>
+          <span>Open Live Platform</span>
+        </a>
+        <a href="{% url 'portfolio:contact' %}" class="btn-modern btn-secondary-outline btn-sm">
+          <i class="bi bi-envelope"></i>
+          <span>Request Code Review</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript Engine with Cache Buster -->
-  <script src="{% static 'js/main.js' %}?v=20260829_1745"></script>
+  <script src="{% static 'js/main.js' %}?v=20260901_1923"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

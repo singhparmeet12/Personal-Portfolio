@@ -4,6 +4,7 @@ Django settings for portfolio_core project.
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +15,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-^5bnfu0df60eso
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+    'https://*.now.sh',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
+custom_csrf = os.environ.get('CSRF_TRUSTED_ORIGINS')
+if custom_csrf:
+    CSRF_TRUSTED_ORIGINS.extend([origin.strip() for origin in custom_csrf.split(',') if origin.strip()])
 
 # Application definition
 INSTALLED_APPS = [
@@ -30,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,13 +73,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_core.wsgi.application'
 
 # Database
-# Uses SQLite for local development, easily configured with DATABASE_URL or Postgres in production
+# Uses SQLite for local development, automatically uses PostgreSQL when DATABASE_URL is configured
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    DATABASES['default'] = dj_database_url.config(
+        default=database_url,
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -95,6 +116,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files (User uploads, project images, resume PDF)
 MEDIA_URL = '/media/'
@@ -104,3 +126,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Experimental Lab / Skills Sandbox toggle
+ENABLE_LAB = True
+
+# Email Configuration (for contact form dispatch)
+EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'parmeetssms@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'Portfolio Contact <parmeetssms@gmail.com>')
+

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Lab & Experiments — Parmeet Singh{% endblock %}
+{% block meta_title %}Lab & Experiments — Parmeet Singh{% endblock %}
+{% block meta_description %}Experimental developer sandbox where Parmeet tests raw ideas, interactive prototypes, creative UI experiments, and emerging tech stacks.{% endblock %}
+
+{% block content %}
+<!-- ==========================================================================
+     EXPERIMENTAL LAB / SKILLS SANDBOX
+     ========================================================================== -->
+<div class="lab-page-container">
+  <div class="site-container py-4">
+    
+    <!-- Dedicated Page Navigation Breadcrumb -->
+    <div class="page-nav-bar mb-4">
+      <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+        <i class="bi bi-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+    </div>
+
+    <!-- Lab Header Banner -->
+    <div class="lab-header mb-5">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;">
+        <i class="bi bi-flask-fill"></i>
+        <span>EXPERIMENTAL LAB &bull; UNSTRUCTURED ZONE</span>
+      </div>
+      <h1 class="display-4 fw-bold mb-3">Creative Sandbox &amp; Experiments</h1>
+      <p class="lead text-secondary max-w-2xl" style="max-width: 680px;">
+        An informal, unstructured playground where I tinker with interactive animations, experimental Python &amp; web concepts, UI prototypes, and mini tech demos before they graduate into production projects.
+      </p>
+    </div>
+
+    <!-- Open Experimental Area -->
+    <div class="lab-open-workspace" style="min-height: 420px; border: 1px dashed var(--border-medium); border-radius: var(--radius-xl); padding: 3rem; background: rgba(15, 23, 42, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 3rem;">
+      <div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+        <i class="bi bi-flask text-warning fs-3"></i>
+      </div>
+      <h3 class="h4 fw-bold mb-2">Experimental Scratchpad Ready</h3>
+      <p class="text-secondary small mb-0" style="max-width: 520px;">
+        This page is completely unstructured. You can add your raw code, animations, custom widgets, interactive demos, or creative experiments here anytime.
+      </p>
+    </div>
+
+    <!-- Toggle Note for Hosting -->
+    <div class="p-3 rounded-3" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.75rem;">
+      <i class="bi bi-info-circle-fill text-warning fs-5"></i>
+      <div>
+        <strong>Hosting Control Note:</strong> To hide or show this Lab from the navbar when hosting, simply change <code>ENABLE_LAB = False</code> in <code>portfolio_core/settings.py</code>. The rest of the site is completely unaffected!
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
