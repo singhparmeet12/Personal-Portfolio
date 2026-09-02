@@ -1400,13 +1400,13 @@ function initAboutWorldExperience() {
         }
       }
 
-      // Smoothly hide onboarding scroll prompt when user initiates scrolling
-      const storyScrollHint = document.getElementById('storyScrollHint');
-      if (storyScrollHint) {
-        if (window.scrollY > 40) {
-          storyScrollHint.classList.add('hint-hidden');
+      // Smoothly hide onboarding scroll prompt as soon as user begins scrolling
+      const storyPrompt = document.getElementById('storyScrollPrompt') || document.getElementById('aboutScrollPrompt') || document.getElementById('storyScrollHint');
+      if (storyPrompt) {
+        if (window.scrollY > 8) {
+          storyPrompt.classList.add('dismissed');
         } else {
-          storyScrollHint.classList.remove('hint-hidden');
+          storyPrompt.classList.remove('dismissed');
         }
       }
 
@@ -1417,6 +1417,15 @@ function initAboutWorldExperience() {
   window.addEventListener('scroll', updateActiveChapterOnScroll, { passive: true });
   window.addEventListener('resize', updateActiveChapterOnScroll, { passive: true });
   updateActiveChapterOnScroll();
+
+  // Story scroll prompt click-to-scroll handler
+  const storyPromptEl = document.getElementById('storyScrollPrompt') || document.getElementById('aboutScrollPrompt');
+  if (storyPromptEl) {
+    storyPromptEl.addEventListener('click', () => {
+      storyPromptEl.classList.add('dismissed');
+      window.scrollTo({ top: window.innerHeight * 0.45, behavior: 'smooth' });
+    });
+  }
 
   // Quick dot navigation: click dot to scroll directly to that chapter
   stageDots.forEach(dot => {
@@ -1656,9 +1665,11 @@ window.openCertLightbox = function(title, issuer, year, code, pdfUrl, onlineUrl)
 // Close Certificate Lightbox handlers
 document.addEventListener('DOMContentLoaded', () => {
   const modalBackdrop = document.getElementById('certModalBackdrop');
-  const modalCloseBtn = document.getElementById('certModalClose');
-  if (modalCloseBtn && modalBackdrop) {
-    modalCloseBtn.addEventListener('click', () => modalBackdrop.classList.remove('open'));
+  if (modalBackdrop) {
+    const closeButtons = modalBackdrop.querySelectorAll('.cert-modal-close, .cert-modal-btn-close, #certModalClose, #modalCertCloseBottomBtn');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => modalBackdrop.classList.remove('open'));
+    });
     modalBackdrop.addEventListener('click', (e) => {
       if (e.target === modalBackdrop) modalBackdrop.classList.remove('open');
     });
@@ -1747,69 +1758,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Tab switching
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const targetTab = btn.getAttribute('data-tab');
       tabBtns.forEach(b => b.classList.remove('active'));
       tabPanels.forEach(p => p.classList.remove('active'));
-
       btn.classList.add('active');
-      const activePanel = aiModal.querySelector(`#aiTab${targetTab.charAt(0).toUpperCase() + targetTab.slice(1)}`);
-      if (activePanel) {
-        activePanel.classList.add('active');
-      }
-
-      if (targetTab === 'comparison') {
-        setTimeout(initComparisonSlider, 50);
-      }
-    });
-  });
-
-  // Prompt Copy Buttons
-  const copyBtns = aiModal.querySelectorAll('.ai-copy-btn');
-  copyBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const textToCopy = btn.getAttribute('data-copy');
-      if (textToCopy && navigator.clipboard) {
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          const originalHtml = btn.innerHTML;
-          btn.innerHTML = '<i class="bi bi-check2"></i> <span>Copied!</span>';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.innerHTML = originalHtml;
-            btn.classList.remove('copied');
-          }, 2000);
-        });
+      const targetPanel = document.getElementById(`tab-${targetTab}`);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+        if (targetTab === 'retouch') {
+          setTimeout(initComparisonSlider, 50);
+        }
       }
     });
   });
-
-  // Draggable Before/After Comparison Slider
-  let isDragging = false;
-  const compBox = document.getElementById('aiComparisonBox');
-  const compOverlay = document.getElementById('aiCompOverlay');
-  const compDivider = document.getElementById('aiCompDivider');
-
-  function updateSliderPosition(clientX) {
-    if (!compBox || !compOverlay || !compDivider) return;
-    const rect = compBox.getBoundingClientRect();
-    let offsetX = clientX - rect.left;
-    if (offsetX < 0) offsetX = 0;
-    if (offsetX > rect.width) offsetX = rect.width;
-
-    const percentage = (offsetX / rect.width) * 100;
-    compOverlay.style.width = `${percentage}%`;
-    compDivider.style.left = `${percentage}%`;
-  }
 
   function initComparisonSlider() {
-    if (!compBox || !compOverlay || !compDivider) return;
-    compOverlay.style.width = '50%';
-    compDivider.style.left = '50%';
-  }
+    const compBox = document.getElementById('aiComparisonBox');
+    const compSlider = document.getElementById('aiCompSlider');
+    const compOverlay = document.getElementById('aiCompOverlay');
+    if (!compBox || !compSlider || !compOverlay) return;
 
-  if (compBox) {
+    let isDragging = false;
+
+    const updateSliderPosition = (x) => {
+      const rect = compBox.getBoundingClientRect();
+      let offsetX = x - rect.left;
+      if (offsetX < 0) offsetX = 0;
+      if (offsetX > rect.width) offsetX = rect.width;
+      const percent = (offsetX / rect.width) * 100;
+      compSlider.style.left = `${percent}%`;
+      compOverlay.style.width = `${percent}%`;
+    };
+
     const onStart = (e) => {
       isDragging = true;
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -1834,29 +1816,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchmove', onMove, { passive: true });
     window.addEventListener('touchend', onEnd);
   }
-  // Check URL query param ?open=ai-lab
+
+  // Check URL query param ?open=ai-lab
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('open') === 'ai-lab') {
     setTimeout(openAiModal, 150);
   }
 });
-
-// Global helpers for Proprietary Private Repository Modal
-window.openPrivateRepoModal = function(projectName) {
-  const modal = document.getElementById('privateRepoModal');
-  if (modal) {
-    modal.style.display = 'flex';
-    setTimeout(() => modal.classList.add('open'), 10);
-  }
-};
-
-window.closePrivateRepoModal = function() {
-  const modal = document.getElementById('privateRepoModal');
-  if (modal) {
-    modal.classList.remove('open');
-    setTimeout(() => { modal.style.display = 'none'; }, 250);
-  }
-};
 
 /* --------------------------------------------------------------------------
    MOBILE RESUME PDF CANVAS RENDERER (100% Touch-Friendly Native Scroll)

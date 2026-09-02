@@ -53,6 +53,12 @@
          ======================================================================== -->
     <div class="about-story-col" id="aboutStoryCol">
 
+      <!-- Floating Scroll Prompt (Positioned in the empty gap between photo frame and first cue card) -->
+      <div class="story-scroll-banner" id="storyScrollPrompt" role="status" aria-label="Scroll to explore" onclick="this.classList.add('dismissed');">
+        <span class="scroll-banner-text">Scroll to explore</span>
+        <i class="bi bi-chevron-down scroll-banner-arrow"></i>
+      </div>
+
       <!-- CHAPTER 01: THE FIRST MORNING / INTRO -->
       <section class="story-chapter-block active" id="chapter-01" data-scene="1">
         <div class="chapter-content-card">
@@ -647,6 +653,9 @@
         <a href="#" target="_blank" rel="noopener noreferrer" class="btn-modern btn-secondary-outline btn-sm" id="modalCertUrlBtn">
           <i class="bi bi-box-arrow-up-right"></i> Verify Online &rarr;
         </a>
+        <button type="button" class="btn-modern btn-subtle btn-sm cert-modal-btn-close" id="modalCertCloseBottomBtn" title="Close Certificate Modal">
+          <i class="bi bi-x-circle"></i> Close
+        </button>
       </div>
     </div>
   </div>
