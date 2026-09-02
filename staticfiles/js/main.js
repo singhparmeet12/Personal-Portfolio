@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyEmail();
   initInteractiveShowcase();
   initAboutWorldExperience();
+  initMobileDockOnboardingHint();
 });
 
 /* --------------------------------------------------------------------------
@@ -1373,7 +1374,10 @@ function initAboutWorldExperience() {
     scrollTicking = true;
 
     requestAnimationFrame(() => {
-      const viewportTargetY = window.innerHeight * 0.45;
+      const isMobile = window.innerWidth <= 767;
+      // On mobile, the photo stage is pinned sticky at the top (~460px tall).
+      // The reading viewport sweetspot is in the lower active region of the screen:
+      const viewportTargetY = isMobile ? (window.innerHeight * 0.76) : (window.innerHeight * 0.45);
       let closestBlock = null;
       let minDistance = Infinity;
 
@@ -1830,16 +1834,29 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchmove', onMove, { passive: true });
     window.addEventListener('touchend', onEnd);
   }
-
-  // Mobile PDF Canvas Renderer
-  initMobilePdfRenderer();
-
-  // Check URL query param ?open=ai-lab
+  // Check URL query param ?open=ai-lab
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('open') === 'ai-lab') {
     setTimeout(openAiModal, 150);
   }
 });
+
+// Global helpers for Proprietary Private Repository Modal
+window.openPrivateRepoModal = function(projectName) {
+  const modal = document.getElementById('privateRepoModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('open'), 10);
+  }
+};
+
+window.closePrivateRepoModal = function() {
+  const modal = document.getElementById('privateRepoModal');
+  if (modal) {
+    modal.classList.remove('open');
+    setTimeout(() => { modal.style.display = 'none'; }, 250);
+  }
+};
 
 /* --------------------------------------------------------------------------
    MOBILE RESUME PDF CANVAS RENDERER (100% Touch-Friendly Native Scroll)
@@ -1886,5 +1903,76 @@ function initMobilePdfRenderer() {
   });
 }
 
+/* --------------------------------------------------------------------------
+   MOBILE BOTTOM DOCK FIRST-TIME ONBOARDING HINT
+   - Pops up only after the user spends 15 seconds on the website on mobile
+   - Dismisses immediately when the user clicks anywhere on the website
+   - Never appears again on the same device
+   -------------------------------------------------------------------------- */
+function initMobileDockOnboardingHint() {
+  const hintEl = document.getElementById('mobileDockHint');
+  if (!hintEl) return;
 
+  const isMobile = window.innerWidth <= 767;
+  const STORAGE_KEY = 'parmeet_mobile_dock_hint_dismissed_v3';
+  let hasSeenHint = false;
+  try {
+    hasSeenHint = localStorage.getItem(STORAGE_KEY) === 'true';
+  } catch (e) {}
 
+  if (!isMobile || hasSeenHint) {
+    hintEl.remove();
+    return;
+  }
+
+  // Dismiss handler
+  let isDismissed = false;
+  const dismissHint = () => {
+    if (isDismissed) return;
+    isDismissed = true;
+    hintEl.classList.remove('show');
+    hintEl.classList.add('dismissed');
+    try {
+      localStorage.setItem(STORAGE_KEY, 'true');
+    } catch (e) {}
+
+    setTimeout(() => {
+      if (hintEl && hintEl.parentNode) {
+        hintEl.remove();
+      }
+    }, 400);
+
+    // Remove event listeners
+    const events = ['click', 'touchstart', 'pointerdown', 'touchmove', 'scroll', 'wheel'];
+    events.forEach(evt => {
+      window.removeEventListener(evt, dismissHint, { capture: true, passive: true });
+      document.removeEventListener(evt, dismissHint, { capture: true, passive: true });
+    });
+  };
+
+  window.dismissMobileDockHint = dismissHint;
+
+  // Wait for 15 seconds of user presence before showing the reminder
+  const SHOW_DELAY_MS = 15000;
+  setTimeout(() => {
+    if (isDismissed) return;
+    try {
+      if (localStorage.getItem(STORAGE_KEY) === 'true') {
+        hintEl.remove();
+        return;
+      }
+    } catch (e) {}
+
+    // Pop up the reminder tooltip
+    hintEl.classList.add('show');
+
+    // Register click/touch/scroll dismiss listeners
+    setTimeout(() => {
+      const events = ['click', 'touchstart', 'pointerdown', 'touchmove', 'scroll', 'wheel'];
+      events.forEach(evt => {
+        window.addEventListener(evt, dismissHint, { capture: true, passive: true });
+        document.addEventListener(evt, dismissHint, { capture: true, passive: true });
+      });
+    }, 150);
+  }, SHOW_DELAY_MS);
+}

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block body_class %}page-about-view{% endblock %}
+
 {% block title %}A Day in My Life — Parmeet Singh{% endblock %}
 {% block meta_description %}An interactive split-screen journey through A Day in My Life — B.Tech 2025 CSE (AI & Data Science), Python & Django Developer, and builder.{% endblock %}
 
@@ -17,8 +19,25 @@
      Right Half: Sticky 4K Cinematic Visual Stage (Scene 01 to 12)
      ========================================================================== -->
 <div class="split-about-wrapper" id="splitAboutWrapper">
-  <div class="site-container pt-3 pb-1">
-    <!-- Dedicated Page Navigation Breadcrumb (Identical to other pages) -->
+
+  <!-- Mobile-Only Compact Action Bar (Sticky at Top on Phone, Replaces Navbar) -->
+  <div class="about-mobile-action-bar" id="aboutMobileActionBar">
+    <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+    <div class="stage-style-pills mobile-header-pills" id="stageStylePillsMobile">
+      <button type="button" class="style-pill-btn" data-style-target="real" title="Switch to 3D Cinematic Style">
+        <i class="bi bi-camera-reels"></i> <span class="style-name-short">3D</span>
+      </button>
+      <button type="button" class="style-pill-btn active" data-style-target="lofi" title="Switch to Lofi Anime Style (Default)">
+        <i class="bi bi-brush"></i> <span class="style-name-short">Lofi</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Desktop Breadcrumb (Hidden on Mobile) -->
+  <div class="site-container pt-3 pb-1 desktop-only-nav">
     <div class="page-nav-bar mb-1">
       <a href="{% url 'portfolio:home' %}" class="btn-page-back" title="Return to Homepage">
         <i class="bi bi-arrow-left"></i>

@@ -41,14 +41,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260902_0053">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260903_0155">
   
   <!-- Dynamic SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%232563eb'/><text x='50%' y='55%' dominant-baseline='central' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='800' font-size='50'>P</text></svg>">
 
   {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
   <!-- Ambient Grid Background -->
   <div class="bg-grid-overlay" aria-hidden="true"></div>
@@ -122,7 +122,20 @@
     </header>
 
     <!-- Mobile App-Style Bottom Navigation Dock (Fixed at bottom for Mobile App Experience) -->
-    <nav class="mobile-bottom-dock" aria-label="Mobile App Navigation">
+    <nav class="mobile-bottom-dock" id="mobileBottomDock" aria-label="Mobile App Navigation">
+      <!-- Cute First-Time Onboarding Pointer Tooltip (Appears once for first-time visitors, dismisses on touch or scroll) -->
+      <div class="mobile-dock-hint" id="mobileDockHint" role="tooltip" aria-hidden="true" onclick="if(window.dismissMobileDockHint){window.dismissMobileDockHint();}else{this.remove();}">
+        <div class="dock-hint-bubble">
+          <div class="dock-hint-content">
+            <span class="dock-hint-text"><strong>Explore More Pages</strong> from here anytime!</span>
+          </div>
+          <span class="dock-hint-sub">Tap or scroll to close</span>
+        </div>
+        <div class="dock-hint-arrow">
+          <i class="bi bi-chevron-down"></i>
+        </div>
+      </div>
+
       <div class="mobile-bottom-dock-inner">
         {% if active_page != 'home' %}
           <a href="{% url 'portfolio:home' %}" class="dock-item dock-item-home" title="Return to Homepage">
@@ -294,7 +307,7 @@
   </div>
 
   <!-- JavaScript Engine with Cache Buster -->
-  <script src="{% static 'js/main.js' %}?v=20260901_1923"></script>
+  <script src="{% static 'js/main.js' %}?v=20260903_0155"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

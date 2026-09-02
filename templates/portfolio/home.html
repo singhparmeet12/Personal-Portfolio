@@ -197,6 +197,43 @@
 </div>
 
 <!-- ==========================================================================
+     CORE SKILLS & ENGINEERING TOOLKIT STRIP (COMPACT & PROPORTIONATE)
+     ========================================================================== -->
+<section class="home-skills-strip" aria-label="Technical Skills & Toolkit">
+  <div class="site-container">
+    <div class="skills-strip-inner">
+      <div class="skills-strip-header">
+        <span class="skills-strip-badge font-mono">
+          <i class="bi bi-cpu"></i> CORE TOOLKIT
+        </span>
+        <h3 class="skills-strip-heading">Technologies &amp; Tools</h3>
+      </div>
+
+      <div class="skills-strip-grid">
+        {% for cat in skill_categories %}
+          <div class="skill-mini-category">
+            <span class="skill-cat-title font-mono">
+              {% if "Backend" in cat.name or "Programming" in cat.name %}<i class="bi bi-server" style="color:var(--accent-primary);"></i>
+              {% elif "Frontend" in cat.name or "Web" in cat.name %}<i class="bi bi-layout-text-window-reverse" style="color:var(--accent-cyan);"></i>
+              {% elif "AI" in cat.name or "Data" in cat.name or "Machine" in cat.name %}<i class="bi bi-cpu-fill" style="color:var(--accent-emerald);"></i>
+              {% elif "DevOps" in cat.name or "Tools" in cat.name or "Cloud" in cat.name %}<i class="bi bi-cloud-check" style="color:var(--accent-amber);"></i>
+              {% else %}<i class="bi bi-layers" style="color:var(--accent-indigo);"></i>
+              {% endif %}
+              {{ cat.name }}
+            </span>
+            <div class="skill-chips-wrap">
+              {% for skill in cat.skills.all %}
+                <span class="skill-chip">{{ skill.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
      SELECTED WORK SHOWCASE
      ========================================================================== -->
 <section class="section-padding" style="border-top: 1px solid var(--border-subtle);" aria-label="Selected Projects">

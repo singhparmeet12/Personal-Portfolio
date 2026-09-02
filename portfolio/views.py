@@ -25,9 +25,10 @@ from .forms import ContactForm
 
 
 def home_view(request):
-    """Homepage: Hero with interactive visual, selected work, exploration snapshot, freelance preview, about teaser."""
+    """Homepage: Hero with interactive visual, skills strip, selected work, exploration snapshot, freelance preview, about teaser."""
     featured_projects = []
     services_preview = []
+    skill_categories = []
     try:
         qs = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:3]
         if not qs.exists():
@@ -41,9 +42,15 @@ def home_view(request):
     except Exception:
         services_preview = []
 
+    try:
+        skill_categories = list(SkillCategory.objects.prefetch_related('skills').all())
+    except Exception:
+        skill_categories = []
+
     context = {
         'featured_projects': featured_projects,
         'services_preview': services_preview,
+        'skill_categories': skill_categories,
         'active_page': 'home',
     }
     return render(request, 'portfolio/home.html', context)

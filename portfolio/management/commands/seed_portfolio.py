@@ -344,7 +344,7 @@ class Command(BaseCommand):
             ]),
             ("Tools & Environment", "tools-devops", 4, [
                 ("Git & GitHub", "Version Control & Collaboration"),
-                ("VS Code", "Development & Debugging"),
+                ("Google Antigravity", "Development & Debugging"),
                 ("Linux / Bash", "Command Line & Automation"),
                 ("Virtual Environments", "Dependency Management"),
             ]),
