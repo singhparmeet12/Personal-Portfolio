@@ -1439,6 +1439,174 @@ function initAboutWorldExperience() {
       }
     });
   });
+
+  // ========================================================================
+  // CINEMATIC FULLSCREEN STAGE LIGHTBOX ENGINE (In-Place Pure Optical Crossfade)
+  // ========================================================================
+  const fsModal = document.getElementById('stageFullscreenModal');
+  const stageExpandTrigger = document.getElementById('stageExpandTrigger');
+  const fsCloseBtn = document.getElementById('fsCloseBtn');
+  const fsBackdrop = document.getElementById('fsBackdrop');
+  const fsPrevBtn = document.getElementById('fsPrevBtn');
+  const fsNextBtn = document.getElementById('fsNextBtn');
+  const fsImages = document.querySelectorAll('.fs-img');
+  const fsTimecode = document.getElementById('fsTimecodeText');
+  const fsCounter = document.getElementById('fsCounterText');
+  const fsDots = document.querySelectorAll('.fs-dot');
+  const fsStyleBtns = document.querySelectorAll('.fs-style-btn');
+
+  let isFsModalOpen = false;
+  let fsCrossfadeTimer = null;
+
+  function renderFsScene(targetSceneNum) {
+    if (targetSceneNum < 1) targetSceneNum = 11;
+    if (targetSceneNum > 11) targetSceneNum = 1;
+
+    currentActiveScene = targetSceneNum;
+    setActiveScene(targetSceneNum);
+
+    // Crossfade in-place across all statically pre-cached fs-images:
+    fsImages.forEach(img => {
+      const imgScene = parseInt(img.getAttribute('data-scene'), 10);
+      const imgStyle = img.getAttribute('data-style');
+
+      if (imgStyle === currentStyle && imgScene === currentActiveScene) {
+        img.classList.remove('prev-active');
+        img.classList.add('active');
+      } else if (img.classList.contains('active')) {
+        img.classList.remove('active');
+        img.classList.add('prev-active');
+      } else {
+        img.classList.remove('active', 'prev-active');
+      }
+    });
+
+    if (fsCrossfadeTimer) clearTimeout(fsCrossfadeTimer);
+    fsCrossfadeTimer = setTimeout(() => {
+      fsImages.forEach(img => {
+        const imgScene = parseInt(img.getAttribute('data-scene'), 10);
+        const imgStyle = img.getAttribute('data-style');
+        if (imgStyle !== currentStyle || imgScene !== currentActiveScene) {
+          img.classList.remove('prev-active');
+        }
+      });
+    }, 600);
+
+    // Update Telemetry & UI (Clean & Concise)
+    const meta = filmMetadata[targetSceneNum - 1] || filmMetadata[0];
+    const formattedNum = targetSceneNum < 10 ? '0' + targetSceneNum : targetSceneNum;
+    const timeOnly = meta.timecode ? meta.timecode.split('•')[0].trim() : '08:00 AM';
+    if (fsTimecode) fsTimecode.textContent = timeOnly;
+    if (fsCounter) fsCounter.textContent = `${formattedNum} / 11`;
+
+    fsDots.forEach((dot, idx) => {
+      dot.classList.toggle('active', (idx + 1) === targetSceneNum);
+    });
+
+    fsStyleBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-fs-style') === currentStyle);
+    });
+  }
+
+  function openFullscreenModal() {
+    if (!fsModal) return;
+    isFsModalOpen = true;
+    fsModal.classList.add('open');
+    renderFsScene(currentActiveScene);
+  }
+
+  function closeFullscreenModal() {
+    if (!fsModal) return;
+    isFsModalOpen = false;
+    fsModal.classList.remove('open');
+  }
+
+  if (stageExpandTrigger) {
+    stageExpandTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openFullscreenModal();
+    });
+  }
+
+  const stageCanvasFrame = document.querySelector('.stage-canvas-frame');
+  if (stageCanvasFrame) {
+    stageCanvasFrame.addEventListener('click', (e) => {
+      if (e.target.closest('.stage-expand-trigger')) return;
+      openFullscreenModal();
+    });
+  }
+
+  if (fsCloseBtn) fsCloseBtn.addEventListener('click', closeFullscreenModal);
+  if (fsBackdrop) fsBackdrop.addEventListener('click', closeFullscreenModal);
+
+  if (fsPrevBtn) {
+    fsPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderFsScene(currentActiveScene - 1);
+    });
+  }
+
+  if (fsNextBtn) {
+    fsNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      renderFsScene(currentActiveScene + 1);
+    });
+  }
+
+  fsDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetScene = parseInt(dot.getAttribute('data-fs-scene'), 10);
+      renderFsScene(targetScene);
+    });
+  });
+
+  fsStyleBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const newStyle = btn.getAttribute('data-fs-style');
+      if (newStyle && newStyle !== currentStyle) {
+        currentStyle = newStyle;
+        localStorage.setItem('parmeet_about_style', currentStyle);
+        updateStylePillUI();
+        renderFsScene(currentActiveScene);
+      }
+    });
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (!isFsModalOpen) return;
+    if (e.key === 'Escape') {
+      closeFullscreenModal();
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      renderFsScene(currentActiveScene + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      renderFsScene(currentActiveScene - 1);
+    }
+  });
+
+  // Touch Swipe for Mobile Fullscreen Navigation
+  let touchStartX = 0;
+  let touchEndX = 0;
+  if (fsModal) {
+    fsModal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    fsModal.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 45) {
+        if (swipeDistance < 0) {
+          renderFsScene(currentActiveScene + 1);
+        } else {
+          renderFsScene(currentActiveScene - 1);
+        }
+      }
+    }, { passive: true });
+  }
 }
 
 // Global helper for opening Certificate Lightbox

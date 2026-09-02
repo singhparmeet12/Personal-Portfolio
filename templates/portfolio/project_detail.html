@@ -5,9 +5,17 @@
 {% block meta_description %}{{ project.tagline }} Detailed case study and architecture by Parmeet Singh.{% endblock %}
 
 {% block content %}
+<!-- Dedicated Constant Fixed Return Navigation -->
+<div class="page-nav-bar project-detail-nav-bar mb-2">
+  <a href="{% url 'portfolio:work' %}" class="btn-page-back" title="Return to All Projects">
+    <i class="bi bi-arrow-left"></i>
+    <span>Back to Projects</span>
+  </a>
+</div>
+
 <div class="site-container">
   
-  <!-- Breadcrumbs & Contextual Back Navigation -->
+  <!-- Breadcrumbs & Header -->
   <div class="case-study-hero">
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
       <a href="{% url 'portfolio:home' %}">Home</a>
@@ -16,11 +24,6 @@
       <span>/</span>
       <span style="color: var(--text-primary); font-weight: 600;">{{ project.title }}</span>
     </nav>
-
-    <a href="{% url 'portfolio:work' %}" class="back-link">
-      <i class="bi bi-arrow-left"></i>
-      <span>Back to All Projects</span>
-    </a>
 
     <div class="mt-2" style="margin-top: 0.75rem;">
       <h1 class="hero-title mt-2 mb-2" style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.75rem 0;">

@@ -29,9 +29,9 @@ def home_view(request):
     featured_projects = []
     services_preview = []
     try:
-        qs = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:4]
+        qs = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:3]
         if not qs.exists():
-            qs = Project.objects.all().prefetch_related('technologies', 'category')[:4]
+            qs = Project.objects.all().prefetch_related('technologies', 'category')[:3]
         featured_projects = list(qs)
     except Exception:
         featured_projects = []

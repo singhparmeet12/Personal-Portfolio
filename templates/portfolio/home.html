@@ -325,16 +325,16 @@
           </div>
 
           <div class="service-card-body">
-            <div class="d-flex align-items-center gap-2 mb-2">
-              <span class="font-mono text-muted" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em;">Offering 0{{ forloop.counter }}</span>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span class="font-mono text-muted service-offering-badge">Offering 0{{ forloop.counter }}</span>
             </div>
             <h3 class="service-card-title">{{ service.title }}</h3>
-            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+            <p class="service-short-summary">
               {{ service.short_summary }}
             </p>
             <div class="service-deliverable-box mt-auto">
-              <span class="font-mono text-muted" style="font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom: 0.25rem;">Core Deliverable</span>
-              <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">{{ service.what_delivered }}</span>
+              <span class="font-mono text-muted service-deliverable-label">Core Deliverable</span>
+              <span class="service-deliverable-text font-bold">{{ service.what_delivered }}</span>
             </div>
           </div>
         </article>
@@ -359,7 +359,7 @@
             <span class="teaser-pill teaser-pill-scenes"><i class="bi bi-film"></i> 12 Continuous Scenes</span>
           </div>
 
-          <h2 class="teaser-title">Step Inside: A Day in the Life of a Developer</h2>
+          <h2 class="teaser-title">Step Inside: A Day in the Life of Parmeet</h2>
           <p class="teaser-description">
             Rather than reading a standard bio, explore an interactive split-screen journey tracking my 24-hour routine — from morning algorithms and AI lectures to deep full-stack architecture and late-night digital craft.
           </p>
@@ -394,8 +394,8 @@
 
         <!-- Right Column: Visual Stage Reel Frame -->
         <div class="teaser-visual-col">
-          <a href="{% url 'portfolio:about' %}" class="teaser-film-frame" title="Click to explore A Day in the Life">
-            <img src="{% static 'img/about_scene_01_real.png' %}" alt="A Day Inside Parmeet's World Preview" class="teaser-film-img" loading="lazy">
+          <a href="{% url 'portfolio:about' %}" class="teaser-film-frame" title="Click to explore A Day in the Life of Parmeet">
+            <img src="{% static 'img/about_scene_01_real.png' %}" alt="A Day in the Life of Parmeet Preview" class="teaser-film-img" loading="lazy">
             <div class="teaser-film-overlay">
               <div class="teaser-film-header-badge">
                 <span class="status-dot" style="background: var(--accent-cyan);"></span>
