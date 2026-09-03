@@ -1000,40 +1000,45 @@ function initAboutWorldExperience() {
       stageFrame.setAttribute('data-active-style', currentStyle);
     }
 
-    const livingWindow = document.getElementById('stageLivingWindow');
-    if (livingWindow) {
-      if (currentStyle === 'lofi') {
-        livingWindow.classList.remove('living-window-hidden');
-      } else {
-        livingWindow.classList.add('living-window-hidden');
-      }
+    const fsFrame = document.getElementById('fsImageFrame');
+    if (fsFrame) {
+      fsFrame.setAttribute('data-active-style', currentStyle);
     }
+
+    const livingWindows = [document.getElementById('stageLivingWindow'), document.getElementById('fsLivingWindow')];
+    livingWindows.forEach(win => {
+      if (win) {
+        if (currentStyle === 'lofi') {
+          win.classList.remove('living-window-hidden');
+        } else {
+          win.classList.add('living-window-hidden');
+        }
+      }
+    });
 
     update3DWindowExterior(currentActiveScene);
   }
 
   function update3DWindowExterior(sceneNum) {
-    const windowExterior = document.getElementById('stageWindowExterior');
-    if (!windowExterior) return;
+    const exteriors = [document.getElementById('stageWindowExterior'), document.getElementById('fsWindowExterior')];
+    exteriors.forEach(win => {
+      if (!win) return;
+      if (currentStyle !== 'real') {
+        win.classList.add('exterior-hidden');
+        return;
+      }
 
-    if (currentStyle !== 'real') {
-      windowExterior.classList.add('exterior-hidden');
-      return;
-    }
+      win.classList.remove('exterior-hidden');
+      win.classList.remove('exterior-state-day', 'exterior-state-sunset', 'exterior-state-night');
 
-    windowExterior.classList.remove('exterior-hidden');
-    windowExterior.classList.remove('exterior-state-day', 'exterior-state-sunset', 'exterior-state-night');
-
-    if (sceneNum >= 9) {
-      // Scenes 09-11: Night (Luminous Moon Halo, Twinkling Stars, Skyscraper Lights, Aviation Beacons)
-      windowExterior.classList.add('exterior-state-night');
-    } else if (sceneNum === 8) {
-      // Scene 08: Sunset (Volumetric Sunset God-Rays, Twilight Hue, Warm Horizon)
-      windowExterior.classList.add('exterior-state-sunset');
-    } else {
-      // Scenes 01-07: Daytime (Daylight Sky Drift, Soaring Birds, Tree Foliage Rustle, Tower Glints)
-      windowExterior.classList.add('exterior-state-day');
-    }
+      if (sceneNum >= 9) {
+        win.classList.add('exterior-state-night');
+      } else if (sceneNum === 8) {
+        win.classList.add('exterior-state-sunset');
+      } else {
+        win.classList.add('exterior-state-day');
+      }
+    });
   }
 
   // ========================================================================
@@ -1062,32 +1067,37 @@ function initAboutWorldExperience() {
   };
 
   function updateCoffeeSteamPosition(sceneNum) {
-    const steamPrimary = document.getElementById('coffeeSteamPrimary');
-    const steamSecondary = document.getElementById('coffeeSteamSecondary');
-    if (!steamPrimary && !steamSecondary) return;
+    const steamPrimaryList = [document.getElementById('coffeeSteamPrimary'), document.getElementById('fsCoffeeSteamPrimary')];
+    const steamSecondaryList = [document.getElementById('coffeeSteamSecondary'), document.getElementById('fsCoffeeSteamSecondary')];
 
     const config = coffeeSteamCoordinates[sceneNum];
     if (!config) {
-      if (steamPrimary) steamPrimary.classList.add('steam-hidden');
-      if (steamSecondary) steamSecondary.classList.add('steam-hidden');
+      steamPrimaryList.forEach(p => p && p.classList.add('steam-hidden'));
+      steamSecondaryList.forEach(s => s && s.classList.add('steam-hidden'));
       return;
     }
 
-    if (config.primary && steamPrimary) {
-      steamPrimary.style.left = config.primary.left;
-      steamPrimary.style.top = config.primary.top;
-      steamPrimary.classList.remove('steam-hidden');
-    } else if (steamPrimary) {
-      steamPrimary.classList.add('steam-hidden');
-    }
+    steamPrimaryList.forEach(p => {
+      if (!p) return;
+      if (config.primary) {
+        p.style.left = config.primary.left;
+        p.style.top = config.primary.top;
+        p.classList.remove('steam-hidden');
+      } else {
+        p.classList.add('steam-hidden');
+      }
+    });
 
-    if (config.secondary && steamSecondary) {
-      steamSecondary.style.left = config.secondary.left;
-      steamSecondary.style.top = config.secondary.top;
-      steamSecondary.classList.remove('steam-hidden');
-    } else if (steamSecondary) {
-      steamSecondary.classList.add('steam-hidden');
-    }
+    steamSecondaryList.forEach(s => {
+      if (!s) return;
+      if (config.secondary) {
+        s.style.left = config.secondary.left;
+        s.style.top = config.secondary.top;
+        s.classList.remove('steam-hidden');
+      } else {
+        s.classList.add('steam-hidden');
+      }
+    });
   }
 
 
@@ -1148,22 +1158,24 @@ function initAboutWorldExperience() {
     if (stageSceneIndex) stageSceneIndex.textContent = `${formattedNum} / 11`;
     if (stageLens) stageLens.textContent = `${meta.lens} • ${styleLabel}`;
 
-    // Update Living Room Ambient Lighting State
-    const stageFrame = document.querySelector('.stage-canvas-frame');
-    if (stageFrame) {
-      stageFrame.classList.remove('ambient-day', 'ambient-sunset', 'ambient-night');
+    // Update Living Room Ambient Lighting State (Standard & Fullscreen)
+    const frames = [document.querySelector('.stage-canvas-frame'), document.getElementById('fsImageFrame')];
+    frames.forEach(frame => {
+      if (!frame) return;
+      frame.classList.remove('ambient-day', 'ambient-sunset', 'ambient-night');
       if (sceneNum >= 9) {
-        stageFrame.classList.add('ambient-night');
+        frame.classList.add('ambient-night');
       } else if (sceneNum === 8) {
-        stageFrame.classList.add('ambient-sunset');
+        frame.classList.add('ambient-sunset');
       } else {
-        stageFrame.classList.add('ambient-day');
+        frame.classList.add('ambient-day');
       }
-    }
+    });
 
-    // Update The Living Window Dynamic Sky & City State (Lofi Anime only)
-    const livingWindow = document.getElementById('stageLivingWindow');
-    if (livingWindow) {
+    // Update The Living Window Dynamic Sky & City State (Lofi Anime only, Standard & Fullscreen)
+    const livingWindows = [document.getElementById('stageLivingWindow'), document.getElementById('fsLivingWindow')];
+    livingWindows.forEach(livingWindow => {
+      if (!livingWindow) return;
       if (currentStyle !== 'lofi') {
         livingWindow.classList.add('living-window-hidden');
       } else {
@@ -1177,7 +1189,7 @@ function initAboutWorldExperience() {
           livingWindow.classList.add('window-state-day');
         }
       }
-    }
+    });
 
     if (window.setAtmosphereScene) {
       window.setAtmosphereScene(sceneNum);

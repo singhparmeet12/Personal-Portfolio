@@ -5556,6 +5556,7 @@ textarea.form-control {
 
 /* STRICT: Only visible in Lofi Anime mode — completely disabled in 3D Cinematic mode */
 .stage-canvas-frame[data-active-style="real"] .stage-living-window,
+.fs-image-frame[data-active-style="real"] .stage-living-window,
 .stage-living-window.living-window-hidden {
   opacity: 0 !important;
   visibility: hidden !important;
@@ -6914,12 +6915,14 @@ textarea.form-control {
   transition: opacity 1s ease, background 1s ease;
 }
 
-.stage-canvas-frame.ambient-night .stage-lamp-glow {
+.stage-canvas-frame.ambient-night .stage-lamp-glow,
+.fs-image-frame.ambient-night .stage-lamp-glow {
   opacity: 0.85;
   background: radial-gradient(circle, rgba(245, 158, 11, 0.26) 0%, rgba(245, 158, 11, 0.09) 45%, transparent 70%);
 }
 
-.stage-canvas-frame.ambient-sunset .stage-lamp-glow {
+.stage-canvas-frame.ambient-sunset .stage-lamp-glow,
+.fs-image-frame.ambient-sunset .stage-lamp-glow {
   opacity: 0.6;
   background: radial-gradient(circle, rgba(249, 115, 22, 0.22) 0%, rgba(249, 115, 22, 0.07) 45%, transparent 70%);
 }
@@ -7277,7 +7280,9 @@ textarea.form-control {
 
 /* Sunset Mode Steam Tint */
 .stage-canvas-frame.ambient-sunset .stage-coffee-steam .steam-puff,
-.stage-canvas-frame.ambient-sunset .stage-coffee-steam .steam-wisp {
+.stage-canvas-frame.ambient-sunset .stage-coffee-steam .steam-wisp,
+.fs-image-frame.ambient-sunset .stage-coffee-steam .steam-puff,
+.fs-image-frame.ambient-sunset .stage-coffee-steam .steam-wisp {
   background: radial-gradient(ellipse at 50% 60%,
       rgba(254, 215, 170, 0.46) 0%,
       rgba(253, 186, 116, 0.22) 45%,
@@ -7286,7 +7291,9 @@ textarea.form-control {
 
 /* Night Mode Steam Tint */
 .stage-canvas-frame.ambient-night .stage-coffee-steam .steam-puff,
-.stage-canvas-frame.ambient-night .stage-coffee-steam .steam-wisp {
+.stage-canvas-frame.ambient-night .stage-coffee-steam .steam-wisp,
+.fs-image-frame.ambient-night .stage-coffee-steam .steam-puff,
+.fs-image-frame.ambient-night .stage-coffee-steam .steam-wisp {
   background: radial-gradient(ellipse at 50% 60%,
       rgba(226, 232, 240, 0.36) 0%,
       rgba(203, 213, 225, 0.16) 45%,

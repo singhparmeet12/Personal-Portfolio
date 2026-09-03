@@ -724,6 +724,124 @@
         <img src="{% static 'img/about_scene_09.png' %}?v=20260830_0105" alt="Scene 09 (Lofi Anime)" class="fs-img style-lofi" id="fs-img-lofi-9" data-style="lofi" data-scene="9">
         <img src="{% static 'img/about_scene_10.png' %}?v=20260830_0105" alt="Scene 10 (Lofi Anime)" class="fs-img style-lofi" id="fs-img-lofi-10" data-style="lofi" data-scene="10">
         <img src="{% static 'img/about_scene_12.png' %}?v=20260830_0105" alt="Scene 11 (Lofi Anime)" class="fs-img style-lofi" id="fs-img-lofi-11" data-style="lofi" data-scene="11">
+
+        <!-- Living Room Cinemagraph Overlays in Fullscreen Modal -->
+        <div class="stage-living-window fs-living-window" id="fsLivingWindow" aria-hidden="true">
+          <!-- Upper Glass Pane: Sun/Moon, Sky, Drifting Clouds & Twinkling Stars -->
+          <div class="window-pane window-pane-upper">
+            <div class="window-time-layer layer-day">
+              <div class="window-sun-glow"></div>
+              <div class="cloud-track cloud-track-1"><div class="anime-cloud cloud-1"></div></div>
+              <div class="cloud-track cloud-track-2"><div class="anime-cloud cloud-2"></div></div>
+            </div>
+            <div class="window-time-layer layer-sunset">
+              <div class="window-sunset-sky"></div>
+              <div class="cloud-track cloud-track-sunset"><div class="anime-cloud cloud-sunset-1"></div></div>
+            </div>
+            <div class="window-time-layer layer-night">
+              <div class="window-moon">
+                <div class="moon-body"></div>
+                <div class="moon-halo"></div>
+              </div>
+              <div class="stars-cluster">
+                <span class="star star-1"></span><span class="star star-2"></span><span class="star star-3"></span>
+                <span class="star star-4"></span><span class="star star-5"></span><span class="star star-6"></span>
+              </div>
+              <div class="shooting-star-track"><div class="shooting-star"></div></div>
+            </div>
+          </div>
+          <!-- Lower Glass Pane: Skyline, Clouds, City Twinkle & Aviation Beacons -->
+          <div class="window-pane window-pane-lower">
+            <div class="window-time-layer layer-day">
+              <div class="cloud-track cloud-track-3"><div class="anime-cloud cloud-4"></div></div>
+            </div>
+            <div class="window-time-layer layer-sunset">
+              <div class="window-sunset-lower-glow"></div>
+            </div>
+            <div class="window-time-layer layer-night">
+              <div class="city-twinkle-cluster">
+                <span class="c-light cl-1"></span><span class="c-light cl-2"></span><span class="c-light cl-3"></span>
+                <span class="c-light cl-4"></span><span class="c-light cl-5"></span><span class="c-light cl-6"></span>
+                <span class="c-light cl-7"></span><span class="c-light cl-8"></span><span class="c-light cl-9"></span>
+                <span class="c-light cl-10"></span>
+              </div>
+              <div class="tower-beacons">
+                <span class="beacon-light beacon-1"></span>
+                <span class="beacon-light beacon-2"></span>
+                <span class="beacon-light beacon-3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Cinematic Living Window Exterior for Fullscreen Modal -->
+        <div class="stage-window-exterior fs-window-exterior exterior-hidden" id="fsWindowExterior" aria-hidden="true">
+          <div class="exterior-pane exterior-pane-upper">
+            <div class="exterior-time-layer ext-layer-day">
+              <div class="exterior-bird bird-alpha"></div>
+              <div class="exterior-bird bird-beta"></div>
+            </div>
+            <div class="exterior-time-layer ext-layer-night">
+              <div class="exterior-stars-cluster">
+                <span class="ext-star star-1"></span><span class="ext-star star-2"></span><span class="ext-star star-3"></span>
+                <span class="ext-star star-4"></span><span class="ext-star star-5"></span><span class="ext-star star-6"></span>
+              </div>
+              <div class="exterior-shooting-star"></div>
+            </div>
+          </div>
+          <div class="exterior-pane exterior-pane-lower">
+            <div class="exterior-time-layer ext-layer-day">
+              <div class="exterior-foliage-rustle"></div>
+              <span class="exterior-glint glint-tower-1"></span>
+              <span class="exterior-glint glint-tower-2"></span>
+              <span class="exterior-glint glint-tower-3"></span>
+            </div>
+            <div class="exterior-time-layer ext-layer-night">
+              <div class="exterior-city-lights">
+                <span class="city-dot c-dot-1"></span><span class="city-dot c-dot-2"></span>
+                <span class="city-dot c-dot-3"></span><span class="city-dot c-dot-4"></span>
+                <span class="city-dot c-dot-5"></span><span class="city-dot c-dot-6"></span>
+                <span class="city-dot c-dot-7"></span><span class="city-dot c-dot-8"></span>
+              </div>
+              <div class="exterior-tower-beacons">
+                <span class="ext-beacon beacon-tower-1"></span>
+                <span class="ext-beacon beacon-tower-2"></span>
+                <span class="ext-beacon beacon-tower-3"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fullscreen Living Cinemagraph Ambient Overlays -->
+        <div class="stage-window-breeze" id="fsWindowBreeze"></div>
+        <div class="stage-lamp-glow" id="fsLampGlow"></div>
+        <div class="stage-monitor-glow" id="fsMonitorGlow"></div>
+        
+        <!-- Computer Screen Cinemagraph in Fullscreen -->
+        <div class="stage-screen-fx" id="fsScreenFx" aria-hidden="true">
+          <div class="screen-mouse-pointer" id="fsScreenMousePointer">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L6 14L8.5 8.5L14 6L1 1Z" fill="#ffffff" stroke="#0f172a" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Whispering Thermal Coffee Steam in Fullscreen -->
+        <div class="stage-coffee-steam steam-hidden" id="fsCoffeeSteamPrimary" aria-hidden="true">
+          <span class="steam-puff puff-1"></span>
+          <span class="steam-puff puff-2"></span>
+          <span class="steam-puff puff-3"></span>
+          <span class="steam-wisp wisp-1"></span>
+        </div>
+        <div class="stage-coffee-steam steam-hidden" id="fsCoffeeSteamSecondary" aria-hidden="true">
+          <span class="steam-puff puff-1"></span>
+          <span class="steam-puff puff-2"></span>
+          <span class="steam-puff puff-3"></span>
+          <span class="steam-wisp wisp-1"></span>
+        </div>
+
+        <!-- Subtle Gradient Shading for Fullscreen Depth -->
+        <div class="stage-vignette-overlay"></div>
       </div>
 
       <button type="button" class="fs-nav-arrow fs-next" id="fsNextBtn" aria-label="Next Photo (→)">
