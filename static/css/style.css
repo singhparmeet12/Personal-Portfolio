@@ -5511,9 +5511,17 @@ textarea.form-control {
 .stage-canvas-frame:not(.stage-ready) .stage-monitor-glow,
 .stage-canvas-frame:not(.stage-ready) .stage-screen-fx,
 .stage-canvas-frame:not(.stage-ready) .stage-coffee-steam,
-.stage-canvas-frame:not(.stage-ready) .stage-vignette-overlay {
+.stage-canvas-frame:not(.stage-ready) .stage-vignette-overlay,
+.fs-image-frame:not(.stage-ready) .stage-atmosphere-canvas,
+.fs-image-frame:not(.stage-ready) .stage-living-window,
+.fs-image-frame:not(.stage-ready) .stage-window-exterior,
+.fs-image-frame:not(.stage-ready) .stage-window-breeze,
+.fs-image-frame:not(.stage-ready) .stage-lamp-glow,
+.fs-image-frame:not(.stage-ready) .stage-monitor-glow,
+.fs-image-frame:not(.stage-ready) .stage-screen-fx,
+.fs-image-frame:not(.stage-ready) .stage-coffee-steam,
+.fs-image-frame:not(.stage-ready) .stage-vignette-overlay {
   opacity: 0 !important;
-  visibility: hidden !important;
   pointer-events: none !important;
 }
 
@@ -5522,7 +5530,13 @@ textarea.form-control {
 .stage-canvas-frame.stage-ready .stage-lamp-glow,
 .stage-canvas-frame.stage-ready .stage-monitor-glow,
 .stage-canvas-frame.stage-ready .stage-screen-fx,
-.stage-canvas-frame.stage-ready .stage-vignette-overlay {
+.stage-canvas-frame.stage-ready .stage-vignette-overlay,
+.fs-image-frame.stage-ready .stage-atmosphere-canvas,
+.fs-image-frame.stage-ready .stage-window-breeze,
+.fs-image-frame.stage-ready .stage-lamp-glow,
+.fs-image-frame.stage-ready .stage-monitor-glow,
+.fs-image-frame.stage-ready .stage-screen-fx,
+.fs-image-frame.stage-ready .stage-vignette-overlay {
   transition: opacity 0.5s ease-out;
 }
 

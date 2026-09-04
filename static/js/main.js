@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initInteractiveShowcase();
   initAboutWorldExperience();
   initMobileDockOnboardingHint();
+  initInstantPagePrefetch();
 });
 
 /* --------------------------------------------------------------------------
@@ -791,9 +792,7 @@ function initInteractiveShowcase() {
    8B. COZY RAIN ON THE GLASS ENGINE (Lofi Anime Diorama Window)
    -------------------------------------------------------------------------- */
 function initWindowRainEngine() {
-  const canvasUpper = document.getElementById('windowRainUpper');
-  const canvasLower = document.getElementById('windowRainLower');
-  if (!canvasUpper && !canvasLower) return null;
+  window.__rainResizers = [];
 
   function setupPaneRain(canvas, isUpper) {
     if (!canvas) return null;
@@ -801,77 +800,148 @@ function initWindowRainEngine() {
     let width = 0;
     let height = 0;
     let dpr = 1;
-
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = canvas.offsetWidth || 300;
-      height = canvas.offsetHeight || 300;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
-    }
-    resize();
-    window.addEventListener('resize', resize);
+    let isInitialized = false;
 
     // 1. Background fast rain streaks
-    const streakCount = isUpper ? 36 : 30;
-    const streaks = Array.from({ length: streakCount }, () => ({
-      x: width * 0.75 + Math.random() * (width * 0.24),
-      y: Math.random() * height,
-      len: 16 + Math.random() * 24,
-      speed: 7 + Math.random() * 6,
-      alpha: 0.45 + Math.random() * 0.45
-    }));
+    const streakCount = isUpper ? 34 : 28;
+    const streaks = [];
 
     // 2. Condensation beads and dripping droplets
-    const dropCount = isUpper ? 18 : 15;
-    const drops = Array.from({ length: dropCount }, () => ({
-      x: width * 0.76 + Math.random() * (width * 0.22),
-      y: Math.random() * height,
-      radius: 1.4 + Math.random() * 2.0,
-      speed: 0,
-      targetDistance: 0,
-      traveled: 0,
-      state: 'idle', // 'idle' | 'trickling'
-      idleTimer: Math.floor(Math.random() * 120),
-      trail: []
-    }));
+    const dropCount = isUpper ? 16 : 14;
+    const drops = [];
+
+    function initParticles() {
+      if (width <= 0 || height <= 0) return;
+      streaks.length = 0;
+      for (let i = 0; i < streakCount; i++) {
+        streaks.push({
+          x: width * 0.77 + Math.random() * (width * 0.18),
+          y: Math.random() * height,
+          len: 12 + Math.random() * 16,
+          speed: 3.2 + Math.random() * 2.4, // Gentle, relaxing rainfall speed
+          alpha: 0.35 + Math.random() * 0.35
+        });
+      }
+
+      drops.length = 0;
+      for (let i = 0; i < dropCount; i++) {
+        drops.push({
+          x: width * 0.78 + Math.random() * (width * 0.16),
+          y: Math.random() * height,
+          radius: 0.9 + Math.random() * 1.1, // Fine, small droplet bead (never oversized or chunky)
+          speed: 0,
+          targetDistance: 0,
+          traveled: 0,
+          state: 'idle', // 'idle' | 'trickling'
+          idleTimer: Math.floor(Math.random() * 140),
+          trail: []
+        });
+      }
+      isInitialized = true;
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const parentRect = canvas.parentElement ? canvas.parentElement.getBoundingClientRect() : null;
+      const frame = canvas.closest('.stage-canvas-frame, .fs-image-frame');
+      const frameRect = frame ? frame.getBoundingClientRect() : null;
+
+      const measuredW = rect.width > 0 ? rect.width : (parentRect && parentRect.width > 0 ? parentRect.width : (frameRect && frameRect.width > 0 ? frameRect.width : 0));
+      const measuredH = rect.height > 0 ? rect.height : (parentRect && parentRect.height > 0 ? parentRect.height : (frameRect && frameRect.height > 0 ? frameRect.height : 0));
+
+      if (measuredW <= 0 || measuredH <= 0) {
+        return false;
+      }
+
+      const prevW = width;
+      const prevH = height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = measuredW;
+      height = measuredH;
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      if (!isInitialized) {
+        initParticles();
+      } else if (prevW > 0 && prevH > 0 && (Math.abs(prevW - width) > 2 || Math.abs(prevH - height) > 2)) {
+        const scaleX = width / prevW;
+        const scaleY = height / prevH;
+        streaks.forEach(s => {
+          s.x *= scaleX;
+          s.y *= scaleY;
+        });
+        drops.forEach(d => {
+          d.x *= scaleX;
+          d.y *= scaleY;
+          if (d.trail) {
+            d.trail.forEach(pt => {
+              pt.x *= scaleX;
+              pt.y *= scaleY;
+            });
+          }
+        });
+      }
+      return true;
+    }
+
+    resize();
+    window.__rainResizers.push(resize);
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => {
+        resize();
+      });
+      if (canvas.parentElement) ro.observe(canvas.parentElement);
+      const parentFrame = canvas.closest('.stage-canvas-frame, .fs-image-frame');
+      if (parentFrame) ro.observe(parentFrame);
+    }
 
     let animId = null;
 
     function loop() {
-      const currentStyle = localStorage.getItem('parmeet_about_style') || 'real';
+      const currentStyle = localStorage.getItem('parmeet_about_style') || 'lofi';
       // ONLY run when in Lofi Anime mode
       if (currentStyle !== 'lofi') {
-        ctx.clearRect(0, 0, width, height);
+        if (width > 0 && height > 0) ctx.clearRect(0, 0, width, height);
         animId = requestAnimationFrame(loop);
         return;
+      }
+
+      if (!isInitialized || width <= 0 || height <= 0) {
+        if (resize()) {
+          initParticles();
+        } else {
+          animId = requestAnimationFrame(loop);
+          return;
+        }
       }
 
       ctx.clearRect(0, 0, width, height);
 
       // Check current scene for amber lighting
-      const stageFrame = document.querySelector('.stage-canvas-frame');
+      const stageFrame = canvas.closest('.stage-canvas-frame, .fs-image-frame') || document.querySelector('.stage-canvas-frame');
       const isNightScene = stageFrame && stageFrame.classList.contains('ambient-night');
 
       // 1. Draw fast angled rain streaks
       streaks.forEach(s => {
         s.y += s.speed;
-        s.x -= s.speed * 0.12; // Slight natural vertical falling rain
+        s.x -= s.speed * 0.08; // Delicate natural vertical angle
 
         if (s.y > height + s.len) {
           s.y = -s.len;
-          s.x = width * 0.75 + Math.random() * (width * 0.24);
+          s.x = width * 0.77 + Math.random() * (width * 0.18);
         }
 
         const isNearLamp = isNightScene && s.x > width * 0.86;
         ctx.strokeStyle = isNearLamp 
-          ? `rgba(254, 215, 170, ${s.alpha * 0.85})`
-          : `rgba(220, 240, 255, ${s.alpha * 0.8})`;
-        ctx.lineWidth = 1.4;
+          ? `rgba(254, 215, 170, ${s.alpha})`
+          : `rgba(220, 240, 255, ${s.alpha})`;
+        ctx.lineWidth = 1.0;
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
-        ctx.lineTo(s.x - s.len * 0.12, s.y + s.len);
+        ctx.lineTo(s.x - s.len * 0.08, s.y + s.len);
         ctx.stroke();
       });
 
@@ -881,28 +951,28 @@ function initWindowRainEngine() {
           d.idleTimer--;
           if (d.idleTimer <= 0) {
             d.state = 'trickling';
-            d.speed = 1.3 + Math.random() * 1.8;
-            d.targetDistance = 35 + Math.random() * 95;
+            d.speed = 0.5 + Math.random() * 0.7; // Slow, soothing trickle down glass
+            d.targetDistance = 25 + Math.random() * 70;
             d.traveled = 0;
           }
         } else if (d.state === 'trickling') {
           d.y += d.speed;
-          d.x += (Math.sin(d.y * 0.1) * 0.3); // Subtle surface tension wobble
+          d.x += (Math.sin(d.y * 0.12) * 0.15); // Subtle surface tension wobble
           d.traveled += d.speed;
 
           // Record trail point
-          d.trail.push({ x: d.x, y: d.y, alpha: 0.5 });
-          if (d.trail.length > 24) d.trail.shift();
+          d.trail.push({ x: d.x, y: d.y, alpha: 0.45 });
+          if (d.trail.length > 20) d.trail.shift();
 
           if (d.traveled >= d.targetDistance) {
             d.state = 'idle';
-            d.idleTimer = 70 + Math.floor(Math.random() * 180);
+            d.idleTimer = 60 + Math.floor(Math.random() * 160);
           }
 
           if (d.y > height + 10) {
             d.y = -5;
-            d.x = width * 0.76 + Math.random() * (width * 0.22);
-            d.radius = 1.4 + Math.random() * 2.0;
+            d.x = width * 0.78 + Math.random() * (width * 0.16);
+            d.radius = 0.9 + Math.random() * 1.1;
             d.state = 'idle';
             d.idleTimer = 40 + Math.floor(Math.random() * 120);
             d.trail = [];
@@ -918,13 +988,13 @@ function initWindowRainEngine() {
           }
           const isNearLamp = isNightScene && d.x > width * 0.86;
           ctx.strokeStyle = isNearLamp 
-            ? 'rgba(254, 215, 170, 0.38)'
-            : 'rgba(220, 240, 255, 0.35)';
-          ctx.lineWidth = d.radius * 0.7;
+            ? 'rgba(254, 215, 170, 0.28)'
+            : 'rgba(220, 240, 255, 0.25)';
+          ctx.lineWidth = Math.max(0.7, d.radius * 0.55);
           ctx.stroke();
 
           // Fade trail points
-          d.trail.forEach(p => p.alpha *= 0.96);
+          d.trail.forEach(p => p.alpha *= 0.95);
         }
 
         // Draw droplet bead
@@ -938,7 +1008,7 @@ function initWindowRainEngine() {
 
         // Droplet specular highlight
         ctx.beginPath();
-        ctx.arc(d.x - d.radius * 0.35, d.y - d.radius * 0.35, d.radius * 0.4, 0, Math.PI * 2);
+        ctx.arc(d.x - d.radius * 0.35, d.y - d.radius * 0.35, d.radius * 0.35, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.fill();
       });
@@ -950,9 +1020,19 @@ function initWindowRainEngine() {
     return () => cancelAnimationFrame(animId);
   }
 
-  setupPaneRain(canvasUpper, true);
-  setupPaneRain(canvasLower, false);
+  setupPaneRain(document.getElementById('windowRainUpper'), true);
+  setupPaneRain(document.getElementById('windowRainLower'), false);
+  setupPaneRain(document.getElementById('fsWindowRainUpper'), true);
+  setupPaneRain(document.getElementById('fsWindowRainLower'), false);
 }
+
+window.recalibrateRainCanvases = function() {
+  if (Array.isArray(window.__rainResizers)) {
+    window.__rainResizers.forEach(fn => {
+      try { fn(); } catch (e) {}
+    });
+  }
+};
 
 /* --------------------------------------------------------------------------
    8. PARMEET SINGH — SINGLE CONTINUOUS CINEMATIC SCROLLYTELLING ENGINE
@@ -1139,6 +1219,16 @@ function initAboutWorldExperience() {
       });
     }, 600);
 
+    // Progressively preload adjacent scenes so scrolling is silky smooth
+    [sceneNum + 1, sceneNum + 2].forEach(nextNum => {
+      if (nextNum <= 11) {
+        const nextStageImg = document.querySelector(`.stage-image[data-style="${currentStyle}"][data-scene="${nextNum}"]`);
+        if (nextStageImg && nextStageImg.loading === 'lazy') {
+          nextStageImg.loading = 'eager';
+        }
+      }
+    });
+
     // Update active chapter highlight on left
     chapterBlocks.forEach(ch => {
       const chScene = parseInt(ch.getAttribute('data-scene'), 10);
@@ -1223,9 +1313,17 @@ function initAboutWorldExperience() {
   // Synchronized Scene 1 Photo & Cinemagraph Overlay Gate:
   // Ensures animations and overlays never render ahead of the photograph on a black screen
   const stageFrame = document.querySelector('.stage-canvas-frame');
+  const fsFrame = document.getElementById('fsImageFrame');
+
   function markStageAsReady() {
     if (stageFrame) {
       stageFrame.classList.add('stage-ready');
+    }
+    if (fsFrame) {
+      fsFrame.classList.add('stage-ready');
+    }
+    if (window.recalibrateAboutCanvases) {
+      window.recalibrateAboutCanvases();
     }
   }
 
@@ -1238,42 +1336,70 @@ function initAboutWorldExperience() {
   } else if (initialImg) {
     initialImg.addEventListener('load', markStageAsReady, { once: true });
     initialImg.addEventListener('error', markStageAsReady, { once: true });
-    // Safety fallback: reveal after 1.2s max if load event is deferred
-    setTimeout(markStageAsReady, 1200);
+    setTimeout(markStageAsReady, 800);
   } else {
     markStageAsReady();
   }
+
+  // Multi-frequency cold-cache layout synchronization pulses:
+  [0, 50, 150, 300, 600, 1000, 1800].forEach(delay => {
+    setTimeout(() => {
+      if (window.recalibrateAboutCanvases) {
+        window.recalibrateAboutCanvases();
+      }
+    }, delay);
+  });
+
+  window.addEventListener('load', () => {
+    markStageAsReady();
+    if (window.recalibrateAboutCanvases) {
+      window.recalibrateAboutCanvases();
+    }
+  });
 
   // Sticky Visual Stage is locked to 100% stable stationary coordinates
   const visualStage = document.getElementById('stickyVisualStage');
   if (visualStage) {
     visualStage.style.transform = 'none';
   }
-
   // Initialize Cozy Rain on Glass Engine (Lofi Anime Diorama Window)
   initWindowRainEngine();
 
   // ========================================================================
   // ATMOSPHERIC BREEZE & DUST MOTE PARTICLE CANVAS ENGINE
+  // Supports both inline stage and fullscreen lightbox modal
   // ========================================================================
-  const atmoCanvas = document.getElementById('stageAtmosphereCanvas');
-  if (atmoCanvas) {
+  window.__atmoResizers = window.__atmoResizers || [];
+  window.__atmoResizers = [];
+
+  function setupAtmosphereCanvas(atmoCanvas) {
+    if (!atmoCanvas) return;
     const ctx = atmoCanvas.getContext('2d');
     let animationFrameId = null;
     let particles = [];
     let width = 0;
     let height = 0;
-    let currentSceneMode = 1;
+    let currentSceneMode = currentActiveScene || 1;
     let breezePhase = 0;
 
     function resizeCanvas() {
       const rect = atmoCanvas.getBoundingClientRect();
+      const parentRect = atmoCanvas.parentElement ? atmoCanvas.parentElement.getBoundingClientRect() : null;
+      const frame = atmoCanvas.closest('.stage-canvas-frame, .fs-image-frame');
+      const frameRect = frame ? frame.getBoundingClientRect() : null;
+
+      const measuredW = rect.width > 0 ? rect.width : (parentRect && parentRect.width > 0 ? parentRect.width : (frameRect && frameRect.width > 0 ? frameRect.width : 0));
+      const measuredH = rect.height > 0 ? rect.height : (parentRect && parentRect.height > 0 ? parentRect.height : (frameRect && frameRect.height > 0 ? frameRect.height : 0));
+
+      if (measuredW <= 0 || measuredH <= 0) return false;
+
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
+      width = measuredW;
+      height = measuredH;
       atmoCanvas.width = Math.floor(width * dpr);
       atmoCanvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return true;
     }
 
     function createParticle() {
@@ -1293,6 +1419,7 @@ function initAboutWorldExperience() {
     }
 
     function initParticles() {
+      if (width <= 0 || height <= 0) return;
       particles = [];
       const count = Math.min(Math.floor(width * 0.08) + 20, 42);
       for (let i = 0; i < count; i++) {
@@ -1300,22 +1427,15 @@ function initAboutWorldExperience() {
       }
     }
 
-    window.setAtmosphereScene = function(sceneNum) {
-      currentSceneMode = sceneNum;
-    };
-
     function getParticleColor(p) {
       if (currentSceneMode >= 9) {
-        // Night / Persistence / Thank You: cool starlight or warm incandescent
         if (p.isStarSparkle) {
           return `rgba(224, 242, 254, ${p.alpha})`; // cool starlight
         }
         return `rgba(253, 230, 138, ${p.alpha * 0.8})`; // warm lamp glow
       } else if (currentSceneMode === 8) {
-        // Sunset: warm amber & golden twilight
         return `rgba(251, 146, 60, ${p.alpha})`;
       } else {
-        // Daytime / Morning: golden sunbeams and clean daylight dust motes
         if (p.isBreezeDrifter) {
           return `rgba(254, 240, 138, ${p.alpha})`;
         }
@@ -1324,20 +1444,27 @@ function initAboutWorldExperience() {
     }
 
     function renderParticles() {
+      if (width <= 0 || height <= 0 || particles.length === 0) {
+        if (resizeCanvas()) {
+          initParticles();
+        } else {
+          animationFrameId = requestAnimationFrame(renderParticles);
+          return;
+        }
+      }
+
       ctx.clearRect(0, 0, width, height);
       breezePhase += 0.015;
-      const breezeGust = Math.sin(breezePhase) * 0.4 + 0.2; // subtle periodic breeze
+      const breezeGust = Math.sin(breezePhase) * 0.4 + 0.2;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.pulsePhase += p.pulseSpeed;
         p.alpha = (Math.sin(p.pulsePhase) * 0.5 + 0.5) * p.maxAlpha;
 
-        // Movement with slight sine wave drift
         p.x += p.baseSpeedX + (p.isBreezeDrifter ? breezeGust * 0.5 : 0);
         p.y += p.baseSpeedY + Math.sin(p.pulsePhase * 0.8) * 0.15;
 
-        // Wrap boundaries
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
         if (p.y < -10) p.y = height + 10;
@@ -1352,30 +1479,66 @@ function initAboutWorldExperience() {
       animationFrameId = requestAnimationFrame(renderParticles);
     }
 
+    function recheckCanvas() {
+      if (resizeCanvas()) {
+        if (particles.length === 0) initParticles();
+      }
+    }
+
     resizeCanvas();
     initParticles();
     renderParticles();
 
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initParticles();
-    }, { passive: true });
+    window.__atmoResizers.push(recheckCanvas);
 
-    // Pause particle canvas when off-screen to conserve GPU/battery
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => {
+        recheckCanvas();
+      });
+      if (atmoCanvas.parentElement) ro.observe(atmoCanvas.parentElement);
+      const frame = atmoCanvas.closest('.stage-canvas-frame, .fs-image-frame');
+      if (frame) ro.observe(frame);
+    }
+
+    window.addEventListener('set-atmo-scene', (e) => {
+      currentSceneMode = e.detail || 1;
+    });
+
     const stageObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          recheckCanvas();
           if (!animationFrameId) renderParticles();
         } else {
-          if (animationFrameId) {
+          if (!isFsModalOpen && animationFrameId) {
             cancelAnimationFrame(animationFrameId);
             animationFrameId = null;
           }
         }
       });
-    }, { threshold: 0.05 });
+    }, { threshold: 0.02 });
     stageObserver.observe(atmoCanvas);
   }
+
+  setupAtmosphereCanvas(document.getElementById('stageAtmosphereCanvas'));
+  setupAtmosphereCanvas(document.getElementById('fsAtmosphereCanvas'));
+
+  window.setAtmosphereScene = function(sceneNum) {
+    window.dispatchEvent(new CustomEvent('set-atmo-scene', { detail: sceneNum }));
+  };
+
+  window.recalibrateAtmosphereCanvases = function() {
+    if (Array.isArray(window.__atmoResizers)) {
+      window.__atmoResizers.forEach(fn => {
+        try { fn(); } catch (e) {}
+      });
+    }
+  };
+
+  window.recalibrateAboutCanvases = function() {
+    if (window.recalibrateRainCanvases) window.recalibrateRainCanvases();
+    if (window.recalibrateAtmosphereCanvases) window.recalibrateAtmosphereCanvases();
+  };
 
   // ========================================================================
   // CONTINUOUS VIEWPORT CENTER TRACKER: SEAMLESS TRANSITIONS, ZERO DEAD ZONES
@@ -1538,6 +1701,23 @@ function initAboutWorldExperience() {
     isFsModalOpen = true;
     fsModal.classList.add('open');
     renderFsScene(currentActiveScene);
+
+    // Immediate and stepped recalibration of fullscreen canvases upon opening
+    requestAnimationFrame(() => {
+      if (window.recalibrateAboutCanvases) {
+        window.recalibrateAboutCanvases();
+      }
+      setTimeout(() => {
+        if (window.recalibrateAboutCanvases) {
+          window.recalibrateAboutCanvases();
+        }
+      }, 50);
+      setTimeout(() => {
+        if (window.recalibrateAboutCanvases) {
+          window.recalibrateAboutCanvases();
+        }
+      }, 200);
+    });
   }
 
   function closeFullscreenModal() {
@@ -1954,3 +2134,43 @@ function initMobileDockOnboardingHint() {
     }, 150);
   }, SHOW_DELAY_MS);
 }
+
+/* --------------------------------------------------------------------------
+   INSTANT SPECULATIVE NAVIGATION ENGINE (Zero-Latency Internal Page Transitions)
+   -------------------------------------------------------------------------- */
+function initInstantPagePrefetch() {
+  const prefetchedUrls = new Set();
+
+  function prefetchUrl(url) {
+    if (!url || prefetchedUrls.has(url)) return;
+    try {
+      const parsed = new URL(url, window.location.href);
+      if (parsed.origin !== window.location.origin) return;
+      if (parsed.pathname === window.location.pathname) return;
+      if (parsed.pathname.startsWith('/admin') || parsed.pathname.startsWith('/static')) return;
+
+      prefetchedUrls.add(url);
+
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = url;
+      link.as = 'document';
+      document.head.appendChild(link);
+    } catch (e) {}
+  }
+
+  document.addEventListener('mouseover', (e) => {
+    const anchor = e.target.closest('a[href]');
+    if (anchor && anchor.getAttribute('href') && !anchor.getAttribute('href').startsWith('#') && !anchor.target) {
+      prefetchUrl(anchor.getAttribute('href'));
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchstart', (e) => {
+    const anchor = e.target.closest('a[href]');
+    if (anchor && anchor.getAttribute('href') && !anchor.getAttribute('href').startsWith('#') && !anchor.target) {
+      prefetchUrl(anchor.getAttribute('href'));
+    }
+  }, { passive: true });
+}
+

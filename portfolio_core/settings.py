@@ -134,6 +134,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False
 WHITENOISE_USE_FINDERS = True
+WHITENOISE_MAX_AGE = 31536000
+WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Media files (User uploads, project images, resume PDF)
 MEDIA_URL = '/media/'
