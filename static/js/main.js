@@ -44,6 +44,35 @@ function getTimeBasedDefaultMode() {
 }
 
 /* --------------------------------------------------------------------------
+   ATOMIC IMAGE DECODE UTILITY (Ensures image bitmap is 100% ready before reveal)
+   -------------------------------------------------------------------------- */
+function ensureImageDecoded(img, callback) {
+  if (!img) return callback();
+  if (img.complete && img.naturalWidth > 0) {
+    if (typeof img.decode === 'function') {
+      img.decode().then(callback).catch(callback);
+    } else {
+      callback();
+    }
+  } else {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      callback();
+    };
+    img.addEventListener('load', () => {
+      if (typeof img.decode === 'function') {
+        img.decode().then(finish).catch(finish);
+      } else {
+        finish();
+      }
+    }, { once: true });
+    img.addEventListener('error', finish, { once: true });
+  }
+}
+
+/* --------------------------------------------------------------------------
    1. UNIFIED THEME & SCENE ENGINE
    -------------------------------------------------------------------------- */
 function initThemeEngine() {
@@ -184,15 +213,7 @@ function initLofiWorkspace() {
     if (tiltLayer) tiltLayer.classList.add('is-loaded');
   }
 
-  if (targetImg && targetImg.complete && targetImg.naturalWidth > 0) {
-    revealHeroWorkspace();
-  } else if (targetImg) {
-    targetImg.addEventListener('load', revealHeroWorkspace, { once: true });
-    targetImg.addEventListener('error', revealHeroWorkspace, { once: true });
-    setTimeout(revealHeroWorkspace, 250);
-  } else {
-    revealHeroWorkspace();
-  }
+  ensureImageDecoded(targetImg, revealHeroWorkspace);
 
   // Initial render with time-based mode
   applySceneMode(currentSceneMode);
@@ -1223,8 +1244,9 @@ function initAboutWorldExperience() {
     [sceneNum + 1, sceneNum + 2].forEach(nextNum => {
       if (nextNum <= 11) {
         const nextStageImg = document.querySelector(`.stage-image[data-style="${currentStyle}"][data-scene="${nextNum}"]`);
-        if (nextStageImg && nextStageImg.loading === 'lazy') {
-          nextStageImg.loading = 'eager';
+        if (nextStageImg) {
+          if (nextStageImg.loading === 'lazy') nextStageImg.loading = 'eager';
+          if (typeof nextStageImg.decode === 'function') nextStageImg.decode().catch(() => {});
         }
       }
     });
@@ -1331,15 +1353,7 @@ function initAboutWorldExperience() {
     ? document.getElementById('stage-img-real-1')
     : document.getElementById('stage-img-lofi-1');
 
-  if (initialImg && initialImg.complete && initialImg.naturalWidth > 0) {
-    markStageAsReady();
-  } else if (initialImg) {
-    initialImg.addEventListener('load', markStageAsReady, { once: true });
-    initialImg.addEventListener('error', markStageAsReady, { once: true });
-    setTimeout(markStageAsReady, 800);
-  } else {
-    markStageAsReady();
-  }
+  ensureImageDecoded(initialImg, markStageAsReady);
 
   // Multi-frequency cold-cache layout synchronization pulses:
   [0, 50, 150, 300, 600, 1000, 1800].forEach(delay => {
@@ -1351,7 +1365,7 @@ function initAboutWorldExperience() {
   });
 
   window.addEventListener('load', () => {
-    markStageAsReady();
+    ensureImageDecoded(initialImg, markStageAsReady);
     if (window.recalibrateAboutCanvases) {
       window.recalibrateAboutCanvases();
     }

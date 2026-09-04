@@ -116,9 +116,9 @@
 
     <!-- Art & Canvas Pane (Synchronized with Active Theme/Mode) -->
     <div class="lofi-modal-art-pane" id="lofiModalArtPane">
-      <img src="{% static 'img/lofi_workspace_day.jpg' %}" alt="Day Studio" class="lofi-bg-image lofi-bg-day" id="lofiModalBgDay">
-      <img src="{% static 'img/lofi_workspace_sunset.jpg' %}" alt="Sunset Studio" class="lofi-bg-image lofi-bg-sunset" id="lofiModalBgSunset">
-      <img src="{% static 'img/lofi_workspace_night.jpg' %}" alt="Night Studio" class="lofi-bg-image lofi-bg-night" id="lofiModalBgNight">
+      <img src="{% static 'img/lofi_workspace_day.jpg' %}" alt="Day Studio" class="lofi-bg-image lofi-bg-day" id="lofiModalBgDay" loading="lazy" decoding="async">
+      <img src="{% static 'img/lofi_workspace_sunset.jpg' %}" alt="Sunset Studio" class="lofi-bg-image lofi-bg-sunset" id="lofiModalBgSunset" loading="lazy" decoding="async">
+      <img src="{% static 'img/lofi_workspace_night.jpg' %}" alt="Night Studio" class="lofi-bg-image lofi-bg-night" id="lofiModalBgNight" loading="lazy" decoding="async">
       <canvas class="lofi-canvas-overlay" id="lofiModalCanvas"></canvas>
       <div class="lofi-lamp-glow"></div>
       <div class="lofi-monitor-glow"></div>
@@ -353,7 +353,7 @@
       {% for service in services_preview %}
         <article class="service-card" id="service-card-{{ service.slug }}">
           <div class="service-card-image-wrap">
-            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
+            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy" decoding="async">
             <div class="service-image-tag">
               {% if service.icon == 'magic' %}
                 <i class="bi bi-stars"></i> <span>Generative AI</span>
@@ -440,7 +440,7 @@
         <!-- Right Column: Visual Stage Reel Frame -->
         <div class="teaser-visual-col">
           <a href="{% url 'portfolio:about' %}" class="teaser-film-frame" title="Click to explore A Day in the Life of Parmeet">
-            <img src="{% static 'img/about_scene_01_real.png' %}" alt="A Day in the Life of Parmeet Preview" class="teaser-film-img" loading="lazy">
+            <img src="{% static 'img/about_scene_01_real.png' %}" alt="A Day in the Life of Parmeet Preview" class="teaser-film-img" loading="lazy" decoding="async">
             <div class="teaser-film-overlay">
               <div class="teaser-film-header-badge">
                 <span class="status-dot" style="background: var(--accent-cyan);"></span>

@@ -30,10 +30,10 @@ def home_view(request):
     services_preview = []
     skill_categories = []
     try:
-        qs = Project.objects.filter(is_featured=True).prefetch_related('technologies', 'category')[:3]
-        if not qs.exists():
-            qs = Project.objects.all().prefetch_related('technologies', 'category')[:3]
-        featured_projects = list(qs)
+        qs = list(Project.objects.filter(is_featured=True).select_related('category').prefetch_related('technologies')[:3])
+        if not qs:
+            qs = list(Project.objects.all().select_related('category').prefetch_related('technologies')[:3])
+        featured_projects = qs
     except Exception:
         featured_projects = []
 
@@ -63,7 +63,7 @@ def work_view(request):
     projects_qs = []
     try:
         categories = list(ProjectCategory.objects.all())
-        projects_qs = Project.objects.all().prefetch_related('technologies', 'category')
+        projects_qs = Project.objects.all().select_related('category').prefetch_related('technologies')
         if selected_category_slug and selected_category_slug != 'all':
             projects_qs = projects_qs.filter(category__slug=selected_category_slug)
     except Exception:
@@ -83,7 +83,7 @@ def project_detail_view(request, slug):
     """Case Study: In-depth project breakdown with metrics, challenges, and architecture."""
     try:
         project = get_object_or_404(
-            Project.objects.prefetch_related('technologies', 'gallery_images', 'category'),
+            Project.objects.select_related('category').prefetch_related('technologies', 'gallery_images'),
             slug=slug
         )
         prev_project = project.get_prev_project()

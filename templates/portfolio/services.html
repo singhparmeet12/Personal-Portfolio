@@ -32,7 +32,7 @@
       {% for service in services %}
         <article class="service-card" id="service-{{ service.slug }}">
           <div class="service-card-image-wrap">
-            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy">
+            <img src="{% static 'img/services/' %}{{ service.slug }}.jpg" alt="{{ service.title }} Preview" class="service-card-image" loading="lazy" decoding="async">
             <div class="service-image-tag">
               {% if service.icon == 'magic' %}
                 <i class="bi bi-stars"></i> <span>Generative AI</span>
