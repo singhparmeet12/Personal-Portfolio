@@ -146,8 +146,8 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Experimental Lab / Skills Sandbox toggle
-ENABLE_LAB = True
+# Experimental Lab / Skills Sandbox toggle (defaults to False; set to True or 1 via env to re-enable)
+ENABLE_LAB = os.environ.get('ENABLE_LAB', 'False').lower() in ('true', '1')
 
 # Email Configuration (for contact form dispatch)
 EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend' if DEBUG else 'django.core.mail.backends.smtp.EmailBackend')

@@ -1,0 +1,1018 @@
+/* ==========================================================================
+   SCROLLING STYLES MASTERCLASS COLLECTION (STYLES 02 - 07 + UNIFIED STYLES HUB)
+   MASTER INTERACTION DIRECTION: CONTINUOUS, IMMERSIVE, UN-RESETTING CINEMATIC WORLDS
+   ========================================================================== */
+
+:root {
+  --st-bg: #06070a;
+  --st-bg-surface: rgba(13, 16, 24, 0.8);
+  --st-text-main: #f8fafc;
+  --st-text-muted: #8e9bb0;
+  --st-border: rgba(255, 255, 255, 0.08);
+  --st-border-glow: rgba(255, 255, 255, 0.16);
+  --font-editorial: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Mono', 'SF Mono', Consolas, monospace;
+
+  /* Style Distinct Visual Worlds */
+  --accent-s1: #ff2bd6; /* Style 01: Illusion (Neon Magenta) */
+  --accent-s2: #00f5ff; /* Style 02: Scroll Trigger (Electric Cyan / Obsidian) */
+  --accent-s3: #8b5cf6; /* Style 03: Pin Animation (Electric Violet / Graphite) */
+  --accent-s4: #f59e0b; /* Style 04: Parallax Depth (Warm Amber / Cosmic Sci-Fi) */
+  --accent-s5: #10b981; /* Style 05: Horizontal Scroll (Acid Mint / Studio) */
+  --accent-s6: #ec4899; /* Style 06: Scroll Progress (Neon Rose / Mission Control) */
+  --accent-s7: #06b6d4; /* Style 07: Scroll Linked (Laser Blueprint Cyan) */
+}
+
+/* ==========================================================================
+   1. UNIFIED STYLE SWITCHER & HUB MODAL
+   ========================================================================== */
+
+.style-switcher-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.style-select-pill {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.style-select-pill:hover,
+.style-select-pill:focus {
+  border-color: #00f5ff;
+  box-shadow: 0 0 14px rgba(0, 245, 255, 0.25);
+}
+
+.btn-styles-hub {
+  background: linear-gradient(135deg, rgba(255, 43, 214, 0.15), rgba(0, 245, 255, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-styles-hub:hover {
+  background: linear-gradient(135deg, rgba(255, 43, 214, 0.3), rgba(0, 245, 255, 0.3));
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(0, 245, 255, 0.2);
+}
+
+/* Styles Hub Overlay Modal */
+.styles-hub-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 10, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1.5rem;
+}
+
+.styles-hub-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.styles-hub-dialog {
+  background: #080a0f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1100px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 245, 255, 0.1);
+  overflow: hidden;
+  transform: scale(0.96);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.styles-hub-overlay.active .styles-hub-dialog {
+  transform: scale(1);
+}
+
+.styles-hub-header {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.styles-hub-body {
+  padding: 1.75rem;
+  overflow-y: auto;
+}
+
+.styles-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.25rem;
+}
+
+.style-card {
+  background: #0d1117;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.style-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, #00f5ff);
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.style-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-3px);
+  background: #111722;
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6), 0 0 20px var(--card-glow, rgba(0, 245, 255, 0.15));
+}
+
+.style-card:hover::before {
+  opacity: 1;
+}
+
+.style-card.active-style {
+  border-color: var(--card-accent, #00f5ff);
+  background: #101824;
+}
+
+.style-card-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.style-card-title {
+  font-family: var(--font-editorial);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.45rem;
+}
+
+.style-card-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin-bottom: 1.1rem;
+}
+
+.style-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #64748b;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+}
+
+/* ==========================================================================
+   2. STYLE CONTAINERS ARCHITECTURE
+   ========================================================================== */
+
+.scrolling-style-container {
+  display: none;
+  position: absolute;
+  top: 52px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--st-bg);
+  color: var(--st-text-main);
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-style-container.active {
+  display: block;
+}
+
+/* Dedicated Fixed Overlays inside Each Style */
+.style-nav-tag {
+  position: fixed;
+  top: 64px;
+  left: 28px;
+  z-index: 90;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--style-accent, #00f5ff);
+  background: rgba(6, 7, 10, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.style-counter-rail {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  pointer-events: auto;
+}
+
+.counter-rail-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f8fafc;
+  background: rgba(6, 7, 10, 0.88);
+  backdrop-filter: blur(8px);
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.rail-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.rail-dot.active {
+  background: var(--style-accent, #00f5ff);
+  box-shadow: 0 0 10px var(--style-accent, #00f5ff);
+  transform: scale(1.6);
+}
+
+/* ==========================================================================
+   3. STYLE 02: SCROLL TRIGGER (CONTINUOUS KINETIC CHAIN-REACTION FACILITY)
+   Visual World: Deep Obsidian, Bone White, Electric Cyan, Hairline Beam Connectors
+   ========================================================================== */
+
+#styleContainer_2 {
+  --style-accent: var(--accent-s2);
+  background: #050608;
+}
+
+/* Continuous Vertical Kinetic Laser Filament connecting scenes */
+.st2-chain-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, 
+    transparent 0%,
+    rgba(0, 245, 255, 0.4) 15%,
+    rgba(0, 245, 255, 0.8) 50%,
+    rgba(0, 245, 255, 0.4) 85%,
+    transparent 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.st2-section,
+.st2-scene-wrap {
+  position: relative;
+  min-height: 110vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  z-index: 20;
+}
+
+.st2-content {
+  position: relative;
+  z-index: 25;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Asymmetric un-resetting stage */
+.st2-stage-hero {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+}
+
+.st2-split-left {
+  display: inline-block;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.st2-split-right {
+  display: inline-block;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .st2-split-left {
+  transform: translateX(-20px);
+}
+
+.is-triggered .st2-split-right {
+  transform: translateX(20px);
+}
+
+.st2-kinetic-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent-s2);
+  color: #040609;
+  font-size: 1.6rem;
+  margin: 0 1.2rem;
+  box-shadow: 0 0 35px rgba(0, 245, 255, 0.6);
+  transform: scale(0);
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+}
+
+.is-triggered .st2-kinetic-node {
+  transform: scale(1);
+}
+
+/* Expanding Iris Scene 02 -> Scene 03 */
+.st2-iris-portal {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  background: radial-gradient(circle, rgba(0,245,255,0.2) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+  transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 40px rgba(0, 245, 255, 0.2);
+}
+
+.is-triggered .st2-iris-portal {
+  transform: scale(1.4);
+  border-color: #00f5ff;
+  box-shadow: 0 0 70px rgba(0, 245, 255, 0.5);
+}
+
+/* MOMENTUM Editorial Typography */
+.st2-momentum-canvas,
+.st2-momentum-word {
+  font-family: var(--font-editorial);
+  font-size: clamp(3.2rem, 11vw, 8.5rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: #ffffff;
+  filter: blur(16px);
+  opacity: 0.15;
+  transform: scale(0.85);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .st2-momentum-canvas,
+.is-triggered .st2-momentum-word {
+  filter: blur(0);
+  opacity: 1;
+  transform: scale(1);
+  letter-spacing: 0.16em;
+}
+
+/* Triggered State Elements */
+.trig-fade-up {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .trig-fade-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.trig-scale-up {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .trig-scale-up {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.trig-line-draw {
+  width: 0%;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .trig-line-draw {
+  width: 100%;
+}
+
+.trig-clip-reveal {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .trig-clip-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Asymmetric Stagger Cards */
+.st2-chain-cards,
+.st2-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.st2-chain-card,
+.st2-card-stagger {
+  background: #090c12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(45px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.st2-chain-card::after,
+.st2-card-stagger::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.is-triggered .st2-chain-card:nth-child(1),
+.is-triggered .st2-card-stagger:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+.is-triggered .st2-chain-card:nth-child(2),
+.is-triggered .st2-card-stagger:nth-child(2) { transition-delay: 0.22s; opacity: 1; transform: translateY(-12px); }
+.is-triggered .st2-chain-card:nth-child(3),
+.is-triggered .st2-card-stagger:nth-child(3) { transition-delay: 0.38s; opacity: 1; transform: translateY(12px); }
+.is-triggered .st2-chain-card::after,
+.is-triggered .st2-card-stagger::after { opacity: 1; }
+
+/* Horizontal Speedway Track */
+.st2-speedway-strip,
+.st2-marquee-track {
+  display: flex;
+  gap: 2.5rem;
+  white-space: nowrap;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 800;
+  color: #334155;
+  transform: translateX(120px);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .st2-speedway-strip,
+.is-triggered .st2-marquee-track {
+  transform: translateX(-45px);
+  color: #ffffff;
+}
+
+.st2-speedway-strip span.pulse,
+.st2-marquee-track span.accent {
+  color: var(--accent-s2);
+}
+
+/* Numbers count-up */
+.st2-metric-stat,
+.st2-stat-number {
+  font-family: var(--font-editorial);
+  font-size: clamp(3.2rem, 7vw, 5.8rem);
+  font-weight: 900;
+  color: var(--accent-s2);
+  line-height: 1;
+}
+
+.st2-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.st2-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.st2-showcase-item {
+  background: #090c12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-triggered .st2-showcase-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.st2-showcase-img-wrap {
+  height: 200px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  position: relative;
+  overflow: hidden;
+}
+
+.st2-showcase-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 245, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.st2-showcase-item:hover .st2-showcase-mask {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   4. STYLE 03: PIN ANIMATION (SPATIAL PINNED VIEWPORT OS)
+   Visual World: Graphite, Deep Sapphire, Electric Violet (#8b5cf6)
+   ========================================================================== */
+
+#styleContainer_3 {
+  --style-accent: var(--accent-s3);
+  background: #07080c;
+}
+
+.st3-pin-section {
+  position: relative;
+  min-height: 100vh;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.st3-pin-stage,
+.st3-sticky-frame {
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.st3-pin-panel-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.st3-pinned-display,
+.st3-pinned-monolith {
+  background: #0b0e14;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 960px;
+  height: 440px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 45px rgba(139, 92, 246, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.st3-pin-stage-layer,
+.st3-monolith-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.st3-pin-stage-layer.active,
+.st3-monolith-layer.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.st3-pin-evolve-word {
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-family: var(--font-editorial);
+  letter-spacing: 0.08em;
+  transition: all 0.5s ease;
+}
+
+/* Color wash transitions */
+.st3-color-wash-viewport,
+.st3-color-stage {
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* ==========================================================================
+   5. STYLE 04: PARALLAX (4-SPEED INFINITE DEPTH STRATUM)
+   Visual World: Deep Cosmos, Warm Atmospheric Amber (#f59e0b), Stardust
+   ========================================================================== */
+
+#styleContainer_4 {
+  --style-accent: var(--accent-s4);
+  background: #08090d;
+}
+
+.st4-parallax-section,
+.st4-stratum-viewport {
+  position: relative;
+  min-height: 120vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.st4-layer {
+  will-change: transform;
+}
+
+.st4-layer-bg,
+.st4-stratum-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.st4-layer-mid,
+.st4-stratum-mid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.st4-layer-subject,
+.st4-stratum-sub {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1080px;
+}
+
+.st4-layer-fore,
+.st4-stratum-fore {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 3rem;
+}
+
+.st4-shape,
+.st4-geometric-shard {
+  position: absolute;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(236, 72, 153, 0.12));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+.st4-h-strip-1,
+.st4-h-strip-2 {
+  will-change: transform;
+}
+
+/* ==========================================================================
+   6. STYLE 05: HORIZONTAL SCROLL (ENDLESS SIDEWAYS CANVAS)
+   Visual World: Studio Warm Charcoal, Acid Mint (#10b981), Editorial Collisions
+   ========================================================================== */
+
+#styleContainer_5 {
+  --style-accent: var(--accent-s5);
+  background: #090c0e;
+}
+
+.st5-scroll-spacer,
+.st5-horizontal-spacer {
+  height: 900vh; /* Expansive vertical distance driving horizontal travel */
+  position: relative;
+}
+
+.st5-sticky-viewport,
+.st5-viewport-locked {
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 52px);
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.st5-horizontal-track,
+.st5-mural-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+
+.st5-scene,
+.st5-mural-scene {
+  width: 86vw;
+  max-width: 1250px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 4.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.st5-progress-bottom,
+.st5-progress-ribbon {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 85;
+}
+
+.st5-progress-fill,
+.st5-ribbon-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-s5);
+  box-shadow: 0 0 16px var(--accent-s5);
+}
+
+/* ==========================================================================
+   7. STYLE 06: SCROLL PROGRESS (LIVING MISSION-CONTROL INSTRUMENT)
+   Visual World: High-Contrast Slate, Neon Rose (#ec4899), Telemetry Grid
+   ========================================================================== */
+
+#styleContainer_6 {
+  --style-accent: var(--accent-s6);
+  background: #07080b;
+}
+
+.st6-global-rail,
+.st6-telemetry-rail {
+  position: fixed;
+  right: 32px;
+  top: 75px;
+  bottom: 75px;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  z-index: 95;
+}
+
+.st6-rail-fill,
+.st6-telemetry-fill {
+  width: 100%;
+  height: 0%;
+  background: var(--accent-s6);
+  box-shadow: 0 0 14px var(--accent-s6);
+  position: relative;
+  border-radius: 3px;
+}
+
+.st6-rail-marker,
+.st6-telemetry-node {
+  position: absolute;
+  bottom: -7px;
+  left: -6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 14px var(--accent-s6);
+}
+
+.st6-pct-counter,
+.st6-radar-readout {
+  position: fixed;
+  right: 56px;
+  bottom: 72px;
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--accent-s6);
+  text-shadow: 0 0 20px rgba(236,72,153,0.5);
+  z-index: 95;
+}
+
+.st6-chapter-badge,
+.st6-chapter-radar {
+  position: fixed;
+  right: 56px;
+  top: 75px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  background: rgba(13, 16, 24, 0.88);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  letter-spacing: 0.08em;
+  z-index: 95;
+}
+
+.st6-svg-gauge,
+.st6-svg-circular-gauge {
+  width: 150px;
+  height: 150px;
+  transform: rotate(-90deg);
+}
+
+.st6-gauge-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 8;
+}
+
+.st6-gauge-meter {
+  fill: none;
+  stroke: var(--accent-s6);
+  stroke-width: 8;
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  transition: stroke-dashoffset 0.1s ease;
+  stroke-linecap: round;
+}
+
+.st6-progress-section {
+  min-height: 110vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ==========================================================================
+   8. STYLE 07: SCROLL LINKED ANIMATION (100% SCRUBBABLE TIME-MACHINE)
+   Visual World: Deep Obsidian, Laser Cyan (#06b6d4), Wireframe Grid
+   ========================================================================== */
+
+#styleContainer_7 {
+  --style-accent: var(--accent-s7);
+  background: #050608;
+}
+
+.st7-scrub-section,
+.st7-scrub-scene {
+  min-height: 120vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.st7-scrub-element,
+.st7-hero-object,
+.st7-motion-word,
+.st7-transform-frame,
+.st7-morph-wireframe,
+.st7-morph-finished {
+  will-change: transform, opacity, filter, letter-spacing, width, border-radius;
+  transition: none !important; /* Absolute zero transition for pure scrub math */
+}
+
+/* ==========================================================================
+   9. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 992px) {
+  .st2-chain-cards,
+  .st2-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .st3-pin-panel-2col {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .st3-pinned-display,
+  .st3-pinned-monolith {
+    height: 340px;
+  }
+
+  .st5-scene,
+  .st5-mural-scene {
+    width: 95vw;
+    padding: 2rem 1.5rem;
+  }
+}
+

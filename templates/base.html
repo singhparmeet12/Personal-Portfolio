@@ -41,7 +41,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Custom Stylesheet with Cache Buster -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260904_1740">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260906_lab_fix">
   
   <!-- Dynamic SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%232563eb'/><text x='50%' y='55%' dominant-baseline='central' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='800' font-size='50'>P</text></svg>">
@@ -95,6 +95,14 @@
                 Resume
               </a>
             </li>
+            {% if enable_lab %}
+            <li>
+              <a href="{% url 'portfolio:lab' %}" class="nav-link-item {% if active_page == 'lab' %}active{% endif %}" title="Experimental Lab &amp; Sandbox">
+                <i class="bi bi-flask text-warning me-1"></i>
+                <span>Lab</span>
+              </a>
+            </li>
+            {% endif %}
             <li>
               <a href="{% url 'portfolio:contact' %}" class="nav-link-item {% if active_page == 'contact' %}active{% endif %}">
                 Contact
@@ -137,30 +145,28 @@
       </div>
 
       <div class="mobile-bottom-dock-inner">
-        {% if active_page != 'home' %}
-          <a href="{% url 'portfolio:home' %}" class="dock-item dock-item-home" title="Return to Homepage">
-            <i class="bi bi-house-door-fill"></i>
-            <span>Home</span>
-          </a>
-        {% endif %}
-        <a href="{% url 'portfolio:work' %}" class="dock-item {% if active_page == 'work' %}active{% endif %}">
-          <i class="bi bi-grid-fill"></i>
+        <a href="{% url 'portfolio:home' %}" class="dock-item {% if active_page == 'home' %}active{% endif %}" title="Home">
+          <i class="bi bi-house-door-fill"></i>
+          <span>Home</span>
+        </a>
+        <a href="{% url 'portfolio:work' %}" class="dock-item {% if active_page == 'work' %}active{% endif %}" title="Work">
+          <i class="bi bi-code-slash"></i>
           <span>Work</span>
         </a>
-        <a href="{% url 'portfolio:services' %}" class="dock-item {% if active_page == 'services' %}active{% endif %}">
-          <i class="bi bi-briefcase-fill"></i>
+        <a href="{% url 'portfolio:services' %}" class="dock-item {% if active_page == 'services' %}active{% endif %}" title="Services">
+          <i class="bi bi-cpu-fill"></i>
           <span>Services</span>
         </a>
         <a href="{% url 'portfolio:about' %}" class="dock-item {% if active_page == 'about' %}active{% endif %}" title="A Day in My Life">
           <i class="bi bi-camera-reels-fill"></i>
           <span>My Day</span>
         </a>
-        <a href="{% url 'portfolio:resume' %}" class="dock-item {% if active_page == 'resume' %}active{% endif %}">
-          <i class="bi bi-file-earmark-text-fill"></i>
+        <a href="{% url 'portfolio:resume' %}" class="dock-item {% if active_page == 'resume' %}active{% endif %}" title="Resume">
+          <i class="bi bi-file-earmark-code-fill"></i>
           <span>Resume</span>
         </a>
-        <a href="{% url 'portfolio:contact' %}" class="dock-item {% if active_page == 'contact' %}active{% endif %}">
-          <i class="bi bi-envelope-fill"></i>
+        <a href="{% url 'portfolio:contact' %}" class="dock-item {% if active_page == 'contact' %}active{% endif %}" title="Contact">
+          <i class="bi bi-chat-dots-fill"></i>
           <span>Contact</span>
         </a>
       </div>
@@ -215,6 +221,9 @@
               <li><a href="{% url 'portfolio:about' %}">About Me</a></li>
               <li><a href="{% url 'portfolio:services' %}">Freelance & Services</a></li>
               <li><a href="{% url 'portfolio:resume' %}">Resume</a></li>
+              {% if enable_lab %}
+              <li><a href="{% url 'portfolio:lab' %}"><i class="bi bi-flask text-warning me-1"></i>Lab &amp; Experiments</a></li>
+              {% endif %}
               <li><a href="{% url 'portfolio:contact' %}">Contact</a></li>
             </ul>
           </div>
@@ -236,6 +245,11 @@
               <li>
                 <a href="mailto:{{ site_profile.email }}">
                   <i class="bi bi-envelope me-1"></i> {{ site_profile.email }}
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/919318406016?text=Hi%20Parmeet,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!" target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-whatsapp me-1 text-emerald"></i> WhatsApp (+91 9318406016)
                 </a>
               </li>
             </ul>

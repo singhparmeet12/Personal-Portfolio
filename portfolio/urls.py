@@ -13,6 +13,7 @@ urlpatterns = [
     path('resume/download/', views.resume_download_view, name='resume_download'),
     path('contact/', views.contact_view, name='contact'),
     path('lab/', views.lab_view, name='lab'),
+    path('lab/ai-prompts/', views.ai_prompts_view, name='ai_prompts'),
     
     # Live Django Full-Stack Showcase APIs
     path('api/v1/system-metrics/', views.system_metrics_api, name='system_metrics_api'),

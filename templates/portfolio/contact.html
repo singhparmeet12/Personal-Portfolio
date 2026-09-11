@@ -41,22 +41,69 @@
           <!-- Method 1: Email -->
           <div class="contact-method-card">
             <div class="arch-icon blue">
-              <i class="bi bi-envelope fs-5"></i>
+              <i class="bi bi-envelope"></i>
             </div>
             <div class="contact-method-content">
-              <span class="font-mono text-muted contact-method-label">
-                Email Address
-              </span>
-              <a href="mailto:{{ site_profile.email }}" class="contact-method-link contact-email-link">
-                {{ site_profile.email }}
-              </a>
-              <div class="pt-1">
+              <div class="contact-card-top-row">
+                <span class="font-mono text-muted contact-method-label">
+                  Email Address
+                </span>
+              </div>
+              <div class="contact-val-row">
+                <a href="mailto:{{ site_profile.email }}" class="contact-method-link contact-email-link">
+                  {{ site_profile.email }}
+                </a>
+              </div>
+              <div class="contact-actions-toolbar">
                 <button 
                   type="button" 
-                  class="btn-modern btn-subtle btn-sm p-0 font-mono btn-copy-email" 
+                  class="btn-action-pill btn-action-copy btn-copy-email" 
                   data-copy-email="{{ site_profile.email }}" 
                   title="Copy email to clipboard">
-                  <i class="bi bi-clipboard me-1"></i> <span>Copy Email</span>
+                  <i class="bi bi-clipboard"></i> <span>Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 2: Phone & WhatsApp (Featured Direct Contact) -->
+          <div class="contact-method-card featured-whatsapp">
+            <div class="arch-icon whatsapp-icon">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <div class="contact-method-content">
+              <div class="contact-card-top-row">
+                <span class="font-mono text-muted contact-method-label">
+                  Phone &amp; WhatsApp
+                </span>
+                <span class="whatsapp-badge">
+                  <span class="status-dot"></span> Active on WhatsApp
+                </span>
+              </div>
+              <div class="contact-val-row">
+                <a href="tel:+919318406016" class="contact-phone-link font-mono" title="Call directly">
+                  {{ site_profile.phone|default:"+91 9318406016" }}
+                </a>
+              </div>
+              <div class="contact-actions-toolbar">
+                <a href="https://wa.me/919318406016?text=Hi%20Parmeet,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn-action-pill btn-action-whatsapp" 
+                   title="Chat directly on WhatsApp">
+                  <i class="bi bi-whatsapp"></i> <span>WhatsApp</span>
+                </a>
+                <a href="tel:+919318406016" 
+                   class="btn-action-pill btn-action-call" 
+                   title="Call directly">
+                  <i class="bi bi-telephone-fill"></i> <span>Call</span>
+                </a>
+                <button 
+                  type="button" 
+                  class="btn-action-pill btn-action-copy btn-copy-email" 
+                  data-copy-email="+919318406016" 
+                  title="Copy phone number to clipboard">
+                  <i class="bi bi-clipboard"></i> <span>Copy</span>
                 </button>
               </div>
             </div>

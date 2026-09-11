@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Prompts Discovery Library — Parmeet Singh{% endblock %}
+{% block meta_title %}AI Prompts Discovery Library — Parmeet Singh{% endblock %}
+{% block meta_description %}A visual, curated AI prompt discovery library with hover-to-reveal Before/After image comparisons, Prompt DNA breakdown, and unredacted production-ready prompts.{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/ai_prompts.css' %}?v=20260907_2">
+{% endblock %}
+
+{% block content %}
+<div class="aip-page-wrapper">
+  <!-- Atmospheric Ambient Lights -->
+  <div class="aip-ambient-glow aip-glow-1"></div>
+  <div class="aip-ambient-glow aip-glow-2"></div>
+
+  <div class="aip-container">
+    
+    <!-- Top Breadcrumb & Stats Bar -->
+    <header class="aip-nav-bar">
+      <a href="{% url 'portfolio:lab' %}" class="aip-back-link" title="Return to Experiments Lab">
+        <i class="bi bi-arrow-left"></i>
+        <span>Back to Lab Experiments</span>
+      </a>
+      <div class="d-flex align-items-center gap-3">
+        <div class="aip-stats-pill">
+          <span class="live-dot"></span>
+          <span id="aipStatsText">12 Curated Master Prompts</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Simplified Hero Section -->
+    <section class="aip-hero-section">
+      <div class="aip-hero-badge">
+        <i class="bi bi-magic"></i>
+        <span>AI PROMPTS LAB &bull; HOVER TO REVEAL</span>
+      </div>
+      <h1 class="aip-hero-title">
+        <span class="aip-gradient-text">See the Transformation.</span>
+        <span class="aip-hero-sub-gradient">Hover to Reveal the Original.</span>
+      </h1>
+      <p class="aip-hero-desc">
+        Explore authentic, production-tested AI prompt engineering. Every card displays the AI-generated result on the cover — <strong>hover your mouse over any image</strong> to reveal the original photo. Click to copy the unredacted prompt or inspect Prompt DNA.
+      </p>
+
+      <!-- Master Search Bar -->
+      <div class="aip-search-wrapper">
+        <i class="bi bi-search aip-search-icon"></i>
+        <input type="text" id="aipSearchInput" class="aip-search-input" placeholder="Search prompts by style, camera, genre, mood (e.g. 'y2k', 'noir', 'ghibli', 'vogue')..." autocomplete="off">
+        <button type="button" id="aipSearchClear" class="aip-search-clear" title="Clear search">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <nav class="aip-categories-nav" id="aipCategoriesNav" aria-label="Prompt Categories">
+        <!-- Rendered dynamically by JavaScript -->
+      </nav>
+    </section>
+
+    <!-- Transformations Grid Header -->
+    <div class="aip-grid-header">
+      <h2 class="aip-grid-title">
+        <i class="bi bi-grid-fill text-info"></i>
+        <span>Curated Transformations</span>
+      </h2>
+      <div class="aip-grid-counter" id="aipGridCounter">
+        Showing 12 of 12 Prompts
+      </div>
+    </div>
+
+    <!-- Hover-to-Reveal Cards Grid -->
+    <main class="aip-prompts-grid" id="aipPromptsGrid">
+      <!-- Cards rendered dynamically from AI_PROMPTS_DATA -->
+      
+      <!-- Empty State -->
+      <div class="aip-empty-state" id="aipEmptyState">
+        <div class="aip-empty-icon">
+          <i class="bi bi-search"></i>
+        </div>
+        <h3 class="aip-empty-title">No matching prompts found</h3>
+        <p class="aip-empty-desc">
+          Try searching for a different keyword like "disposable", "anime", "noir", or clear your filter.
+        </p>
+        <button type="button" class="btn btn-outline-info btn-sm rounded-pill px-4" id="aipResetSearchBtn">
+          Reset Filter
+        </button>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- ======================================================================
+     CLEAN DETAIL INSPECTION MODAL
+     ====================================================================== -->
+<div class="aip-modal-overlay" id="aipModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="aip-modal-dialog">
+    <button type="button" class="aip-modal-close-btn" id="modalCloseBtn" aria-label="Close modal">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="aip-modal-header">
+      <h2 id="modalTitle">Prompt Title</h2>
+      <div class="aip-modal-meta">
+        <span class="aip-category-tag" id="modalCategory">Category</span>
+        <span class="aip-trend-tag" id="modalTrend">Trend</span>
+      </div>
+    </div>
+
+    <!-- Side-by-Side Images in Modal -->
+    <div class="aip-modal-images-row">
+      <div class="aip-modal-img-card">
+        <img src="" alt="Original Photo" id="modalImgBefore" loading="lazy">
+        <div class="aip-modal-img-label text-emerald">
+          <i class="bi bi-camera-fill me-1"></i> Original Photo
+        </div>
+      </div>
+      <div class="aip-modal-img-card">
+        <img src="" alt="AI Transformed Result" id="modalImgAfter" loading="lazy">
+        <div class="aip-modal-img-label text-info">
+          <i class="bi bi-stars me-1"></i> AI Result
+        </div>
+      </div>
+    </div>
+
+    <!-- Unredacted Prompt Box -->
+    <div class="aip-modal-prompt-box">
+      <div class="aip-modal-prompt-header">
+        <span class="aip-modal-prompt-title">
+          <i class="bi bi-terminal-fill me-1"></i> Full Master Prompt (100% Unredacted)
+        </span>
+        <button type="button" class="aip-copy-btn btn-sm py-1 px-3" id="modalCopyBtn">
+          <i class="bi bi-clipboard me-1"></i> Copy Prompt
+        </button>
+      </div>
+      <pre class="aip-modal-prompt-text" id="modalPromptText"></pre>
+    </div>
+
+    <!-- Prompt DNA Grid -->
+    <div class="mb-3">
+      <h4 class="text-white font-weight-bold mb-3 d-flex align-items-center gap-2" style="font-size: 1.05rem;">
+        <i class="bi bi-diagram-3-fill text-info"></i> Prompt DNA Breakdown
+      </h4>
+      <div class="aip-modal-dna-grid" id="modalDnaGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Why It Works -->
+    <div class="aip-modal-educational">
+      <h4>
+        <i class="bi bi-lightbulb-fill"></i> Why This Prompt Works
+      </h4>
+      <p id="modalWhyItWorks"></p>
+    </div>
+
+    <!-- Model Compatibility Matrix -->
+    <div class="mb-2">
+      <h5 class="text-secondary font-weight-bold mb-2" style="font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">
+        Tested Model Compatibility
+      </h5>
+      <div class="aip-models-row" id="modalModelsRow">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Floating Toast Notification -->
+<div class="aip-toast" id="aipToast" role="status" aria-live="polite">
+  <i class="bi bi-check-circle-fill aip-toast-icon"></i>
+  <span id="aipToastMsg">Prompt copied to clipboard!</span>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/ai_prompts_data.js' %}?v=20260907_2"></script>
+<script src="{% static 'js/ai_prompts_app.js' %}?v=20260907_2"></script>
+{% endblock %}

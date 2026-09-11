@@ -20,6 +20,7 @@ class Profile(models.Model):
         default="I am an early-career technologist passionate about software engineering, data analytics, and digital product creation. My background in Computer Science with specialization in AI & Data Science has equipped me with strong problem-solving fundamentals, modern full-stack development skills (Python, Django, JavaScript), and data exploration capabilities. Rather than claiming senior expertise in everything, I focus on hands-on execution: understanding real-world user needs, writing clean code, analyzing information thoughtfully, and delivering functional digital experiences."
     )
     email = models.EmailField(default="contact@parmeetsingh.dev")
+    phone = models.CharField(max_length=30, default="+91 9318406016", blank=True)
     location = models.CharField(max_length=100, default="Punjab, India")
     github_url = models.URLField(default="https://github.com/singhparmeet12")
     linkedin_url = models.URLField(default="https://linkedin.com/in/parmeetsingh")

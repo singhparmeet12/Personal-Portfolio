@@ -19,7 +19,7 @@ from .models import (
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['name', 'headline', 'email', 'location', 'is_available_for_work']
+    list_display = ['name', 'headline', 'email', 'phone', 'location', 'is_available_for_work']
     fieldsets = (
         ('Personal Info', {
             'fields': ('name', 'headline', 'subheadline', 'avatar', 'is_available_for_work')
@@ -28,7 +28,7 @@ class ProfileAdmin(admin.ModelAdmin):
             'fields': ('bio_short', 'bio_full')
         }),
         ('Contact & Links', {
-            'fields': ('email', 'location', 'github_url', 'linkedin_url')
+            'fields': ('email', 'phone', 'location', 'github_url', 'linkedin_url')
         }),
     )
 

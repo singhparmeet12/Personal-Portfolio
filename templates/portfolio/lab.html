@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Lab & Experiments — Parmeet Singh{% endblock %}
-{% block meta_title %}Lab & Experiments — Parmeet Singh{% endblock %}
-{% block meta_description %}Experimental developer sandbox where Parmeet tests raw ideas, interactive prototypes, creative UI experiments, and emerging tech stacks.{% endblock %}
+{% block title %}Lab &amp; Experiments — Parmeet Singh{% endblock %}
+{% block meta_title %}Lab &amp; Experiments — Parmeet Singh{% endblock %}
+{% block meta_description %}Experimental developer sandbox where Parmeet tests raw ideas, 3D WebGL scenes, interactive prototypes, and emerging tech stacks.{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/ai_lab.css' %}?v=20260906_ai_lab">
+<link rel="stylesheet" href="{% static 'css/illusion_scroll.css' %}?v=20260906_scroll">
+<link rel="stylesheet" href="{% static 'css/scrolling_styles.css' %}?v=20260906_styles">
+{% endblock %}
 
 {% block content %}
 <!-- ==========================================================================
@@ -26,32 +32,2618 @@
         <i class="bi bi-flask-fill"></i>
         <span>EXPERIMENTAL LAB &bull; UNSTRUCTURED ZONE</span>
       </div>
-      <h1 class="display-4 fw-bold mb-3">Creative Sandbox &amp; Experiments</h1>
+      <h1 class="display-4 fw-bold mb-3">Creative Sandbox &amp; 3D Experiments</h1>
       <p class="lead text-secondary max-w-2xl" style="max-width: 680px;">
-        An informal, unstructured playground where I tinker with interactive animations, experimental Python &amp; web concepts, UI prototypes, and mini tech demos before they graduate into production projects.
+        An informal playground where I test raw ideas, interactive 3D WebGL scenes, keyframe animations, UI prototypes, and creative engineering concepts.
       </p>
     </div>
 
-    <!-- Open Experimental Area -->
-    <div class="lab-open-workspace" style="min-height: 420px; border: 1px dashed var(--border-medium); border-radius: var(--radius-xl); padding: 3rem; background: rgba(15, 23, 42, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 3rem;">
-      <div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
-        <i class="bi bi-flask text-warning fs-3"></i>
+    <!-- Experiments Grid (Cue Cards) -->
+    <div class="lab-experiments-grid">
+      
+      <!-- Experiment 1: Littlest Tokyo 3D Keyframe Animation -->
+      <div class="lab-cue-card" id="openLittlestTokyoCard" role="button" tabindex="0" onclick="window.openLittlestTokyoModal()" title="Click to open interactive 3D Littlest Tokyo">
+        <div class="lab-card-poster-wrap">
+          <img src="{% static 'img/littlest_tokyo_preview.jpg' %}" alt="Littlest Tokyo 3D Keyframe Animation" class="lab-card-poster-img" loading="lazy">
+          <div class="lab-card-play-overlay">
+            <div class="lab-play-btn-circle">
+              <i class="bi bi-play-fill" style="margin-left: 3px;"></i>
+            </div>
+          </div>
+          <div style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+            <span class="badge-tech" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); border-color: rgba(99, 102, 241, 0.4); color: #818cf8; font-size: 0.72rem;">
+              <span class="status-dot" style="background: #818cf8; box-shadow: 0 0 8px #818cf8; width: 6px; height: 6px; margin-right: 5px;"></span> Interactive 3D World
+            </span>
+          </div>
+        </div>
+
+        <div class="lab-card-body">
+          <div class="lab-card-tagline">
+            <span class="badge-tech"><i class="bi bi-box me-1"></i> Three.js</span>
+            <span class="badge-tech"><i class="bi bi-buildings me-1"></i> GLTF 3D</span>
+            <span class="badge-tech"><i class="bi bi-camera me-1"></i> OrbitControls</span>
+            <span class="badge-tech"><i class="bi bi-play-circle me-1"></i> Keyframe Animation</span>
+          </div>
+          <h3 class="lab-card-title">Littlest Tokyo: 3D Keyframe Animation</h3>
+          <p class="lab-card-desc">
+            Interactive 3D WebGL demonstration of the iconic "Littlest Tokyo" diorama by Glen Fox, powered by Three.js. Features complex skeletal animations, moving streetcar, spinning fans, an animated Lucky Cat (Maneki-neko), and ambient RoomEnvironment PBR lighting.
+          </p>
+
+          <div class="lab-card-footer">
+            <span class="text-muted font-mono" style="font-size: 0.76rem;">
+              Three.js Showcase &bull; 60FPS WebGL
+            </span>
+            <button type="button" class="btn-modern btn-primary-glow btn-sm" onclick="event.stopPropagation(); window.openLittlestTokyoModal();">
+              <span>Launch 3D</span>
+              <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </button>
+          </div>
+        </div>
       </div>
-      <h3 class="h4 fw-bold mb-2">Experimental Scratchpad Ready</h3>
-      <p class="text-secondary small mb-0" style="max-width: 520px;">
-        This page is completely unstructured. You can add your raw code, animations, custom widgets, interactive demos, or creative experiments here anytime.
-      </p>
+
+      <!-- Experiment 2: AI Experimental Lab (Cue Card) -->
+      <div class="lab-cue-card" id="openAILabCard" role="button" tabindex="0" onclick="window.openAILabModal()" title="Click to open interactive AI Experimental Lab">
+        <div class="lab-card-poster-wrap">
+          <img src="{% static 'img/ai_lab_preview.jpg' %}" alt="AI Experimental Lab Research Facility" class="lab-card-poster-img" loading="lazy">
+          <div class="lab-card-play-overlay">
+            <div class="lab-play-btn-circle" style="background: rgba(0, 245, 255, 0.95); color: #030712; box-shadow: 0 0 24px rgba(0, 245, 255, 0.65);">
+              <i class="bi bi-play-fill" style="margin-left: 3px;"></i>
+            </div>
+          </div>
+          <div style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+            <span class="badge-tech" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); border-color: rgba(0, 245, 255, 0.4); color: #00f5ff; font-size: 0.72rem;">
+              <span class="status-dot" style="background: #00f5ff; box-shadow: 0 0 8px #00f5ff; width: 6px; height: 6px; margin-right: 5px;"></span> 10 Living Experiments
+            </span>
+          </div>
+        </div>
+
+        <div class="lab-card-body">
+          <div class="lab-card-tagline">
+            <span class="badge-tech"><i class="bi bi-stars me-1"></i> 5 Worlds</span>
+            <span class="badge-tech"><i class="bi bi-bezier2 me-1"></i> Constellation Map</span>
+            <span class="badge-tech"><i class="bi bi-tornado me-1"></i> Chaos Engine</span>
+            <span class="badge-tech"><i class="bi bi-cpu me-1"></i> 100% Local</span>
+          </div>
+          <h3 class="lab-card-title">AI Experimental Lab: Autonomous Research Facility</h3>
+          <p class="lab-card-desc">
+            An expansive interactive AI research playground and digital operating system. Step inside to explore 5 theme worlds, an orbital constellation map, live neural and quantum fields, physics chaos controls, and 10 fully interactive experiments with inspectable algorithms.
+          </p>
+
+          <div class="lab-card-footer">
+            <span class="text-muted font-mono" style="font-size: 0.76rem;">
+              Canvas 2D &bull; Web Audio &bull; Physics
+            </span>
+            <button type="button" class="btn-modern btn-primary-glow btn-sm" onclick="event.stopPropagation(); window.openAILabModal();">
+              <span>Launch Lab</span>
+              <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experiment 3: The Illusion of Scroll (Cue Card) -->
+      <div class="lab-cue-card lab-card-illusion" id="openIllusionScrollCard" role="button" tabindex="0" onclick="window.openIllusionScrollModal()" title="Click to launch The Illusion of Scroll: 7 Masterclass Scrolling Styles">
+        <div class="lab-card-poster-wrap">
+          <img src="{% static 'img/illusion_scroll_preview.jpg' %}" alt="The Illusion of Scroll 7 Masterclass Scrolling Styles" class="lab-card-poster-img" loading="lazy">
+          <div class="lab-card-play-overlay">
+            <div class="lab-play-btn-circle" style="background: linear-gradient(135deg, #00f5ff, #ec4899); color: #ffffff; box-shadow: 0 0 26px rgba(236, 72, 153, 0.65);">
+              <i class="bi bi-play-fill" style="margin-left: 3px;"></i>
+            </div>
+          </div>
+          <div style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+            <span class="badge-tech" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); border-color: rgba(236, 72, 153, 0.45); color: #f472b6; font-size: 0.72rem;">
+              <span class="status-dot" style="background: #f472b6; box-shadow: 0 0 8px #f472b6; width: 6px; height: 6px; margin-right: 5px;"></span> LAB / EXPERIMENT 01
+            </span>
+          </div>
+        </div>
+
+        <div class="lab-card-body">
+          <div class="lab-card-tagline">
+            <span class="badge-tech"><i class="bi bi-collection-play me-1"></i> 7 Scrolling Styles</span>
+            <span class="badge-tech"><i class="bi bi-box me-1"></i> 20-Act 3D World</span>
+            <span class="badge-tech"><i class="bi bi-pin-angle me-1"></i> Pin &amp; Trigger</span>
+            <span class="badge-tech"><i class="bi bi-sliders me-1"></i> Scrubbable Timelines</span>
+          </div>
+          <h3 class="lab-card-title">The Illusion of Scroll: 7-Style Masterclass</h3>
+          <p class="lab-card-desc">
+            An executive collection of 7 distinct interactive scrolling styles: 01 The Illusion of Scroll (20 Acts), 02 Scroll Trigger (12 Sections), 03 Pin Animation (14 Sections), 04 Parallax Depth (15 Sections), 05 Horizontal Scroll (15 Scenes), 06 Scroll Progress (15 Sections), and 07 Scroll Linked (15 Sections).
+          </p>
+
+          <div class="lab-card-footer">
+            <span class="text-muted font-mono" style="font-size: 0.76rem;">
+              7 Interactive Styles &bull; 90+ Sections &bull; Client Ready
+            </span>
+            <button type="button" class="btn-modern btn-primary-glow btn-sm" onclick="event.stopPropagation(); window.openIllusionScrollModal();">
+              <span>Explore 7 Styles</span>
+              <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experiment 4: AI Prompts Discovery Library & Remix Studio (Cue Card) -->
+      <div class="lab-cue-card lab-card-aiprompts" id="openAIPromptsCard" role="button" tabindex="0" onclick="window.location.href='{% url 'portfolio:ai_prompts' %}'" title="Click to launch AI Prompts Discovery Library & Remix Studio">
+        <div class="lab-card-poster-wrap">
+          <img src="{% static 'img/ai_prompts_preview.jpg' %}" alt="AI Prompts Discovery Library & Remix Studio" class="lab-card-poster-img" loading="lazy">
+          <div class="lab-card-play-overlay">
+            <div class="lab-play-btn-circle" style="background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: #ffffff; box-shadow: 0 0 26px rgba(139, 92, 246, 0.75);">
+              <i class="bi bi-stars" style="margin-left: 1px;"></i>
+            </div>
+          </div>
+          <div style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+            <span class="badge-tech" style="background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); border-color: rgba(139, 92, 246, 0.45); color: #c4b5fd; font-size: 0.72rem;">
+              <span class="status-dot" style="background: #a855f7; box-shadow: 0 0 8px #a855f7; width: 6px; height: 6px; margin-right: 5px;"></span> LAB / EXPERIMENT 02
+            </span>
+          </div>
+        </div>
+
+        <div class="lab-card-body">
+          <div class="lab-card-tagline">
+            <span class="badge-tech"><i class="bi bi-cursor me-1"></i> Hover to Compare</span>
+            <span class="badge-tech"><i class="bi bi-images me-1"></i> 100% Unique Assets</span>
+            <span class="badge-tech"><i class="bi bi-bezier2 me-1"></i> Prompt DNA</span>
+            <span class="badge-tech"><i class="bi bi-clipboard-check me-1"></i> 1-Click Copy</span>
+          </div>
+          <h3 class="lab-card-title">AI Prompts: Visual Discovery Library</h3>
+          <p class="lab-card-desc">
+            A curated visual AI prompt discovery library. Experience instant hover-to-reveal Before/After image comparisons, inspect deep Prompt DNA breakdowns, and copy 100% unredacted production-tested prompts.
+          </p>
+
+          <div class="lab-card-footer">
+            <span class="text-muted font-mono" style="font-size: 0.76rem;">
+              Curated Master Prompts &bull; Hover to Reveal
+            </span>
+            <a href="{% url 'portfolio:ai_prompts' %}" class="btn-modern btn-primary-glow btn-sm text-decoration-none" onclick="event.stopPropagation();">
+              <span>Launch Prompts</span>
+              <i class="bi bi-box-arrow-up-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Toggle Note for Hosting -->
-    <div class="p-3 rounded-3" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.75rem;">
+    <div class="p-3 rounded-3 mt-4 mb-4" style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.75rem;">
       <i class="bi bi-info-circle-fill text-warning fs-5"></i>
       <div>
-        <strong>Hosting Control Note:</strong> To hide or show this Lab from the navbar when hosting, simply change <code>ENABLE_LAB = False</code> in <code>portfolio_core/settings.py</code>. The rest of the site is completely unaffected!
+        <strong>Hosting Control Note:</strong> To hide or show this Lab from the navbar when hosting, simply change <code>ENABLE_LAB = False</code> in <code>portfolio_core/settings.py</code>.
       </div>
     </div>
 
   </div>
 </div>
+
+<!-- ======================================================================
+     FULLSCREEN AI EXPERIMENTAL LAB THEATRE MODAL (LAUNCHED FROM CUE CARD)
+     ====================================================================== -->
+<div class="lab-3d-modal ai-lab-fullscreen-modal" id="aiLabFullscreenModal" aria-hidden="true" role="dialog" aria-label="AI Experimental Lab Research Facility" style="display: none;">
+  <!-- Top Action Bar -->
+  <div class="lab-3d-topbar">
+    <div class="lab-3d-title-group">
+      <span class="badge-tech" style="background: rgba(0, 245, 255, 0.15); color: #00f5ff; border-color: rgba(0, 245, 255, 0.4); font-size: 0.72rem;">
+        <span class="ai-lab-status-ping" style="display: inline-block; margin-right: 4px;"></span> Research Facility
+      </span>
+      <span class="lab-3d-title">AI Experimental Lab &bull; Autonomous Digital Playground</span>
+      <span class="lab-3d-author d-none d-md-inline">&bull; 10 Experiments &bull; 5 Worlds</span>
+    </div>
+
+    <!-- Actions in Top Bar -->
+    <div style="display: flex; align-items: center; gap: 0.55rem;">
+      <button type="button" class="btn-modern btn-subtle btn-sm text-white" id="btnToggleSoundTop" onclick="var s = document.getElementById('btnToggleSound'); if (s) s.click();" title="Toggle Audio [M]">
+        <i class="bi bi-volume-up"></i> <span class="d-none d-sm-inline">Sound</span>
+      </button>
+      <button type="button" class="btn-modern btn-subtle btn-sm text-white" id="btnOpenManualTop" onclick="var m = document.getElementById('btnOpenManual'); if (m) m.click();" title="Manual &amp; Shortcuts [?]">
+        <i class="bi bi-question-circle"></i> <span class="d-none d-sm-inline">Manual</span>
+      </button>
+      <button type="button" class="btn-modern btn-primary-glow btn-sm" id="btnCloseAILabModal" onclick="window.closeAILabModal()" title="Close Lab (Esc)">
+        <i class="bi bi-x-lg"></i> <span class="d-none d-sm-inline">Close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrolling Viewport housing the full AI Lab experience -->
+  <div class="ai-lab-modal-viewport" id="aiLabModalViewport">
+    <div class="ai-lab-wrapper" id="aiLabWrapper" data-lab-world="neural">
+      <!-- CRT Scanline & Screen Glitch Overlay -->
+      <div class="ai-lab-scanlines" aria-hidden="true"></div>
+
+      <!-- LAYER 1: HERO LIVING COMPUTATIONAL FIELD -->
+      <section class="ai-lab-hero" id="aiLabHeroSection">
+        <canvas class="ai-lab-hero-canvas" id="aiLabHeroCanvas" aria-label="Interactive Computational Particle Field"></canvas>
+
+        <div class="ai-lab-hero-content">
+          <div class="ai-lab-eyebrow">
+            <span class="ai-lab-status-ping"></span>
+            <span>AUTONOMOUS RESEARCH FACILITY // LEVEL 9 CLEARANCE</span>
+          </div>
+          <h2 class="ai-lab-title">AI EXPERIMENTAL LAB</h2>
+          <p class="ai-lab-tagline">
+            A collection of things that probably shouldn't work together. Don't read about the experiment. Touch it. Drag nodes, adjust physical chaos, cycle through worlds, and deconstruct underlying algorithms.
+          </p>
+
+          <div class="ai-lab-hero-actions">
+            <a href="#aiLabConstellationSection" class="ai-lab-btn ai-lab-btn-primary" id="btnExploreGalaxy" data-cursor="explore">
+              <i class="bi bi-bezier2"></i>
+              <span>Explore Constellation Map</span>
+            </a>
+            <button type="button" class="ai-lab-btn ai-lab-btn-ghost" id="btnSurpriseMe" data-cursor="interact">
+              <i class="bi bi-shuffle"></i>
+              <span>Surprise Me</span>
+            </button>
+            <button type="button" class="ai-lab-btn ai-lab-btn-ghost" id="btnBoredMe" data-cursor="secret">
+              <i class="bi bi-emoji-sunglasses"></i>
+              <span>I'm Bored</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Bottom Telemetry Strip -->
+        <div class="ai-lab-telemetry-strip">
+          <div class="ai-lab-telemetry-item">
+            <span>FACILITY STATUS:</span>
+            <span class="ai-lab-telemetry-val">ONLINE // LOW-LATENCY</span>
+          </div>
+
+          <!-- 5-Worlds Environment Switcher Dock -->
+          <div class="ai-lab-env-dock" role="toolbar" aria-label="Environment Theme Switcher">
+            <button type="button" class="ai-lab-env-btn active" data-world="neural" title="Neural Theme [1]">
+              <span class="ai-lab-env-dot" style="color: #00f5ff;"></span>
+              <span>Neural</span>
+            </button>
+            <button type="button" class="ai-lab-env-btn" data-world="quantum" title="Quantum Theme [2]">
+              <span class="ai-lab-env-dot" style="color: #d946ef;"></span>
+              <span>Quantum</span>
+            </button>
+            <button type="button" class="ai-lab-env-btn" data-world="cyber-organic" title="Cyber Organic Theme [3]">
+              <span class="ai-lab-env-dot" style="color: #b6ff00;"></span>
+              <span>Organic</span>
+            </button>
+            <button type="button" class="ai-lab-env-btn" data-world="machine-dream" title="Machine Dream Theme [4]">
+              <span class="ai-lab-env-dot" style="color: #fda4af;"></span>
+              <span>Dream</span>
+            </button>
+            <button type="button" class="ai-lab-env-btn" data-world="terminal" title="Terminal / Void Theme [5]">
+              <span class="ai-lab-env-dot" style="color: #22c55e;"></span>
+              <span>Void</span>
+            </button>
+          </div>
+
+          <div class="ai-lab-telemetry-item">
+            <span>DISCOVERY:</span>
+            <span class="ai-lab-telemetry-val" id="labDiscoveryCount">0 / 10</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LAYER 2: INTERACTIVE CONSTELLATION GALAXY MAP -->
+      <section class="ai-lab-constellation-section" id="aiLabConstellationSection">
+        <div class="ai-lab-galaxy-header">
+          <div class="ai-lab-galaxy-title-group">
+            <h2><i class="bi bi-diagram-3-fill" style="color: var(--lab-c1);"></i> Orbital Experiment Constellation</h2>
+            <p>Drag nodes freely through cosmic filaments &bull; Click any orbital station to launch interactive theatre</p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <button type="button" class="ai-lab-btn ai-lab-btn-ghost" id="btnOpenManual" title="Open Lab Manual &amp; Shortcuts [?]" data-cursor="interact">
+              <i class="bi bi-question-circle"></i>
+              <span>Lab Manual</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="ai-lab-galaxy-viewport" id="aiLabGalaxyViewport">
+          <canvas class="ai-lab-galaxy-canvas" id="aiLabGalaxyCanvas"></canvas>
+          <div class="galaxy-node-overlay" id="galaxyNodeOverlay"></div>
+        </div>
+
+        <!-- LAYER 3: GLOBAL PERSISTENT CONTROL DECK & CHAOS SLIDER -->
+        <div class="ai-lab-control-deck">
+          <div class="ai-lab-chaos-widget">
+            <span class="ai-lab-chaos-label">
+              <i class="bi bi-tornado" style="color: var(--lab-c1);"></i> CHAOS LEVEL:
+            </span>
+            <input type="range" class="ai-lab-chaos-slider" id="aiLabChaosSlider" min="0" max="100" value="20" title="Adjust Global Chaos (0-100%)">
+            <span class="ai-lab-chaos-val" id="aiLabChaosVal">20%</span>
+            <button type="button" class="deck-icon-btn" id="btnResetChaos" title="Reset Chaos to 20%"><i class="bi bi-arrow-counterclockwise"></i></button>
+          </div>
+
+          <div class="ai-lab-deck-actions">
+            <button type="button" class="deck-icon-btn" id="btnToggleSound" title="Toggle Procedural Audio [M]"><i class="bi bi-volume-up"></i></button>
+            <span class="text-muted font-mono" style="font-size: 0.72rem; padding: 0 0.5rem;">Press <strong>?</strong> for manual</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LAYER 4: EDGE OF THE LAB SECTION -->
+      <div style="padding: 2.5rem; background: rgba(3, 7, 18, 0.95); border-top: 1px solid var(--lab-border); display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div style="font-family: var(--lab-font-mono); font-size: 0.76rem; color: var(--lab-c1); margin-bottom: 0.75rem;">
+          SYSTEM STATUS: 100% OPERATIONAL &bull; RUNTIME RECURSIVE
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 0.65rem;">You have reached the horizon of the lab.</h3>
+        <p style="color: #94a3b8; font-size: 0.88rem; max-width: 520px; line-height: 1.6; margin-bottom: 1.5rem;">
+          The simulations keep evolving in background threads. Ready to engineer robust, high-performance web products and distributed AI systems together?
+        </p>
+        <div style="display: flex; gap: 0.85rem; flex-wrap: wrap; justify-content: center;">
+          <a href="{% url 'portfolio:work' %}" class="ai-lab-btn ai-lab-btn-primary">
+            <i class="bi bi-briefcase-fill"></i>
+            <span>View Production Work</span>
+          </a>
+          <a href="{% url 'portfolio:contact' %}" class="ai-lab-btn">
+            <i class="bi bi-envelope-paper-fill"></i>
+            <span>Initiate Collaboration</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         EXPERIMENT THEATRE MODAL (PLAYGROUND & CODE INSPECTOR)
+         ====================================================================== -->
+    <div class="lab-theatre-modal" id="labTheatreModal" aria-hidden="true" role="dialog" aria-label="Experiment Stage Theatre">
+      <div class="lab-theatre-header">
+        <div class="lab-theatre-title-block">
+          <h3 class="lab-theatre-title" id="theatreTitle">Experiment Theatre</h3>
+          <span class="lab-theatre-meta-pill" id="theatreBadge">ACTIVE</span>
+        </div>
+
+        <div class="lab-mode-switch">
+          <button type="button" class="lab-mode-btn active" id="btnModePlay">
+            <i class="bi bi-play-circle-fill"></i> PLAY
+          </button>
+          <button type="button" class="lab-mode-btn" id="btnModeInspect">
+            <i class="bi bi-code-slash"></i> INSPECT
+          </button>
+        </div>
+
+        <div class="lab-theatre-actions">
+          <button type="button" class="deck-icon-btn" id="btnCloseTheatre" title="Close Theatre [Esc]"><i class="bi bi-x-lg"></i></button>
+        </div>
+      </div>
+
+      <div class="lab-theatre-body">
+        <!-- Interactive Play Stage -->
+        <div class="lab-stage-view" id="theatreStageView">
+          <div class="lab-stage-canvas-wrap">
+            <canvas class="lab-stage-canvas" id="theatreStageCanvas"></canvas>
+            <div class="lab-stage-hud" id="theatreStageHud"></div>
+          </div>
+        </div>
+
+        <!-- Technical Inspect Mode View -->
+        <div class="lab-inspect-view" id="theatreInspectView">
+          <div class="inspect-container" id="theatreInspectContainer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         LAB MANUAL / KEYBOARD SHORTCUTS MODAL
+         ====================================================================== -->
+    <div class="lab-manual-modal" id="labManualModal" aria-hidden="true" role="dialog" aria-label="Lab Manual and Keybindings">
+      <div class="lab-manual-dialog">
+        <div class="manual-header">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <i class="bi bi-book-half" style="color: var(--lab-c1); font-size: 1.25rem;"></i>
+            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #ffffff;">Lab Manual &amp; Interaction Guide</h3>
+          </div>
+          <button type="button" class="deck-icon-btn" id="btnCloseManual"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 0.86rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          Welcome to the AI Experimental Lab. Use pointer gravity on desktop, gestures on mobile, or command keybindings below to navigate worlds and control physics:
+        </p>
+
+        <div class="manual-key-grid">
+          <div class="manual-key-item">
+            <span>Neural World</span>
+            <kbd class="manual-kbd">1</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Quantum World</span>
+            <kbd class="manual-kbd">2</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Cyber Organic World</span>
+            <kbd class="manual-kbd">3</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Machine Dream World</span>
+            <kbd class="manual-kbd">4</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Terminal / Void World</span>
+            <kbd class="manual-kbd">5</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Toggle Audio / Mute</span>
+            <kbd class="manual-kbd">M</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Trigger Chaos Burst</span>
+            <kbd class="manual-kbd">C</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Surprise Me / Random Exp</span>
+            <kbd class="manual-kbd">R</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Trigger Hero Impulse</span>
+            <kbd class="manual-kbd">SPACE</kbd>
+          </div>
+          <div class="manual-key-item">
+            <span>Close Stage / Dialog</span>
+            <kbd class="manual-kbd">ESC</kbd>
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;">
+          <strong>Tip:</strong> In any experiment, click <code>INSPECT</code> in the top header to examine the real mathematical algorithms, time complexity, and client-side browser stack.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==========================================================================
+     FULLSCREEN 3D THEATRE MODAL (LITTLEST TOKYO 3D STAGE)
+     ========================================================================== -->
+<div class="lab-3d-modal" id="threeLabModal" aria-hidden="true" role="dialog" aria-label="Littlest Tokyo 3D Keyframe Animation Stage" style="display: none;">
+  <!-- Top Action Bar -->
+  <div class="lab-3d-topbar">
+    <div class="lab-3d-title-group">
+      <span class="badge-tech" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: rgba(99, 102, 241, 0.35); font-size: 0.72rem;">
+        <i class="bi bi-flask-fill me-1 text-primary"></i> 3D Stage
+      </span>
+      <span class="lab-3d-title">Littlest Tokyo &bull; 3D Keyframe Animation</span>
+      <span class="lab-3d-author d-none d-md-inline">&bull; Model by Glen Fox</span>
+    </div>
+
+    <!-- Camera Viewpoint Presets Nav -->
+    <div class="lab-3d-presets-nav" id="cameraPresetsNav">
+      <button type="button" class="lab-preset-pill active" onclick="window.setTokyoViewpoint('overview', this)"><i class="bi bi-camera-reels me-1"></i>Overview</button>
+      <button type="button" class="lab-preset-pill" onclick="window.setTokyoViewpoint('cat', this)"><i class="bi bi-heart me-1"></i>Lucky Cat</button>
+      <button type="button" class="lab-preset-pill" onclick="window.setTokyoViewpoint('train', this)"><i class="bi bi-train-front me-1"></i>Streetcar</button>
+      <button type="button" class="lab-preset-pill" onclick="window.setTokyoViewpoint('shop', this)"><i class="bi bi-shop me-1"></i>Ramen Shop</button>
+      <button type="button" class="lab-preset-pill" onclick="window.setTokyoViewpoint('rooftop', this)"><i class="bi bi-buildings me-1"></i>Rooftop</button>
+      <button type="button" class="lab-preset-pill" id="btnAutoTour" onclick="window.toggleTokyoAutoTour()" title="Cinematic Turntable Auto-Tour"><i class="bi bi-arrow-repeat me-1"></i>Auto-Tour</button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; align-items: center; gap: 0.45rem;">
+      <button type="button" class="btn-modern btn-subtle btn-sm text-white" id="btnResetCamera" onclick="window.resetTokyoCamera();" title="Reset Camera Angle">
+        <i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-sm-inline">Reset</span>
+      </button>
+      <button type="button" class="btn-modern btn-primary-glow btn-sm" id="btnClose3DModal" onclick="window.closeLittlestTokyoModal()" title="Close Stage (Esc)">
+        <i class="bi bi-x-lg"></i> <span class="d-none d-sm-inline">Close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3D Canvas Viewport -->
+  <div class="lab-3d-stage-viewport">
+    <div id="threeLabCanvasContainer"></div>
+
+    <!-- Smooth Loading Spinner -->
+    <div class="lab-3d-loading-screen" id="threeLabLoadingScreen">
+      <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="text-center font-mono" style="color: #818cf8; font-size: 0.88rem;">
+        <div>Loading Littlest Tokyo 3D Model &amp; Keyframe Animations...</div>
+        <div class="text-muted mt-1" style="font-size: 0.76rem;">Initializing Three.js WebGL &bull; DRACO Compressed Model</div>
+      </div>
+    </div>
+
+    <!-- Bottom Controls Guide Pill -->
+    <div class="lab-3d-hint-pill">
+      <i class="bi bi-cursor-fill text-warning"></i>
+      <span>Left Click + Drag: <strong>Rotate</strong></span>
+      <span class="text-muted">&bull;</span>
+      <span>Scroll: <strong>Zoom</strong></span>
+      <span class="text-muted">&bull;</span>
+      <span>Right Click: <strong>Pan</strong></span>
+      <span class="text-muted d-none d-md-inline">&bull;</span>
+      <span class="d-none d-md-inline">Presets in Top Bar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     FULLSCREEN THE ILLUSION OF SCROLL THEATRE MODAL
+     ====================================================================== -->
+<div class="lab-3d-modal illusion-modal" id="illusionScrollModal" aria-hidden="true" role="dialog" aria-label="The Illusion of Scroll 14-Act Masterclass" style="display: none;">
+  <!-- Top Bar with Unified Style Switcher -->
+  <div class="illusion-topbar">
+    <div class="illusion-title-group">
+      <span class="badge-tech" id="currentStyleBadge" style="background: rgba(255, 43, 214, 0.15); color: #ff2bd6; border-color: rgba(255, 43, 214, 0.4); font-size: 0.72rem;">
+        <span class="status-dot" style="background: #ff2bd6; box-shadow: 0 0 8px #ff2bd6; width: 6px; height: 6px; margin-right: 5px;"></span> 01 // ILLUSION OF SCROLL
+      </span>
+      <span class="illusion-title d-none d-lg-inline">The Illusion of Scroll</span>
+
+      <!-- Global Style Selector Dropdown -->
+      <select class="style-select-pill" id="globalStyleSelect" title="Switch Scrolling Style">
+        <option value="1">Style 01: The Illusion of Scroll (20 Acts)</option>
+        <option value="2">Style 02: Scroll Trigger (12 Sections)</option>
+        <option value="3">Style 03: Pin Animation (14 Sections)</option>
+        <option value="4">Style 04: Parallax Depth (15 Sections)</option>
+        <option value="5">Style 05: Horizontal Scroll (15 Scenes)</option>
+        <option value="6">Style 06: Scroll Progress (15 Sections)</option>
+        <option value="7">Style 07: Scroll Linked Animation (15 Sections)</option>
+      </select>
+
+      <!-- Styles Hub Button -->
+      <button type="button" class="btn-styles-hub" id="btnOpenStylesHub" title="Open Styles Collection Hub">
+        <i class="bi bi-grid-fill"></i> <span class="d-none d-sm-inline">Styles Hub</span>
+      </button>
+    </div>
+
+    <!-- Center / Right Actions -->
+    <div style="display: flex; align-items: center; gap: 0.65rem;">
+      <!-- Jump to Act dropdown (only for Style 1) -->
+      <select class="illusion-act-selector d-none d-md-inline-block" id="illusionActSelector" title="Jump directly to any animation act">
+        <option value="1">Act 01: Kinetic Typography Warp</option>
+        <option value="2">Act 02: 3D Monolith Room 90° Flip</option>
+        <option value="3">Act 03: Edge-to-Edge Dull-to-Vivid Wipe</option>
+        <option value="4">Act 04: Sacred Geometry &amp; Constellations</option>
+        <option value="5">Act 05: Panoramic Lateral Speedway</option>
+        <option value="6">Act 06: Diagonal Guillotine Fault</option>
+        <option value="7">Act 07: 3D Origami Spatial OS</option>
+        <option value="8">Act 08: Cylindrical Holo-Turbine</option>
+        <option value="9">Act 09: Gravitational Singularity</option>
+        <option value="10">Act 10: Exploded 3D Glassmorphism</option>
+        <option value="11">Act 11: Cyberpunk Matrix Rain</option>
+        <option value="12">Act 12: Audio Polar Oscilloscope</option>
+        <option value="13">Act 13: Reverse Gravity Vortex</option>
+        <option value="14">Act 14: Volumetric Hex Tunnel</option>
+        <option value="15">Act 15: Viscous Ferrofluid Field</option>
+        <option value="16">Act 16: Retro CRT Scanline Glitch</option>
+        <option value="17">Act 17: Isometric Blueprint City</option>
+        <option value="18">Act 18: Reality Detonation Shatter</option>
+        <option value="19">Act 19: Wormhole Event Horizon</option>
+        <option value="20">Act 20: Luminous Dawn &amp; Skills Hub</option>
+      </select>
+
+      <div class="illusion-progress-pill" id="illusionProgressPill">0% TRANSIT</div>
+      <button type="button" class="btn-modern btn-primary-glow btn-sm" onclick="window.closeIllusionScrollModal()" title="Close Experiment (Esc)">
+        <i class="bi bi-x-lg"></i> <span>Close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 01: THE ILLUSION OF SCROLL (20-ACT MASTERCLASS ENGINE)
+       ====================================================================== -->
+  <div class="scrolling-style-container active" id="styleContainer_1" style="display: flex; position: relative; height: calc(100% - 56px); width: 100%; flex-direction: column;">
+    <div class="illusion-stage-viewport illusion-viewport" id="illusionViewport" tabindex="0">
+    <!-- Background Canvas (100% Full Viewport) -->
+    <canvas class="illusion-bg-canvas" id="illusionBgCanvas"></canvas>
+
+    <!-- World Camera Rig -->
+    <div class="illusion-world-camera illusion-camera" id="illusionCamera">
+
+      <!-- Act 01: Kinetic Typography Warp -->
+      <div class="scene-phase scene-phase-1" id="illusionScene1">
+        <h1 class="inscription-title">KEEP SCROLLING.</h1>
+        <p class="inscription-sub">The page isn't moving. The world is evolving around you.</p>
+      </div>
+
+      <!-- Act 02: Full-Page 3D Monolith Room 90° Flip -->
+      <div class="scene-phase scene-phase-2" id="illusionScene2">
+        <div class="room-flipper-stage" id="roomFlipperStage">
+          <div class="room-box-3d" id="roomBox3D">
+            <!-- Face A: Architectural Wireframe Room -->
+            <div class="room-face room-face-blueprint">
+              <div class="room-grid-overlay"></div>
+              <span class="badge-tech" style="border-color: #00f5ff; color: #00f5ff; margin-bottom: 1rem;">
+                <i class="bi bi-box-seam me-1"></i> WORLD MATRIX // ROOM 01
+              </span>
+              <h2 class="room-hero-title" style="color: #ffffff;">ARCHITECTURAL SPEC</h2>
+              <p class="room-hero-sub">The entire viewport is an immersive 3D chamber. Scroll to trigger a full 90-degree horizontal room rotation.</p>
+              <div class="room-telemetry-strip">
+                <div class="room-telemetry-item"><span class="text-muted">AXIS:</span> Y-AXIS 90°</div>
+                <div class="room-telemetry-item"><span class="text-muted">PERSPECTIVE:</span> 1400px</div>
+                <div class="room-telemetry-item"><span class="text-muted">PROJECTION:</span> MATRIX3D</div>
+              </div>
+            </div>
+            <!-- Face B: Hardware-Accelerated Chromatic Core -->
+            <div class="room-face room-face-cyber">
+              <div class="room-grid-overlay" style="background-image: linear-gradient(to right, rgba(255,43,214,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,43,214,0.08) 1px, transparent 1px);"></div>
+              <span class="badge-tech" style="border-color: #ff2bd6; color: #ff2bd6; margin-bottom: 1rem;">
+                <i class="bi bi-cpu me-1"></i> HARDWARE CORE // ROOM 02
+              </span>
+              <h2 class="room-hero-title" style="background: linear-gradient(135deg, #ff2bd6, #ff7a18); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">HARDWARE ACCELERATED</h2>
+              <p class="room-hero-sub">Rotated 90° into a chromatic command center. GPU-composited 3D spatial transformation.</p>
+              <div class="room-telemetry-strip">
+                <div class="room-telemetry-item" style="border-color: rgba(255,43,214,0.3);"><span class="text-muted">RENDER:</span> 60 FPS ULTRA</div>
+                <div class="room-telemetry-item" style="border-color: rgba(255,43,214,0.3);"><span class="text-muted">LIGHTING:</span> DUAL RADIAL</div>
+                <div class="room-telemetry-item" style="border-color: rgba(255,43,214,0.3);"><span class="text-muted">STATUS:</span> LOCKED</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 03: Edge-to-Edge Dull-to-Vivid Laser Curtain Wipe -->
+      <div class="scene-phase scene-phase-3" id="illusionScene3">
+        <div class="wipe-fullscreen-stage" id="wipeFullscreenStage">
+          <!-- Dull Grayscale Layer (Edge-to-Edge 100vw × 100vh) -->
+          <div class="wipe-pane-full wipe-pane-dull-full">
+            <span class="badge-tech" style="border-color: #52525b; color: #71717a; margin-bottom: 1rem;">
+              <i class="bi bi-sliders me-1"></i> CHROMATIC SPECTRUM SHIFT
+            </span>
+            <h2 class="room-hero-title" style="color: #52525b;">DIGITAL INTERACTION</h2>
+            <p class="room-hero-sub" style="color: #71717a;">Next-generation spatial web engineering rendered with GPU hardware acceleration.</p>
+            <div class="room-telemetry-strip">
+              <div class="room-telemetry-item" style="border-color: #3f3f46; color: #71717a;">MONOCHROME BLUEPRINT &bull; STATIC RASTER</div>
+            </div>
+          </div>
+
+          <!-- Vivid Chromatic Neon Layer (Edge-to-Edge 100vw × 100vh, dynamic clip) -->
+          <div class="wipe-pane-full wipe-pane-vivid-full" id="wipeVividPaneFull">
+            <span class="badge-tech" style="border-color: #00f5ff; color: #00f5ff; margin-bottom: 1rem;">
+              <i class="bi bi-sliders me-1"></i> CHROMATIC SPECTRUM SHIFT
+            </span>
+            <h2 class="room-hero-title" style="background: linear-gradient(135deg, #ffffff, #00f5ff, #ff2bd6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">DIGITAL INTERACTION</h2>
+            <p class="room-hero-sub" style="color: #e2e8f0;">Next-generation spatial web engineering rendered with GPU hardware acceleration.</p>
+            <div class="room-telemetry-strip">
+              <div class="room-telemetry-item" style="border-color: #00f5ff; color: #00f5ff; box-shadow: 0 0 20px rgba(0,245,255,0.3);">VIVID LUXURY &bull; 60 FPS GPU ACCELERATED</div>
+            </div>
+          </div>
+
+          <!-- Fullscreen Vertical Glowing Laser Beam Divider -->
+          <div class="wipe-laser-line-full" id="wipeLaserFull">
+            <div class="wipe-laser-head"><i class="bi bi-arrows-expand-vertical"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 04: Sacred Geometry & Constellation Node Mesh -->
+      <div class="scene-phase scene-phase-4" id="illusionScene4">
+        <div class="constellation-stage" id="constellationStage">
+          <div class="morph-svg-wrap">
+            <svg class="morph-svg-graphic" viewBox="0 0 280 280">
+              <path class="morph-svg-path" id="morphPathFull" d="M 140 30 C 200 30 250 80 250 140 C 250 200 200 250 140 250 C 80 250 30 200 30 140 C 30 80 80 30 140 30 Z"></path>
+            </svg>
+          </div>
+          <h2 class="room-hero-title" style="color: #ffffff;">SACRED VECTOR MORPHING</h2>
+          <p class="room-hero-sub">Continuous Bezier spline path interpolation through sacred geometric topologies.</p>
+        </div>
+      </div>
+
+      <!-- Act 05: Panoramic Lateral Speedway -->
+      <div class="scene-phase scene-phase-5" id="illusionScene5">
+        <div class="conveyor-stage-full" id="conveyorStageFull">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <span class="badge-tech" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">
+              <i class="bi bi-arrow-left-right me-1"></i> ORTHOGONAL MOTION // X-AXIS PARALLAX
+            </span>
+            <h2 class="room-hero-title" style="color: #ffffff; margin: 0.5rem 0;">PANORAMIC SPEEDWAY</h2>
+          </div>
+          <div class="conveyor-speedway-track" id="conveyorSpeedwayTrack">
+            <div class="speedway-card" style="border-color: #00f5ff;">
+              <div class="speedway-num" style="color: #00f5ff;">01</div>
+              <div>
+                <h3 style="color: #ffffff; font-size: 1.4rem; font-weight: 800;">WebGL Pipelines</h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">GPU-rendered Three.js dioramas and zero-latency GLTF environments.</p>
+              </div>
+            </div>
+            <div class="speedway-card" style="border-color: #ff2bd6;">
+              <div class="speedway-num" style="color: #ff2bd6;">02</div>
+              <div>
+                <h3 style="color: #ffffff; font-size: 1.4rem; font-weight: 800;">Kinetic Motion</h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">Sub-pixel typography and silky inertial scroll camera scrub mechanics.</p>
+              </div>
+            </div>
+            <div class="speedway-card" style="border-color: #b6ff00;">
+              <div class="speedway-num" style="color: #b6ff00;">03</div>
+              <div>
+                <h3 style="color: #ffffff; font-size: 1.4rem; font-weight: 800;">Spatial Audio</h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">Procedural WebAudio harmonic oscillators synced to velocity.</p>
+              </div>
+            </div>
+            <div class="speedway-card" style="border-color: #818cf8;">
+              <div class="speedway-num" style="color: #818cf8;">04</div>
+              <div>
+                <h3 style="color: #ffffff; font-size: 1.4rem; font-weight: 800;">Verlet Physics</h3>
+                <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;">Rigid-body collision dynamics reacting to cursor gravitational fields.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 06: Fullscreen Diagonal Guillotine Fault -->
+      <div class="scene-phase scene-phase-6" id="illusionScene6">
+        <div class="guillotine-stage-full" id="guillotineStageFull">
+          <div class="guillotine-half guillotine-top" id="guillotineTop">
+            <span class="badge-tech" style="color: #00f5ff; border-color: #00f5ff; margin-bottom: 1rem;"><i class="bi bi-scissors me-1"></i> FAULT VECTOR 01</span>
+            <h2 class="room-hero-title" style="color: #ffffff;">DIAGONAL</h2>
+            <p class="room-hero-sub">Polygonal clip-path dividing the entire 100vw display along a -45° seam.</p>
+          </div>
+          <div class="guillotine-half guillotine-bottom" id="guillotineBottom">
+            <span class="badge-tech" style="color: #ff2bd6; border-color: #ff2bd6; margin-bottom: 1rem;"><i class="bi bi-scissors me-1"></i> FAULT VECTOR 02</span>
+            <h2 class="room-hero-title" style="color: #ff2bd6;">GUILLOTINE</h2>
+            <p class="room-hero-sub">Opposing kinetic vectors slice the interface open to reveal subterranean depth.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 07: 3D Origami Spatial OS Unfold -->
+      <div class="scene-phase scene-phase-7" id="illusionScene7">
+        <div class="origami-stage-full" id="origamiStageFull">
+          <div class="origami-hub" id="origamiHub">
+            <span class="badge-tech" style="border-color: #ff2bd6; color: #ff2bd6; margin-bottom: 0.75rem;"><i class="bi bi-cpu me-1"></i> SPATIAL CORE</span>
+            <h3 style="font-size: 1.5rem; font-weight: 900; color: #ffffff; margin-bottom: 0.5rem;">UNFOLDING OS</h3>
+            <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.4; margin: 0;">A closed 3D prism blooming its flaps outward to the 4 borders of the screen.</p>
+            <!-- 4 Massive Hinged Panels -->
+            <div class="origami-panel origami-panel-top" id="origamiPanelTop">
+              <span class="text-muted font-mono" style="font-size: 0.75rem;">PANEL 01 // TOP</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #00f5ff;">Creative Directing</div>
+            </div>
+            <div class="origami-panel origami-panel-bottom" id="origamiPanelBottom">
+              <span class="text-muted font-mono" style="font-size: 0.75rem;">PANEL 02 // BOTTOM</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #b6ff00;">System Architecture</div>
+            </div>
+            <div class="origami-panel origami-panel-left" id="origamiPanelLeft">
+              <span class="text-muted font-mono" style="font-size: 0.75rem;">PANEL 03 // LEFT</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #ff2bd6;">GLSL Shader Math</div>
+            </div>
+            <div class="origami-panel origami-panel-right" id="origamiPanelRight">
+              <span class="text-muted font-mono" style="font-size: 0.75rem;">PANEL 04 // RIGHT</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #818cf8;">Kinetic Motion</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 08: Fullscreen Cylindrical Holo-Turbine -->
+      <div class="scene-phase scene-phase-8" id="illusionScene8">
+        <div class="turbine-stage-full" id="turbineStageFull">
+          <div class="turbine-drum" id="turbineDrum">
+            <div class="turbine-slat slat-0">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 01 // 0°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #00f5ff;">TURBINE MOTION</div>
+            </div>
+            <div class="turbine-slat slat-60">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 02 // 60°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #ff2bd6;">ROTATIONAL MOMENTUM</div>
+            </div>
+            <div class="turbine-slat slat-120">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 03 // 120°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #b6ff00;">CENTRIFUGAL FORCE</div>
+            </div>
+            <div class="turbine-slat slat-180">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 04 // 180°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #818cf8;">RADIAL COORDINATES</div>
+            </div>
+            <div class="turbine-slat slat-240">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 05 // 240°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #f59e0b;">CONTINUOUS REVOLVE</div>
+            </div>
+            <div class="turbine-slat slat-300">
+              <span class="text-muted font-mono" style="font-size: 0.78rem;">SLAT 06 // 300°</span>
+              <div style="font-size: 1.5rem; font-weight: 900; color: #ec4899;">INERTIAL TUMBLER</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 09: N-Body Gravitational Singularity -->
+      <div class="scene-phase scene-phase-9" id="illusionScene9">
+        <div class="singularity-stage-full" id="singularityStageFull">
+          <span class="badge-tech" style="border-color: #0ea5e9; color: #0ea5e9; margin-bottom: 1rem;">
+            <i class="bi bi-bullseye me-1"></i> N-BODY GRAVITATIONAL PHYSICS
+          </span>
+          <h2 class="room-hero-title" style="color: #ffffff;">CELESTIAL SWARM</h2>
+          <p class="room-hero-sub">250 matter particles swirling across every quadrant of the display in real-time orbit.</p>
+        </div>
+      </div>
+
+      <!-- Act 10: Exploded 3D Glassmorphism Desktop -->
+      <div class="scene-phase scene-phase-10" id="illusionScene10">
+        <div class="glass-desktop-stage" id="glassDesktopStage">
+          <div class="glass-plate" id="glassPlate1" style="background: rgba(14, 165, 233, 0.12); border-color: rgba(14, 165, 233, 0.4);">
+            <span class="text-muted font-mono" style="font-size: 0.8rem; color: #38bdf8;">LAYER 01 // PRESENTATION</span>
+            <h2 style="font-size: 2.2rem; font-weight: 900; color: #ffffff; margin: 0.5rem 0;">Interactive Front-End</h2>
+            <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">3D coordinate perspective spaces with fluid micro-interactions.</p>
+          </div>
+          <div class="glass-plate" id="glassPlate2" style="background: rgba(255, 43, 214, 0.12); border-color: rgba(255, 43, 214, 0.4);">
+            <span class="text-muted font-mono" style="font-size: 0.8rem; color: #ff2bd6;">LAYER 02 // LOGIC &amp; MATH</span>
+            <h2 style="font-size: 2.2rem; font-weight: 900; color: #ffffff; margin: 0.5rem 0;">Physics &amp; Shaders</h2>
+            <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">Real-time vector interpolation and procedural trigonometric waveforms.</p>
+          </div>
+          <div class="glass-plate" id="glassPlate3" style="background: rgba(182, 255, 0, 0.12); border-color: rgba(182, 255, 0, 0.4);">
+            <span class="text-muted font-mono" style="font-size: 0.8rem; color: #b6ff00;">LAYER 03 // ARCHITECTURE</span>
+            <h2 style="font-size: 2.2rem; font-weight: 900; color: #ffffff; margin: 0.5rem 0;">Full-Stack Backend</h2>
+            <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.5;">Django enterprise infrastructure, low-latency APIs, and production stability.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 11: Cyberpunk Matrix Rain & Glyph Decoder -->
+      <div class="scene-phase scene-phase-11" id="illusionScene11">
+        <div class="matrix-stage-full" id="matrixStageFull">
+          <div class="matrix-terminal-box">
+            <span class="badge-tech" style="border-color: #10b981; color: #10b981;">
+              <i class="bi bi-terminal me-1"></i> REAL-TIME GLYPH STREAM
+            </span>
+            <div class="matrix-stream-text" id="matrixDecodeTextFull">INITIALIZING_</div>
+            <p style="color: #94a3b8; font-family: var(--font-mono); font-size: 0.95rem; margin: 0;">Cascades of digital code pouring down the entire window with cryptographic deciphering.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 12: Audio-Reactive Polar Oscilloscope -->
+      <div class="scene-phase scene-phase-12" id="illusionScene12">
+        <div class="polar-stage-full" id="polarStageFull">
+          <span class="badge-tech" style="border-color: #f43f5e; color: #f43f5e; margin-bottom: 1rem;">
+            <i class="bi bi-soundwave me-1"></i> HARMONIC POLAR OSCILLATOR
+          </span>
+          <h2 class="room-hero-title" style="color: #ffffff;">RESONANCE FREQUENCIES</h2>
+          <p class="room-hero-sub">Circular acoustic waveforms pulsating outward across the full window borders.</p>
+        </div>
+      </div>
+
+      <!-- Act 13: Reverse Gravity Inversion Vortex -->
+      <div class="scene-phase scene-phase-13" id="illusionScene13">
+        <div class="antigravity-stage-full" id="antigravityStageFull">
+          <span class="badge-tech" style="border-color: #6366f1; color: #6366f1; margin-bottom: 1rem;">
+            <i class="bi bi-arrow-up-circle me-1"></i> SPATIAL INVERSION // 180°
+          </span>
+          <h2 class="room-hero-title" style="color: #ffffff;">ANTI-GRAVITY PARADOX</h2>
+          <p class="room-hero-sub">Downwards scroll scrub is inverted into upwards spatial velocity. The world is turned upside down.</p>
+        </div>
+      </div>
+
+      <!-- Act 14: Infinite Volumetric Hex Warp Tunnel -->
+      <div class="scene-phase scene-phase-14" id="illusionScene14">
+        <div class="hextunnel-stage-full" id="hextunnelStageFull">
+          <div class="hex-ring"></div>
+          <div class="hex-ring" style="border-color: #ff2bd6; box-shadow: 0 0 35px rgba(255, 43, 214, 0.45);"></div>
+          <div class="hex-ring" style="border-color: #b6ff00; box-shadow: 0 0 35px rgba(182, 255, 0, 0.45);"></div>
+          <div class="hex-ring" style="border-color: #818cf8; box-shadow: 0 0 35px rgba(129, 140, 248, 0.45);"></div>
+          <div class="hex-ring" style="border-color: #ffffff; box-shadow: 0 0 35px rgba(255, 255, 255, 0.45);"></div>
+          <div style="text-align: center; z-index: 10;">
+            <h2 class="room-hero-title" style="color: #ffffff; text-shadow: 0 0 40px #00f5ff;">INFINITE Z-DEPTH</h2>
+            <p class="room-hero-sub">Concentric neon hexagonal frames racing past peripheral vision.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 15: Viscous Liquid Ferrofluid Simulation -->
+      <div class="scene-phase scene-phase-15" id="illusionScene15">
+        <div class="ferrofluid-stage-full" id="ferrofluidStageFull">
+          <div class="ferro-magnetic-orb"></div>
+          <span class="badge-tech" style="border-color: #38bdf8; color: #38bdf8; margin-bottom: 0.75rem;">
+            <i class="bi bi-droplet me-1"></i> VISCOUS FERROFLUID
+          </span>
+          <h2 class="room-hero-title" style="color: #ffffff;">MAGNETIC FIELD DYNAMICS</h2>
+          <p class="room-hero-sub">Organic liquid spikes reacting dynamically to cursor attraction and scroll scrub velocity.</p>
+        </div>
+      </div>
+
+      <!-- Act 16: Retro CRT Phosphor Scanline Glitch -->
+      <div class="scene-phase scene-phase-16" id="illusionScene16">
+        <div class="crt-stage-full" id="crtStageFull">
+          <div class="crt-scanlines"></div>
+          <span class="badge-tech" style="border-color: #ec4899; color: #ec4899; margin-bottom: 0.5rem;">
+            <i class="bi bi-tv me-1"></i> ANALOG POST-PROCESSING
+          </span>
+          <div class="crt-glitch-badge">SYSTEM INTERFERENCE</div>
+          <p class="room-hero-sub" style="color: #e2e8f0;">Emulating phosphor scanlines, RGB subpixel distortion, and beam curvature.</p>
+        </div>
+      </div>
+
+      <!-- Act 17: Isometric Wireframe Blueprint City -->
+      <div class="scene-phase scene-phase-17" id="illusionScene17">
+        <div class="isocity-stage-full" id="isocityStageFull">
+          <div class="isocity-grid-floor">
+            <div class="isocity-tower" style="top: 80px; left: 100px;"></div>
+            <div class="isocity-tower" style="top: 180px; left: 240px; border-color: #ff2bd6; background: rgba(255,43,214,0.3);"></div>
+            <div class="isocity-tower" style="top: 120px; left: 380px; border-color: #b6ff00; background: rgba(182,255,0,0.3);"></div>
+            <div class="isocity-tower" style="top: 260px; left: 160px; border-color: #818cf8; background: rgba(129,140,248,0.3);"></div>
+          </div>
+          <div style="text-align: center; margin-top: 2rem;">
+            <h2 class="room-hero-title" style="color: #ffffff;">ISOMETRIC BLUEPRINT</h2>
+            <p class="room-hero-sub">3D digital infrastructure towers elevating from a perspective grid.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 18: Reality Detonation & Glass Shatter -->
+      <div class="scene-phase scene-phase-18" id="illusionScene18">
+        <div class="shatter-stage-full" id="shatterStageFull">
+          <div class="shatter-plaque-full">
+            <div class="shatter-shard-full" data-dx="-1.3" data-dy="-1.0" data-rot="-40">
+              <span class="badge-tech" style="color: #ff2bd6; border-color: #ff2bd6; width: fit-content;">CRITICAL BREACH</span>
+              <h2 style="font-size: 2.8rem; font-weight: 900; color: #ffffff; margin: 0.5rem 0;">EXPERIMENT</h2>
+            </div>
+            <div class="shatter-shard-full" data-dx="1.2" data-dy="-1.1" data-rot="45">
+              <h2 style="font-size: 2.8rem; font-weight: 900; color: #00f5ff; margin: 0.5rem 0;">DETONATES</h2>
+            </div>
+            <div class="shatter-shard-full" data-dx="-1.0" data-dy="1.2" data-rot="30">
+              <p style="color: #cbd5e1; font-size: 1.1rem; margin: 0;">You thought you reached the wall...</p>
+            </div>
+            <div class="shatter-shard-full" data-dx="1.3" data-dy="1.0" data-rot="-35">
+              <p style="color: #ff2bd6; font-size: 1.1rem; font-weight: 700; margin: 0;">REALITY DETONATES OUTWARD</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Act 19: Celestial Wormhole & Hyperspace Singularity -->
+      <div class="scene-phase scene-phase-19" id="illusionScene19">
+        <div class="wormhole-stage-full" id="wormholeStageFull">
+          <div class="singularity-core"></div>
+          <span class="badge-tech" style="border-color: #a855f7; color: #a855f7; margin-bottom: 0.75rem;">
+            <i class="bi bi-record-circle me-1"></i> EVENT HORIZON
+          </span>
+          <h2 class="room-hero-title" style="color: #ffffff;">HYPERSPACE SINGULARITY</h2>
+          <p class="room-hero-sub">Gravitational accretion disk warping light and cosmic energy into the singularity.</p>
+        </div>
+      </div>
+
+      <!-- Act 20: Luminous Dawn Horizon & Master Skills Hub -->
+      <div class="scene-phase scene-phase-20" id="illusionScene20">
+        <div class="dawn-stage-full" id="dawnStageFull">
+          <h2 class="dawn-title">YOU MADE IT.</h2>
+          <p class="dawn-sub">
+            A continuous 20-act creative web engineering masterclass. Every spatial transformation, physical simulation, and interactive environment is designed to elevate client digital experiences.
+          </p>
+
+          <!-- 6-Card Skills Matrix -->
+          <div class="skills-matrix-20">
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-box me-1 text-primary"></i> 3D WebGL &amp; Three.js</div>
+              <div class="skill-card-20-desc">Interactive 3D dioramas, custom PBR shaders, skeletal keyframe animations, and zero-latency GLTF rendering.</div>
+            </div>
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-lightning-charge me-1 text-warning"></i> Kinetic Motion &amp; GSAP</div>
+              <div class="skill-card-20-desc">Scroll-scrub camera engines, sub-pixel typography, and fluid inertial spatial navigation.</div>
+            </div>
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-bezier2 me-1 text-success"></i> Canvas &amp; Verlet Physics</div>
+              <div class="skill-card-20-desc">Real-time particle dynamics, fluid caustics, N-body gravitational fields, and spring-damper colliders.</div>
+            </div>
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-layers me-1 text-info"></i> Holographic UI Design</div>
+              <div class="skill-card-20-desc">Glassmorphism layers, dynamic mouse-parallax cards, and state-of-the-art interactive micro-interactions.</div>
+            </div>
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-cpu me-1 text-danger"></i> GLSL Shaders &amp; FX</div>
+              <div class="skill-card-20-desc">Post-processing bloom, chromatic aberration, CRT glitch decoders, and custom fragment raymarching.</div>
+            </div>
+            <div class="skill-card-20">
+              <div class="skill-card-20-title"><i class="bi bi-database-check me-1 text-primary"></i> Full-Stack Architecture</div>
+              <div class="skill-card-20-desc">Django enterprise backends, low-latency REST APIs, Redis caching, and automated deployment pipelines.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <button type="button" class="btn-modern btn-primary-glow btn-sm px-4 py-2" id="btnIllusionRunAgain" onclick="if (window.illusionEngine) window.illusionEngine.resetToStart();">
+              <i class="bi bi-arrow-clockwise me-1"></i> <span>RUN IT AGAIN ↺</span>
+            </button>
+            <button type="button" class="btn-modern btn-outline-glow btn-sm px-4 py-2" id="btnIllusionBackLab" onclick="window.closeIllusionScrollModal();">
+              <span>BACK TO LAB →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Floating Technique & Skill HUD Badge -->
+    <div class="illusion-technique-hud" id="illusionTechniqueHUD">
+      <div class="hud-pill-row">
+        <span class="hud-act-badge" id="hudActBadge">ACT 01 // 20</span>
+        <span class="hud-skill-badge" id="hudSkillBadge">CSS 3D Matrix &amp; Typography</span>
+      </div>
+      <div class="technique-title" id="hudTitle">Kinetic Typography Warp</div>
+      <div class="technique-desc" id="hudDesc">High-impact cinematic hero titles where letterforms expand beyond screen edges.</div>
+    </div>
+
+    <!-- Interactive Chapter Scrubber Rail with 20 Act Ticks -->
+    <div class="illusion-rail" id="illusionRail" aria-hidden="true">
+      <div class="illusion-rail-fill" id="illusionRailFill"></div>
+      <div class="illusion-rail-ticks">
+        <div class="rail-tick" data-act="1" data-label="Act 01: Kinetic Typography" style="top: 0%;"></div>
+        <div class="rail-tick" data-act="2" data-label="Act 02: 3D Room Flip" style="top: 5.26%;"></div>
+        <div class="rail-tick" data-act="3" data-label="Act 03: Dull-to-Vivid Wipe" style="top: 10.53%;"></div>
+        <div class="rail-tick" data-act="4" data-label="Act 04: Sacred Geometry" style="top: 15.79%;"></div>
+        <div class="rail-tick" data-act="5" data-label="Act 05: Lateral Speedway" style="top: 21.05%;"></div>
+        <div class="rail-tick" data-act="6" data-label="Act 06: Diagonal Guillotine" style="top: 26.32%;"></div>
+        <div class="rail-tick" data-act="7" data-label="Act 07: 3D Origami OS" style="top: 31.58%;"></div>
+        <div class="rail-tick" data-act="8" data-label="Act 08: Cylindrical Holo-Turbine" style="top: 36.84%;"></div>
+        <div class="rail-tick" data-act="9" data-label="Act 09: Gravitational Singularity" style="top: 42.11%;"></div>
+        <div class="rail-tick" data-act="10" data-label="Act 10: 3D Glassmorphism" style="top: 47.37%;"></div>
+        <div class="rail-tick" data-act="11" data-label="Act 11: Matrix Code Rain" style="top: 52.63%;"></div>
+        <div class="rail-tick" data-act="12" data-label="Act 12: Polar Oscilloscope" style="top: 57.89%;"></div>
+        <div class="rail-tick" data-act="13" data-label="Act 13: Reverse Gravity" style="top: 63.16%;"></div>
+        <div class="rail-tick" data-act="14" data-label="Act 14: Hex Warp Tunnel" style="top: 68.42%;"></div>
+        <div class="rail-tick" data-act="15" data-label="Act 15: Viscous Ferrofluid" style="top: 73.68%;"></div>
+        <div class="rail-tick" data-act="16" data-label="Act 16: CRT Scanline Glitch" style="top: 78.95%;"></div>
+        <div class="rail-tick" data-act="17" data-label="Act 17: Isometric City" style="top: 84.21%;"></div>
+        <div class="rail-tick" data-act="18" data-label="Act 18: Glass Detonation" style="top: 89.47%;"></div>
+        <div class="rail-tick" data-act="19" data-label="Act 19: Wormhole Singularity" style="top: 94.74%;"></div>
+        <div class="rail-tick" data-act="20" data-label="Act 20: Luminous Dawn &amp; Skills" style="top: 100%;"></div>
+      </div>
+    </div>
+
+    <!-- Floating Helper Hint -->
+    <div class="illusion-scroll-hint" id="illusionScrollHint">
+      <i class="bi bi-mouse text-warning"></i>
+      <span>SCROLL &bull; ARROW KEYS &bull; CLICK TICKS TO JUMP</span>
+    </div>
+    </div><!-- /.illusion-stage-viewport -->
+  </div><!-- /#styleContainer_1 -->
+
+  <!-- ======================================================================
+       STYLE 02: SCROLL TRIGGER (12 SECTIONS // VIEWPORT TRIGGER CHOREOGRAPHY)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_2">
+    <div class="style-nav-tag">SCROLL TRIGGER / 02</div>
+    <div class="style-counter-rail">
+      <div class="counter-rail-text st2-counter-num">01 / 12</div>
+      <div class="rail-dot st2-rail-dot active"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+      <div class="rail-dot st2-rail-dot"></div>
+    </div>
+
+    <!-- Continuous Vertical Kinetic Laser Filament connecting scenes -->
+    <div class="st2-chain-track" aria-hidden="true"></div>
+
+    <!-- Section 01: Hero -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec1" data-sec-index="1">
+      <div class="st2-stage-hero">
+        <span class="badge-tech mb-3" style="border-color: #00f5ff; color: #00f5ff;">
+          <i class="bi bi-play-circle me-1"></i> INTERACTION STYLE 02 // SCROLL TRIGGER
+        </span>
+        <div class="mb-4">
+          <span class="st2-split-left">SCROLL.</span>
+          <span class="st2-kinetic-node"><i class="bi bi-lightning-charge-fill"></i></span>
+          <span class="st2-split-right">WATCH IT MOVE.</span>
+        </div>
+        <p class="text-secondary max-w-xl mx-auto mb-4" style="max-width: 600px; font-size: 1.05rem;">
+          A continuous kinetic chain reaction built around viewport triggers. Elements stay calm and restrained until you reach them—then unfold with cinematic intent.
+        </p>
+        <div class="d-inline-flex align-items-center gap-2 font-mono text-muted" style="font-size: 0.8rem; letter-spacing: 0.1em;">
+          <span>CONTINUOUS CHAIN ENGAGED</span>
+          <i class="bi bi-arrow-down animate-bounce text-info"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02: Trigger Point / Expanding Iris Portal -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec2" data-sec-index="2">
+      <div class="st2-content text-center">
+        <div class="trig-fade-up">
+          <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">02 // APERTURE TRIGGER</span>
+          <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">“Nothing happens until you reach it.”</h2>
+          <p class="text-secondary mx-auto mb-3" style="max-width: 540px;">
+            The viewport calculates intersection coordinates in real-time. Reaching the threshold opens the iris conduit into the next scene.
+          </p>
+        </div>
+        <div class="st2-iris-portal">
+          <i class="bi bi-circle-fill text-info" style="font-size: 1.4rem; box-shadow: 0 0 20px #00f5ff;"></i>
+        </div>
+        <div class="trig-line-draw mx-auto mt-4" style="height: 1px; background: linear-gradient(90deg, transparent, #00f5ff, transparent); max-width: 500px;"></div>
+      </div>
+    </section>
+
+    <!-- Section 03: Typography Trigger -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec3" data-sec-index="3">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #00f5ff; color: #00f5ff;">03 // TYPOGRAPHY MOMENTUM</span>
+        <div class="st2-momentum-canvas my-3">MOMENTUM</div>
+        <div class="trig-line-draw mx-auto my-3" style="height: 2px; background: #00f5ff; max-width: 320px;"></div>
+        <p class="trig-fade-up text-secondary mx-auto" style="max-width: 520px; font-size: 0.95rem;">
+          Optical de-blurring, expanding letter kerning, and hairline vector calibration driven on viewport entry.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 04: Image Reveal -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec4" data-sec-index="4">
+      <div class="st2-content w-100" style="max-width: 1000px;">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">04 // STAGGERED MASKED REVEAL</span>
+        <div class="trig-clip-reveal my-3" style="height: 380px; border-radius: 18px; overflow: hidden; background: linear-gradient(135deg, #0d1a2d, #142850, #00587a); border: 1px solid rgba(0,245,255,0.3); display: flex; align-items: center; justify-content: center; position: relative;">
+          <div style="font-family: var(--font-editorial); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">ARCHITECTURAL HORIZON</div>
+          <div style="position: absolute; bottom: 20px; left: 24px; font-family: var(--font-mono); font-size: 0.75rem; color: #94a3b8;">METADATA // LATENCY: 0.04ms &bull; ISO: 100 &bull; 60FPS COMPOSITING</div>
+        </div>
+        <div class="trig-fade-up d-flex justify-content-between align-items-center mt-3">
+          <span class="text-secondary" style="font-size: 0.88rem;">Left-to-right mask sliding with staggered caption deceleration.</span>
+          <span class="badge-tech" style="border-color: #00f5ff; color: #00f5ff;">STAGGERED MASK</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 05: Staggered Cards -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec5" data-sec-index="5">
+      <div class="st2-content w-100" style="max-width: 1100px;">
+        <span class="badge-tech mb-3" style="border-color: #00f5ff; color: #00f5ff;">05 // ASYMMETRIC CHOREOGRAPHY</span>
+        <h2 class="h2 fw-bold mb-1" style="font-family: var(--font-editorial);">Choreographed Sequence Entry</h2>
+        <p class="text-secondary mb-4" style="font-size: 0.9rem;">Elements arrive with disciplined staggered offsets, creating visual rhythm without resetting flow.</p>
+        
+        <div class="st2-chain-cards">
+          <div class="st2-chain-card">
+            <span class="badge-tech mb-3" style="color: #00f5ff; border-color: rgba(0,245,255,0.3);">NODE 01</span>
+            <h3 class="h4 fw-bold mb-2">Adaptive Viewport</h3>
+            <p class="text-secondary" style="font-size: 0.85rem;">Intersection observers compute entry percentages and dynamically fire GPU transitions.</p>
+          </div>
+          <div class="st2-chain-card">
+            <span class="badge-tech mb-3" style="color: #38bdf8; border-color: rgba(56,189,248,0.3);">NODE 02</span>
+            <h3 class="h4 fw-bold mb-2">Spatial Velocity</h3>
+            <p class="text-secondary" style="font-size: 0.85rem;">Lightweight CSS transform matrix calculations ensuring zero layout reflows.</p>
+          </div>
+          <div class="st2-chain-card">
+            <span class="badge-tech mb-3" style="color: #818cf8; border-color: rgba(129,140,248,0.3);">NODE 03</span>
+            <h3 class="h4 fw-bold mb-2">Fluid Inertia</h3>
+            <p class="text-secondary" style="font-size: 0.85rem;">Natural cubic bezier deceleration curves tuned for luxury agency aesthetics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 06: Horizontal Speedway Moment -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec6" data-sec-index="6" style="overflow: hidden;">
+      <div class="w-100 text-center">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">06 // SPEEDWAY REACTION</span>
+        <div class="st2-speedway-strip my-4">
+          <span>CREATE</span>
+          <span class="pulse">→</span>
+          <span>DESIGN</span>
+          <span class="pulse">→</span>
+          <span>BUILD</span>
+          <span class="pulse">→</span>
+          <span>INTERACT</span>
+          <span class="pulse">→</span>
+          <span>REPEAT</span>
+        </div>
+        <p class="text-secondary font-mono" style="font-size: 0.82rem;">VERTICAL SCROLL TRIGGERS CONTINUOUS HORIZONTAL VELOCITY</p>
+      </div>
+    </section>
+
+    <!-- Section 07: Numbers / Statistics -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec7" data-sec-index="7">
+      <div class="st2-content w-100" style="max-width: 1050px;">
+        <span class="badge-tech mb-3" style="border-color: #00f5ff; color: #00f5ff;">07 // ANIMATED TELEMETRY</span>
+        <h2 class="h2 fw-bold mb-4" style="font-family: var(--font-editorial);">Numbers That Count When Reached</h2>
+        
+        <div class="row g-4 text-center">
+          <div class="col-md-4">
+            <div class="p-4 rounded-4" style="background: #090c12; border: 1px solid rgba(255,255,255,0.08);">
+              <div class="st2-metric-stat" id="st2_stat1">0%</div>
+              <h3 class="h5 fw-bold mt-2 mb-1">Client Satisfaction</h3>
+              <p class="text-secondary mb-0" style="font-size: 0.84rem;">Precision-engineered interactive experiences delivering measurable enterprise value.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-4 rounded-4" style="background: #090c12; border: 1px solid rgba(255,255,255,0.08);">
+              <div class="st2-metric-stat" id="st2_stat2">0M</div>
+              <h3 class="h5 fw-bold mt-2 mb-1">Shader Invocations</h3>
+              <p class="text-secondary mb-0" style="font-size: 0.84rem;">Low-latency WebGL fragment raymarching and coordinate perspective shaders.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-4 rounded-4" style="background: #090c12; border: 1px solid rgba(255,255,255,0.08);">
+              <div class="st2-metric-stat" id="st2_stat3">0K</div>
+              <h3 class="h5 fw-bold mt-2 mb-1">Active Nodes</h3>
+              <p class="text-secondary mb-0" style="font-size: 0.84rem;">Real-time interactive components running in production environments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 08: Layered Visual Trigger -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec8" data-sec-index="8">
+      <div class="st2-content">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">08 // LAYERED ASSEMBLY</span>
+        <div style="position: relative; height: 360px; border-radius: 20px; background: radial-gradient(circle at 80% 20%, rgba(0,245,255,0.2) 0%, #0d1117 70%); border: 1px solid rgba(255,255,255,0.1); padding: 2.5rem; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="trig-fade-up">
+            <span class="badge-tech" style="border-color: #00f5ff; color: #00f5ff;">DECONSTRUCTED COMPOSITION</span>
+            <h2 class="display-6 fw-bold mt-2" style="font-family: var(--font-editorial);">Assembled in Real Time</h2>
+          </div>
+          <div class="trig-scale-up" style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%); width: 140px; height: 140px; border-radius: 16px; background: rgba(0,245,255,0.1); border: 1px solid #00f5ff; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(0,245,255,0.2);">
+            <i class="bi bi-layers-half text-info" style="font-size: 3rem;"></i>
+          </div>
+          <div class="trig-fade-up text-secondary font-mono" style="font-size: 0.8rem;">
+            4 independent layers moving at staggered rates to build one cohesive focal point.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 09: Text Transformation -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec9" data-sec-index="9">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #00f5ff; color: #00f5ff;">09 // TRANSFORMATION</span>
+        <div class="trig-scale-up my-4">
+          <h2 class="display-3 fw-bold" style="font-family: var(--font-editorial); letter-spacing: -0.02em;">
+            STATIC IS A <span style="background: linear-gradient(135deg, #00f5ff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CHOICE.</span>
+          </h2>
+        </div>
+        <p class="trig-fade-up text-secondary mx-auto" style="max-width: 540px; font-size: 1rem;">
+          When visitors encounter active, responsive movement, passive reading converts into visceral, memorable interaction.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 10: Portfolio Showcase -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec10" data-sec-index="10">
+      <div class="st2-content">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">10 // SHOWCASE</span>
+        <h2 class="h2 fw-bold mb-4" style="font-family: var(--font-editorial);">Featured Work in Motion</h2>
+        
+        <div class="st2-portfolio-grid">
+          <div class="st2-showcase-item">
+            <div class="st2-showcase-img-wrap d-flex align-items-center justify-content-center">
+              <i class="bi bi-braces-asterisk text-info" style="font-size: 3.5rem;"></i>
+              <div class="st2-showcase-mask"></div>
+            </div>
+            <div class="p-3">
+              <span class="badge-tech" style="font-size: 0.68rem; color: #00f5ff;">BRAND PLATFORM</span>
+              <h3 class="h5 fw-bold mt-1">Spatial Architecture</h3>
+            </div>
+          </div>
+          <div class="st2-showcase-item">
+            <div class="st2-showcase-img-wrap d-flex align-items-center justify-content-center">
+              <i class="bi bi-cpu text-info" style="font-size: 3.5rem;"></i>
+              <div class="st2-showcase-mask"></div>
+            </div>
+            <div class="p-3">
+              <span class="badge-tech" style="font-size: 0.68rem; color: #00f5ff;">AI OPERATING SYSTEM</span>
+              <h3 class="h5 fw-bold mt-1">Autonomous Agent OS</h3>
+            </div>
+          </div>
+          <div class="st2-showcase-item">
+            <div class="st2-showcase-img-wrap d-flex align-items-center justify-content-center">
+              <i class="bi bi-gem text-info" style="font-size: 3.5rem;"></i>
+              <div class="st2-showcase-mask"></div>
+            </div>
+            <div class="p-3">
+              <span class="badge-tech" style="font-size: 0.68rem; color: #00f5ff;">CREATIVE TOOLING</span>
+              <h3 class="h5 fw-bold mt-1">Shader Kinetic Suite</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11: Final Statement -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec11" data-sec-index="11">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-4" style="border-color: #00f5ff; color: #00f5ff;">11 // CLIMAX</span>
+        <div class="trig-fade-up">
+          <h2 class="display-3 fw-bold" style="font-family: var(--font-editorial); line-height: 1.15; max-width: 860px; margin: 0 auto;">
+            GOOD DESIGN DOESN’T WAIT FOR <span style="color: #00f5ff;">ATTENTION.</span>
+          </h2>
+          <p class="text-secondary mt-4 font-mono" style="font-size: 0.9rem;">IT ENGAGES THE MOMENT YOU ARRIVE.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 12: Closing CTA -->
+    <section class="st2-section st2-scene-wrap" id="st2_sec12" data-sec-index="12">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">12 // CLOSING CTA</span>
+        <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">READY TO MAKE SCROLL MATTER?</h2>
+        <p class="text-secondary mx-auto mb-4" style="max-width: 520px;">
+          Explore the other scrolling interaction styles in this masterclass collection or build a tailored web experience.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+            <i class="bi bi-grid-fill me-1"></i> EXPLORE MORE STYLES
+          </button>
+          <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+            <span>START A PROJECT</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 03: PIN ANIMATION (14 SECTIONS // SPATIAL PINNED VIEWPORT OS)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_3">
+    <div class="style-nav-tag" style="color: var(--accent-s3);">PIN / 03</div>
+    <div class="style-counter-rail">
+      <div class="counter-rail-text st3-counter-num">01 / 14</div>
+    </div>
+
+    <!-- Section 01: Hero -->
+    <section class="st3-pin-section" id="st3_sec1">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">STYLE 03 // PIN ANIMATION</span>
+          <h1 class="display-3 fw-bold mb-3" style="font-family: var(--font-editorial);">HOLD THE MOMENT.</h1>
+          <p class="text-secondary max-w-lg mx-auto mb-4" style="max-width: 540px;">
+            A scrolling experience built around pinned interaction. Key visual elements lock into the viewport while the story evolves around them.
+          </p>
+          <div class="d-inline-flex align-items-center gap-2 font-mono text-muted" style="font-size: 0.8rem;">
+            <span>SCROLL TO ENGAGE PIN</span>
+            <i class="bi bi-arrow-down text-primary animate-bounce"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02: The First Pin (3 Stages) -->
+    <section class="st3-pin-section" id="st3_sec2" style="min-height: 250vh;">
+      <div class="st3-pin-stage">
+        <div class="st3-pin-panel-2col">
+          <div>
+            <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">02 // PINNED MATRIX</span>
+            <h2 class="display-5 fw-bold mb-3" style="font-family: var(--font-editorial);">SOME THINGS SHOULD STAY.</h2>
+            <p class="text-secondary" style="font-size: 0.95rem;">
+              The visual panel on the right remains locked in place as you scroll through three consecutive stages of spatial evolution.
+            </p>
+            <div class="d-flex flex-column gap-2 mt-4 font-mono" style="font-size: 0.82rem;">
+              <div style="color: #8b5cf6;">STAGE 01 &bull; FRAME BLUEPRINT</div>
+              <div style="color: #a78bfa;">STAGE 02 &bull; FOCUS RESOLUTION</div>
+              <div style="color: #c4b5fd;">STAGE 03 &bull; FORM INTEGRATION</div>
+            </div>
+          </div>
+
+          <div class="st3-pinned-display">
+            <div class="st3-pin-stage-layer active">
+              <i class="bi bi-bounding-box text-primary" style="font-size: 4rem;"></i>
+              <div class="h5 fw-bold mt-3">01 — FRAME</div>
+              <p class="text-secondary text-center" style="font-size: 0.82rem;">Structural bounding box established in viewport coordinates.</p>
+            </div>
+            <div class="st3-pin-stage-layer">
+              <i class="bi bi-bullseye text-info" style="font-size: 4rem;"></i>
+              <div class="h5 fw-bold mt-3">02 — FOCUS</div>
+              <p class="text-secondary text-center" style="font-size: 0.82rem;">Depth planes converge onto the active focal subject.</p>
+            </div>
+            <div class="st3-pin-stage-layer">
+              <i class="bi bi-cpu-fill" style="font-size: 4rem; color: #8b5cf6;"></i>
+              <div class="h5 fw-bold mt-3">03 — FORM</div>
+              <p class="text-secondary text-center" style="font-size: 0.82rem;">Complete architectural integration locked into production.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 03: Pinned Image Transformation -->
+    <section class="st3-pin-section" id="st3_sec3">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">03 // IMAGE TRANSFORMATION</span>
+          <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">ONE FRAME. MANY STORIES.</h2>
+          <div style="height: 320px; border-radius: 20px; background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(6,182,212,0.2)), #0d1117; border: 1px solid rgba(139,92,246,0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(139,92,246,0.2);">
+            <div class="font-mono text-muted">MONOCHROME &bull; EXPANDED VIEWPORT CROP &bull; SATURATED SPECTRUM</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Pinned Typography (EVOLVE -> ADAPT -> TRANSFORM) -->
+    <section class="st3-pin-section" id="st3_sec4" style="min-height: 250vh;">
+      <div class="st3-pin-stage text-center">
+        <div>
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">04 // PINNED TYPOGRAPHY</span>
+          <div class="st3-pin-evolve-word display-1 fw-bold my-4" style="font-family: var(--font-editorial); letter-spacing: 0.08em; transition: all 0.5s ease;">
+            EVOLVE
+          </div>
+          <p class="text-secondary font-mono" style="font-size: 0.85rem;">SCROLL TO WITNESS PHONETIC &amp; SPATIAL ADAPTATION</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 05: Three-Stage Product Reveal -->
+    <section class="st3-pin-section" id="st3_sec5">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">05 // PRODUCT REVEAL</span>
+          <h2 class="h2 fw-bold mb-3" style="font-family: var(--font-editorial);">Three-Stage Architectural Reveal</h2>
+          <div class="d-flex justify-content-center gap-4 my-4">
+            <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.1); width: 220px;">
+              <div class="font-mono text-muted mb-2">01</div>
+              <h3 class="h5 fw-bold">STRUCTURE</h3>
+            </div>
+            <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid #8b5cf6; width: 220px; box-shadow: 0 0 20px rgba(139,92,246,0.2);">
+              <div class="font-mono text-primary mb-2">02</div>
+              <h3 class="h5 fw-bold">DETAIL</h3>
+            </div>
+            <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.1); width: 220px;">
+              <div class="font-mono text-muted mb-2">03</div>
+              <h3 class="h5 fw-bold">EXPERIENCE</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 06: Pinned Cards Storytelling -->
+    <section class="st3-pin-section" id="st3_sec6">
+      <div class="st3-pin-stage">
+        <div class="st3-pin-panel-2col">
+          <div class="st3-pinned-display d-flex align-items-center justify-content-center p-4">
+            <div class="text-center">
+              <i class="bi bi-compass text-primary" style="font-size: 3.5rem;"></i>
+              <h3 class="h4 fw-bold mt-2">STORYTELLING ENGINE</h3>
+              <p class="text-secondary font-mono" style="font-size: 0.78rem;">Visual anchor updates with right-side scroll narrative.</p>
+            </div>
+          </div>
+          <div>
+            <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">06 // NARRATIVE SYSTEM</span>
+            <div class="d-flex flex-column gap-3">
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08);"><strong>01 &bull; DISCOVER</strong> — Uncover system requirements.</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08);"><strong>02 &bull; DEFINE</strong> — Establish architectural blueprints.</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid #8b5cf6;"><strong>03 &bull; DESIGN</strong> — High-precision spatial UI.</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08);"><strong>04 &bull; DELIVER</strong> — 60 FPS production release.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 07: Full-Screen Color Transition -->
+    <section class="st3-pin-section st3-color-stage" id="st3_sec7" style="min-height: 250vh; background-color: #07080b;">
+      <div class="st3-pin-stage text-center">
+        <div>
+          <span class="badge-tech mb-3" style="border-color: currentColor; color: inherit;">07 // CHROMATIC BREATH</span>
+          <h2 class="display-3 fw-bold mb-2 st3-color-label" style="font-family: var(--font-editorial);">BLACK</h2>
+          <p class="font-mono" style="font-size: 0.85rem; opacity: 0.7;">ADAPTIVE PALETTE SHIFT WHILE PINNED IN VIEWPORT</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 08: Pinned Statistics (01 -> 04) -->
+    <section class="st3-pin-section" id="st3_sec8" style="min-height: 250vh;">
+      <div class="st3-pin-stage text-center">
+        <div>
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">08 // ANCHORED TELEMETRY</span>
+          <div class="st3-pinned-stat-num display-1 fw-bold text-primary my-2" style="font-family: var(--font-editorial);">01</div>
+          <h3 class="st3-pinned-stat-title h4 text-white font-mono">STRATEGY // Discovery &amp; Blueprinting</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 09: Layered Pin -->
+    <section class="st3-pin-section" id="st3_sec9">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">09 // LAYERED PIN</span>
+          <h2 class="display-5 fw-bold mb-4" style="font-family: var(--font-editorial);">Central Anchor With Orbital Parallax</h2>
+          <div style="position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 140px; height: 140px; border-radius: 50%; border: 2px solid #8b5cf6; box-shadow: 0 0 35px rgba(139,92,246,0.4); display: flex; align-items: center; justify-content: center;">
+              <i class="bi bi-shield-lock-fill text-primary" style="font-size: 3rem;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10: Pinned Portfolio Gallery -->
+    <section class="st3-pin-section" id="st3_sec10">
+      <div class="st3-pin-stage">
+        <div class="st3-pin-panel-2col">
+          <div class="st3-pinned-display d-flex align-items-center justify-content-center">
+            <div class="text-center p-4">
+              <i class="bi bi-window-sidebar text-primary" style="font-size: 4rem;"></i>
+              <h3 class="h5 fw-bold mt-3">ACTIVE CASE STUDY</h3>
+            </div>
+          </div>
+          <div>
+            <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">10 // PINNED GALLERY</span>
+            <div class="d-flex flex-column gap-3 font-mono" style="font-size: 0.88rem;">
+              <div class="p-3 rounded-3" style="background: #111722; border: 1px solid #8b5cf6;">PROJECT 01 &bull; Brand Identity Architecture</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.06);">PROJECT 02 &bull; Digital Spatial Product</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.06);">PROJECT 03 &bull; Interactive WebGL Experience</div>
+              <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.06);">PROJECT 04 &bull; Global Creative Campaign</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11: The Long Pin -->
+    <section class="st3-pin-section" id="st3_sec11">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">11 // THE LONG PIN</span>
+          <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">“SCROLLING CAN BE A STORY.”</h2>
+          <p class="text-secondary font-mono mx-auto" style="max-width: 500px; font-size: 0.88rem;">
+            A multi-stage sequence holding viewer attention without rushing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 12: Release -->
+    <section class="st3-pin-section" id="st3_sec12">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">12 // NATURAL RELEASE</span>
+          <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">“AND THEN… LET IT GO.”</h2>
+          <p class="text-secondary font-mono" style="font-size: 0.88rem;">The pinned element gently scales down and rejoins normal document flow.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 13: Final Showcase -->
+    <section class="st3-pin-section" id="st3_sec13">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">13 // COMPARATIVE MATRIX</span>
+          <div class="d-flex justify-content-center gap-3 my-4">
+            <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.1); width: 180px;">
+              <h3 class="h6 fw-bold">TRIGGER</h3>
+              <p class="text-secondary" style="font-size: 0.75rem;">Fires upon viewport entry.</p>
+            </div>
+            <div class="p-3 rounded-3" style="background: #111722; border: 1px solid #8b5cf6; width: 180px; box-shadow: 0 0 20px rgba(139,92,246,0.25);">
+              <h3 class="h6 fw-bold text-primary">PIN</h3>
+              <p class="text-secondary" style="font-size: 0.75rem;">Locks element while world evolves.</p>
+            </div>
+            <div class="p-3 rounded-3" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.1); width: 180px;">
+              <h3 class="h6 fw-bold">SCROLL</h3>
+              <p class="text-secondary" style="font-size: 0.75rem;">Linear continuous movement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 14: Final CTA -->
+    <section class="st3-pin-section" id="st3_sec14">
+      <div class="st3-pin-stage text-center">
+        <div class="st2-content">
+          <span class="badge-tech mb-3" style="border-color: #8b5cf6; color: #8b5cf6;">14 // NEXT CHAPTER</span>
+          <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">WHAT SHOULD WE PIN NEXT?</h2>
+          <p class="text-secondary mx-auto mb-4" style="max-width: 480px;">
+            Explore another scrolling style or engineer a custom interactive presentation.
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+              <i class="bi bi-grid-fill me-1"></i> EXPLORE MORE STYLES
+            </button>
+            <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+              <span>START A PROJECT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 04: PARALLAX (15 SECTIONS // MULTI-PLANE DEPTH ODYSSEY)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_4">
+    <div class="style-nav-tag" style="color: var(--accent-s4);">PARALLAX / 04</div>
+    <div class="style-counter-rail">
+      <div class="counter-rail-text st4-counter-num">01 / 15</div>
+    </div>
+
+    <!-- Section 01: Parallax Hero (4 Layers) -->
+    <section class="st4-parallax-section" id="st4_sec1">
+      <div class="st4-layer st4-layer-bg" style="background: radial-gradient(circle at 50% 50%, rgba(245,158,11,0.15), #090a0f 70%);"></div>
+      <div class="st4-layer st4-layer-mid">
+        <div class="st4-shape" style="width: 280px; height: 280px; transform: rotate(45deg); opacity: 0.3;"></div>
+      </div>
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">STYLE 04 // PARALLAX DEPTH</span>
+        <h1 class="display-3 fw-bold mb-3" style="font-family: var(--font-editorial);">DEPTH CHANGES EVERYTHING.</h1>
+        <p class="text-secondary max-w-lg mx-auto" style="max-width: 520px;">
+          4 independent visual layers traveling at distinct velocities to create true dimensional perspective.
+        </p>
+      </div>
+      <div class="st4-layer st4-layer-fore" style="bottom: 40px; align-items: flex-end;">
+        <span class="font-mono text-muted" style="font-size: 0.8rem;">SCROLL TO DESCEND &darr;</span>
+      </div>
+    </section>
+
+    <!-- Section 02: Layered Landscape -->
+    <section class="st4-parallax-section" id="st4_sec2">
+      <div class="st4-layer st4-layer-bg" style="font-size: 8rem; color: rgba(255,255,255,0.02); font-weight: 900;">HORIZON</div>
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">02 // VELOCITY TIERS</span>
+        <h2 class="display-5 fw-bold mb-3" style="font-family: var(--font-editorial);">EVERY LAYER HAS A SPEED.</h2>
+        <p class="text-secondary" style="max-width: 480px;">Background moves slow. Subject moves medium. Foreground moves fast.</p>
+      </div>
+    </section>
+
+    <!-- Section 03: Typography Parallax -->
+    <section class="st4-parallax-section" id="st4_sec3">
+      <div class="st4-layer st4-layer-bg" style="font-size: clamp(6rem, 15vw, 14rem); font-weight: 900; color: rgba(245,158,11,0.06); letter-spacing: 0.2em;">DEPTH</div>
+      <div class="st4-layer st4-layer-subject">
+        <h2 class="display-4 fw-bold text-center" style="font-family: var(--font-editorial); color: #ffffff;">DIMENSIONAL TYPE</h2>
+      </div>
+    </section>
+
+    <!-- Section 04: Image + Text Depth -->
+    <section class="st4-parallax-section" id="st4_sec4">
+      <div class="st4-layer st4-layer-mid" style="width: 700px; height: 320px; border-radius: 16px; background: linear-gradient(135deg, #1c1917, #292524); border: 1px solid rgba(245,158,11,0.2);"></div>
+      <div class="st4-layer st4-layer-subject text-center">
+        <h3 class="h3 fw-bold">DISPLACED COMPOSITION</h3>
+        <p class="text-secondary font-mono" style="font-size: 0.82rem;">Typography floats above photographic plane</p>
+      </div>
+    </section>
+
+    <!-- Section 05: Floating Objects -->
+    <section class="st4-parallax-section" id="st4_sec5">
+      <div class="st4-shape" style="top: 20%; left: 15%; width: 90px; height: 90px;"></div>
+      <div class="st4-shape" style="bottom: 25%; right: 18%; width: 130px; height: 130px; border-radius: 50%;"></div>
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">05 // ORBITAL SOLIDS</span>
+        <h2 class="display-5 fw-bold" style="font-family: var(--font-editorial);">Floating Geometric Depths</h2>
+      </div>
+    </section>
+
+    <!-- Section 06: Parallax Portfolio -->
+    <section class="st4-parallax-section" id="st4_sec6">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">06 // PARALLAX SHOWCASE</span>
+        <h2 class="h2 fw-bold mb-4" style="font-family: var(--font-editorial);">Internal Container Displacement</h2>
+        <div class="d-flex justify-content-center gap-3">
+          <div class="p-4 rounded-4" style="background: #0e1117; border: 1px solid rgba(255,255,255,0.08); width: 260px;">
+            <div class="h5 fw-bold">PROJ &bull; AURA</div>
+            <p class="text-secondary" style="font-size: 0.8rem;">Visual Identity &bull; 2026</p>
+          </div>
+          <div class="p-4 rounded-4" style="background: #0e1117; border: 1px solid #f59e0b; width: 260px;">
+            <div class="h5 fw-bold text-warning">PROJ &bull; NEXUS</div>
+            <p class="text-secondary" style="font-size: 0.8rem;">Spatial WebGL &bull; 2026</p>
+          </div>
+          <div class="p-4 rounded-4" style="background: #0e1117; border: 1px solid rgba(255,255,255,0.08); width: 260px;">
+            <div class="h5 fw-bold">PROJ &bull; VECTOR</div>
+            <p class="text-secondary" style="font-size: 0.8rem;">Compute Engine &bull; 2026</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 07: Deep Zoom Parallax -->
+    <section class="st4-parallax-section" id="st4_sec7">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">07 // DEEP ZOOM</span>
+        <h2 class="display-4 fw-bold" style="font-family: var(--font-editorial);">“MOVE THROUGH THE IMAGE.”</h2>
+      </div>
+    </section>
+
+    <!-- Section 08: Horizontal Parallax -->
+    <section class="st4-parallax-section" id="st4_sec8" style="overflow: hidden;">
+      <div class="w-100 text-center">
+        <div class="st4-h-strip-1 display-4 fw-bold my-2" style="font-family: var(--font-editorial); white-space: nowrap; color: rgba(255,255,255,0.25);">
+          VISION &bull; CRAFT &bull; MOTION &bull; IMPACT &bull; VISION &bull; CRAFT
+        </div>
+        <div class="st4-h-strip-2 display-4 fw-bold my-2" style="font-family: var(--font-editorial); white-space: nowrap; color: #f59e0b;">
+          IMPACT &bull; MOTION &bull; CRAFT &bull; VISION &bull; IMPACT &bull; MOTION
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 09: Storytelling -->
+    <section class="st4-parallax-section" id="st4_sec9">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">09 // CONVERGENCE</span>
+        <h2 class="display-5 fw-bold mb-2" style="font-family: var(--font-editorial);">A DIFFERENT SPEED FOR EVERY IDEA.</h2>
+        <p class="text-secondary font-mono" style="font-size: 0.85rem;">3 VISUAL MOMENTS CONVERGING INTO ONE COHESIVE FOCAL POINT</p>
+      </div>
+    </section>
+
+    <!-- Section 10: 3D Parallax -->
+    <section class="st4-parallax-section" id="st4_sec10">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">10 // SPATIAL PLANES</span>
+        <h2 class="display-4 fw-bold" style="font-family: var(--font-editorial);">3D Perspective Grids</h2>
+      </div>
+    </section>
+
+    <!-- Section 11: Extreme Depth Moment -->
+    <section class="st4-parallax-section" id="st4_sec11">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">11 // EXTREME DEPTH</span>
+        <h2 class="display-3 fw-bold text-warning" style="font-family: var(--font-editorial);">SCROLL INTO THE EXPERIENCE.</h2>
+      </div>
+    </section>
+
+    <!-- Section 12: Calm Parallax -->
+    <section class="st4-parallax-section" id="st4_sec12">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: rgba(255,255,255,0.2); color: #94a3b8;">12 // BREATHING ROOM</span>
+        <h2 class="display-5 fw-bold" style="font-family: var(--font-editorial);">“SOMETIMES, LESS MOVEMENT CREATES MORE DEPTH.”</h2>
+      </div>
+    </section>
+
+    <!-- Section 13: Parallax Gallery -->
+    <section class="st4-parallax-section" id="st4_sec13">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">13 // GALLERY CARDS</span>
+        <div class="row g-3">
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 01</div></div>
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 02</div></div>
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 03</div></div>
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 04</div></div>
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 05</div></div>
+          <div class="col-4"><div class="p-4 rounded-3" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08);">CARD 06</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 14: Final Perspective -->
+    <section class="st4-parallax-section" id="st4_sec14">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">14 // LOCKED ALIGNMENT</span>
+        <h2 class="display-3 fw-bold" style="font-family: var(--font-editorial);">DEPTH IS A DESIGN TOOL.</h2>
+      </div>
+    </section>
+
+    <!-- Section 15: Closing CTA -->
+    <section class="st4-parallax-section" id="st4_sec15">
+      <div class="st4-layer st4-layer-subject text-center">
+        <span class="badge-tech mb-3" style="border-color: #f59e0b; color: #f59e0b;">15 // EXPLORE</span>
+        <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">READY TO ADD ANOTHER DIMENSION?</h2>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+            <i class="bi bi-grid-fill me-1"></i> EXPLORE MORE STYLES
+          </button>
+          <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+            <span>START A PROJECT</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 05: HORIZONTAL SCROLL (15 SCENES // CONTINUOUS SIDEWAYS ODYSSEY)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_5">
+    <div class="style-nav-tag" style="color: var(--accent-s5);">HORIZONTAL / 05</div>
+    <div class="counter-rail-text st5-counter-num" style="position: fixed; top: 64px; right: 28px; z-index: 90;">01 / 15</div>
+    <div class="st5-progress-bottom"><div class="st5-progress-fill"></div></div>
+
+    <div class="st5-scroll-spacer">
+      <div class="st5-sticky-viewport">
+        <div class="st5-horizontal-track">
+          <!-- Scene 01: Hero -->
+          <div class="st5-scene text-center" id="st5_scene1">
+            <span class="badge-tech mb-3" style="border-color: #10b981; color: #10b981;">STYLE 05 // HORIZONTAL SCROLL</span>
+            <h1 class="display-2 fw-bold mb-3" style="font-family: var(--font-editorial);">TURN THE PAGE SIDEWAYS.</h1>
+            <p class="text-secondary font-mono" style="font-size: 0.9rem;">VERTICAL SCROLL INPUT &bull; CONTINUOUS HORIZONTAL TRAVEL &bull; 15 SCENES</p>
+          </div>
+
+          <!-- Scene 02: Arrival -->
+          <div class="st5-scene" id="st5_scene2">
+            <span class="badge-tech mb-2" style="color: #10b981;">02 // ARRIVAL</span>
+            <h2 class="display-4 fw-bold" style="font-family: var(--font-editorial);">One Seamless Horizontal World</h2>
+            <p class="text-secondary" style="max-width: 500px;">Scenes slide naturally across the canvas without pagination stops.</p>
+          </div>
+
+          <!-- Scene 03: Full-Bleed Image -->
+          <div class="st5-scene text-center" id="st5_scene3">
+            <div style="height: 380px; border-radius: 20px; background: linear-gradient(90deg, #064e3b, #047857, #10b981); display: flex; align-items: center; justify-content: center;">
+              <h2 class="display-3 fw-bold text-white">“KEEP MOVING.”</h2>
+            </div>
+          </div>
+
+          <!-- Scene 04: Typography -->
+          <div class="st5-scene text-center" id="st5_scene4">
+            <div class="display-3 fw-bold" style="font-family: var(--font-editorial); color: #10b981; letter-spacing: 0.1em;">
+              CREATE / BUILD / MOVE / REPEAT
+            </div>
+          </div>
+
+          <!-- Scene 05: Portfolio -->
+          <div class="st5-scene" id="st5_scene5">
+            <span class="badge-tech mb-3" style="color: #10b981;">05 // PORTFOLIO TRACK</span>
+            <div class="d-flex gap-4">
+              <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08); width: 240px;">PROJ 01 &bull; Identity</div>
+              <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid #10b981; width: 240px;">PROJ 02 &bull; Digital OS</div>
+              <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08); width: 240px;">PROJ 03 &bull; Campaign</div>
+              <div class="p-4 rounded-4" style="background: #0d1117; border: 1px solid rgba(255,255,255,0.08); width: 240px;">PROJ 04 &bull; Experience</div>
+            </div>
+          </div>
+
+          <!-- Scene 06: Image Sequence -->
+          <div class="st5-scene" id="st5_scene6">
+            <span class="badge-tech mb-3" style="color: #10b981;">06 // 5-STAGE SEQUENCE</span>
+            <div class="d-flex gap-3">
+              <div class="p-4 rounded-3" style="background:#0d1117;">01</div>
+              <div class="p-4 rounded-3" style="background:#0d1117;">02</div>
+              <div class="p-4 rounded-3" style="background:#132a22; border:1px solid #10b981;">03</div>
+              <div class="p-4 rounded-3" style="background:#0d1117;">04</div>
+              <div class="p-4 rounded-3" style="background:#0d1117;">05</div>
+            </div>
+          </div>
+
+          <!-- Scene 07: Storytelling -->
+          <div class="st5-scene text-center" id="st5_scene7">
+            <h2 class="display-4 fw-bold" style="font-family: var(--font-editorial);">“GOOD STORIES MOVE.”</h2>
+            <p class="text-secondary font-mono mt-2">DISCOVER &bull; DESIGN &bull; DELIVER</p>
+          </div>
+
+          <!-- Scene 08: Split-Screen -->
+          <div class="st5-scene" id="st5_scene8">
+            <h3 class="h3 fw-bold">DIFFERENTIAL SPEEDS</h3>
+            <p class="text-secondary">Top visual and bottom typography travel with independent velocity vectors.</p>
+          </div>
+
+          <!-- Scene 09: Oversized Statement -->
+          <div class="st5-scene text-center" id="st5_scene9">
+            <h2 class="display-3 fw-bold" style="font-family: var(--font-editorial);">THERE IS NO SINGLE DIRECTION.</h2>
+          </div>
+
+          <!-- Scene 10: Product Showcase -->
+          <div class="st5-scene" id="st5_scene10">
+            <div class="d-flex gap-3 font-mono">
+              <div class="p-3 border rounded">01 CONCEPT</div>
+              <div class="p-3 border rounded border-success text-success">02 SYSTEM</div>
+              <div class="p-3 border rounded">03 INTERFACE</div>
+              <div class="p-3 border rounded">04 EXPERIENCE</div>
+            </div>
+          </div>
+
+          <!-- Scene 11: Infinite Transition -->
+          <div class="st5-scene text-center" id="st5_scene11">
+            <h2 class="display-4 fw-bold text-success">“KEEP GOING.”</h2>
+          </div>
+
+          <!-- Scene 12: Horizontal Timeline -->
+          <div class="st5-scene" id="st5_scene12">
+            <span class="badge-tech mb-3" style="color: #10b981;">12 // TIMELINE</span>
+            <div class="d-flex gap-4 font-mono">
+              <div><strong>2022</strong> &bull; Genesis</div>
+              <div><strong>2023</strong> &bull; GPU Shaders</div>
+              <div><strong>2024</strong> &bull; Spatial Web</div>
+              <div class="text-success"><strong>2025</strong> &bull; AI Lab</div>
+              <div><strong>2026</strong> &bull; Autonomous OS</div>
+            </div>
+          </div>
+
+          <!-- Scene 13: Edge Gallery -->
+          <div class="st5-scene" id="st5_scene13">
+            <h3 class="h3 fw-bold">EDGE-TO-EDGE GALLERY</h3>
+            <p class="text-secondary">Full viewport vertical spans without horizontal bounds.</p>
+          </div>
+
+          <!-- Scene 14: Final Transition -->
+          <div class="st5-scene text-center" id="st5_scene14">
+            <h2 class="display-3 fw-bold">“WE'RE ALMOST THERE.”</h2>
+          </div>
+
+          <!-- Scene 15: Closing CTA -->
+          <div class="st5-scene text-center" id="st5_scene15">
+            <h2 class="display-4 fw-bold mb-3">WHERE SHOULD WE GO NEXT?</h2>
+            <div class="d-flex justify-content-center gap-3">
+              <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+                EXPLORE MORE STYLES
+              </button>
+              <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+                START A PROJECT
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 06: SCROLL PROGRESS (15 SECTIONS // MILESTONE ENGINE)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_6">
+    <div class="style-nav-tag" style="color: var(--accent-s6);">SCROLL PROGRESS / 06</div>
+    <div class="counter-rail-text st6-counter-num" style="position: fixed; top: 64px; right: 48px; z-index: 95;">01 / 15</div>
+    
+    <!-- Persistent Global Rail & Telemetry -->
+    <div class="st6-global-rail"><div class="st6-rail-fill"><div class="st6-rail-marker"></div></div></div>
+    <div class="st6-pct-counter">00%</div>
+    <div class="st6-chapter-badge">CHAPTER // INTRODUCTION</div>
+
+    <!-- Section 01: 0% Beginning -->
+    <section class="st2-section st6-progress-section" id="st6_sec1">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #ec4899; color: #ec4899;">STYLE 06 // SCROLL PROGRESS</span>
+        <h1 class="display-3 fw-bold mb-3" style="font-family: var(--font-editorial);">EVERY SCROLL COUNTS.</h1>
+        <p class="text-secondary max-w-lg mx-auto mb-4" style="max-width: 520px;">
+          The scroll position becomes the navigation interface itself. Continuous progress metrics guide your journey.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 02: Progress Awakens (Circular Gauge) -->
+    <section class="st2-section st6-progress-section" id="st6_sec2">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #ec4899; color: #ec4899;">02 // CIRCULAR GAUGE</span>
+        <h2 class="display-5 fw-bold mb-4" style="font-family: var(--font-editorial);">“YOU ARE HERE.”</h2>
+        <div class="d-flex justify-content-center my-3">
+          <svg class="st6-svg-gauge" viewBox="0 0 140 140">
+            <circle class="st6-gauge-bg" cx="70" cy="70" r="60"></circle>
+            <circle class="st6-gauge-meter" cx="70" cy="70" r="60"></circle>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 03: Chapter Navigation -->
+    <section class="st2-section st6-progress-section" id="st6_sec3">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #ec4899; color: #ec4899;">03 // CHAPTERS</span>
+        <div class="d-flex justify-content-center gap-4 font-mono my-3">
+          <div class="p-3 border rounded border-danger text-danger">01 DISCOVER</div>
+          <div class="p-3 border rounded">02 DEFINE</div>
+          <div class="p-3 border rounded">03 DESIGN</div>
+          <div class="p-3 border rounded">04 DELIVER</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Percentage Typography -->
+    <section class="st2-section st6-progress-section" id="st6_sec4">
+      <div class="st2-content text-center">
+        <h2 class="display-3 fw-bold" style="font-family: var(--font-editorial);">WATCH THE JOURNEY BUILD.</h2>
+      </div>
+    </section>
+
+    <!-- Section 05: Progressive Image Reveal -->
+    <section class="st2-section st6-progress-section" id="st6_sec5">
+      <div class="st2-content text-center">
+        <div style="height: 300px; border-radius: 18px; background: linear-gradient(135deg, #831843, #be185d); display: flex; align-items: center; justify-content: center;">
+          <h3 class="h3 fw-bold text-white">PROGRESSIVE MASK</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 06: Milestone Timeline -->
+    <section class="st2-section st6-progress-section" id="st6_sec6">
+      <div class="st2-content text-center">
+        <div class="d-flex justify-content-center gap-3 font-mono" style="font-size: 0.85rem;">
+          <div>START &rarr;</div>
+          <div>IDEA &rarr;</div>
+          <div class="text-danger">DESIGN &rarr;</div>
+          <div>BUILD &rarr;</div>
+          <div>LAUNCH</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 07: Progress Drives Transformation -->
+    <section class="st2-section st6-progress-section" id="st6_sec7">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold">SCROLL DRIVES EVOLUTION</h2>
+      </div>
+    </section>
+
+    <!-- Section 08: Midpoint (50%) -->
+    <section class="st2-section st6-progress-section" id="st6_sec8">
+      <div class="st2-content text-center">
+        <div class="display-1 fw-bold text-danger my-2" style="font-family: var(--font-editorial);">50%</div>
+        <h2 class="display-4 fw-bold">HALFWAY THERE.</h2>
+      </div>
+    </section>
+
+    <!-- Section 09: Progress Cards -->
+    <section class="st2-section st6-progress-section" id="st6_sec9">
+      <div class="st2-content">
+        <div class="row g-3">
+          <div class="col-3"><div class="p-3 border rounded text-center">01 STRATEGY</div></div>
+          <div class="col-3"><div class="p-3 border rounded text-center">02 CREATIVE</div></div>
+          <div class="col-3"><div class="p-3 border rounded text-center border-danger">03 TECHNOLOGY</div></div>
+          <div class="col-3"><div class="p-3 border rounded text-center">04 IMPACT</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10: Gallery -->
+    <section class="st2-section st6-progress-section" id="st6_sec10">
+      <div class="st2-content text-center">
+        <h3 class="h3 fw-bold">03 / 04 GALLERY MILESTONE</h3>
+      </div>
+    </section>
+
+    <!-- Section 11: 75% Moment -->
+    <section class="st2-section st6-progress-section" id="st6_sec11">
+      <div class="st2-content text-center">
+        <div class="display-1 fw-bold text-danger my-2" style="font-family: var(--font-editorial);">75%</div>
+        <h2 class="display-4 fw-bold">THE END IS NOW IN SIGHT.</h2>
+      </div>
+    </section>
+
+    <!-- Section 12: Final Sequence -->
+    <section class="st2-section st6-progress-section" id="st6_sec12">
+      <div class="st2-content text-center">
+        <h2 class="display-3 fw-bold">ALMOST COMPLETE.</h2>
+      </div>
+    </section>
+
+    <!-- Section 13: 100% Climax -->
+    <section class="st2-section st6-progress-section" id="st6_sec13">
+      <div class="st2-content text-center">
+        <div class="display-1 fw-bold text-success my-2" style="font-family: var(--font-editorial);">100%</div>
+        <h2 class="display-3 fw-bold">YOU MADE IT.</h2>
+      </div>
+    </section>
+
+    <!-- Section 14: Reflection -->
+    <section class="st2-section st6-progress-section" id="st6_sec14">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold mb-3">“PROGRESS IS A FEELING.”</h2>
+        <p class="text-secondary max-w-lg mx-auto">Every transition delivers a visceral sense of forward momentum.</p>
+      </div>
+    </section>
+
+    <!-- Section 15: Closing CTA -->
+    <section class="st2-section st6-progress-section" id="st6_sec15">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold mb-3">WHERE DO WE GO FROM HERE?</h2>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+            EXPLORE ALL STYLES
+          </button>
+          <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+            START A PROJECT
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       STYLE 07: SCROLL LINKED ANIMATION (15 SECTIONS // 100% SCRUBBABLE TIMELINE)
+       ====================================================================== -->
+  <div class="scrolling-style-container" id="styleContainer_7">
+    <div class="style-nav-tag" style="color: var(--accent-s7);">SCROLL LINKED / 07</div>
+    <div class="counter-rail-text st7-counter-num" style="position: fixed; top: 64px; right: 28px; z-index: 90;">01 / 15</div>
+    <div class="counter-rail-text st7-scrub-pct" style="position: fixed; bottom: 28px; right: 28px; z-index: 90; color: var(--accent-s7);">0% SCRUB</div>
+
+    <!-- Section 01: Hero -->
+    <section class="st7-scrub-section" id="st7_sec1">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #06b6d4; color: #06b6d4;">STYLE 07 // SCROLL LINKED</span>
+        <h1 class="display-3 fw-bold mb-3" style="font-family: var(--font-editorial);">YOU CONTROL THE MOTION.</h1>
+        <p class="text-secondary max-w-lg mx-auto mb-4" style="max-width: 520px;">
+          Scroll forward: animation progresses. Scroll backward: animation reverses. Stop: pauses at the exact decimal.
+        </p>
+        <div class="st7-hero-object d-inline-flex align-items-center justify-content-center my-3" style="width: 140px; height: 140px; border-radius: 24px; background: rgba(6,182,212,0.15); border: 2px solid #06b6d4; box-shadow: 0 0 35px rgba(6,182,212,0.3); transition: none;">
+          <i class="bi bi-disc text-info" style="font-size: 4rem;"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02: Scrubbed Typography -->
+    <section class="st7-scrub-section" id="st7_sec2">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #06b6d4; color: #06b6d4;">02 // SCRUBBED TYPE</span>
+        <div class="st7-motion-word display-1 fw-bold my-4" style="font-family: var(--font-editorial); color: #06b6d4; transition: none;">
+          MOTION
+        </div>
+        <p class="text-secondary font-mono" style="font-size: 0.82rem;">LETTER SPACING, SCALE &amp; OPACITY TIED 1:1 TO SCROLL TIMELINE</p>
+      </div>
+    </section>
+
+    <!-- Section 03: Image Transformation -->
+    <section class="st7-scrub-section" id="st7_sec3">
+      <div class="st2-content text-center">
+        <span class="badge-tech mb-3" style="border-color: #06b6d4; color: #06b6d4;">03 // FRAME EXPANSION</span>
+        <div class="st7-transform-frame mx-auto my-3" style="height: 320px; width: 60%; background: linear-gradient(135deg, #083344, #155e75); border: 1px solid #06b6d4; display: flex; align-items: center; justify-content: center; transition: none;">
+          <span class="font-mono text-white">SCRUBBED VIEWPORT FRAME</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Object -->
+    <section class="st7-scrub-section" id="st7_sec4">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold">SCROLL-CONTROLLED OBJECT</h2>
+      </div>
+    </section>
+
+    <!-- Section 05: Sequential Transformation -->
+    <section class="st7-scrub-section" id="st7_sec5">
+      <div class="st2-content text-center" style="position: relative; height: 260px;">
+        <div class="st7-morph-wireframe display-4 fw-bold" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #64748b;">
+          [ WIREFRAME SPECIFICATION ]
+        </div>
+        <div class="st7-morph-finished display-4 fw-bold text-info" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0;">
+          [ FINISHED PRODUCTION UI ]
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 06: Scrubbed Horizontal -->
+    <section class="st7-scrub-section" id="st7_sec6">
+      <div class="st2-content text-center">
+        <h2 class="display-5 fw-bold">SCRUBBED HORIZONTAL TRACK</h2>
+      </div>
+    </section>
+
+    <!-- Section 07: Layered Timeline -->
+    <section class="st7-scrub-section" id="st7_sec7">
+      <div class="st2-content text-center">
+        <div class="d-flex justify-content-center gap-3 font-mono">
+          <div>01 &rarr;</div>
+          <div>02 &rarr;</div>
+          <div class="text-info">03 &rarr;</div>
+          <div>04 &rarr;</div>
+          <div>05</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 08: Midpoint -->
+    <section class="st7-scrub-section" id="st7_sec8">
+      <div class="st2-content text-center">
+        <div class="display-1 fw-bold text-info my-2">50%</div>
+        <h2 class="display-4 fw-bold">MIDPOINT SETTLEMENT</h2>
+      </div>
+    </section>
+
+    <!-- Section 09: Gallery -->
+    <section class="st7-scrub-section" id="st7_sec9">
+      <div class="st2-content text-center">
+        <h3 class="h3 fw-bold">SCRUBBED PLAYHEAD GALLERY</h3>
+      </div>
+    </section>
+
+    <!-- Section 10: Synchronized -->
+    <section class="st7-scrub-section" id="st7_sec10">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold">TEXT &amp; IMAGE SYNCHRONIZATION</h2>
+      </div>
+    </section>
+
+    <!-- Section 11: Complex Sequence -->
+    <section class="st7-scrub-section" id="st7_sec11">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold">MULTI-PROPERTY SCRUBBING</h2>
+      </div>
+    </section>
+
+    <!-- Section 12: Reverse Interaction -->
+    <section class="st7-scrub-section" id="st7_sec12">
+      <div class="st2-content text-center">
+        <h2 class="display-3 fw-bold text-warning mb-3">“GO BACK.”</h2>
+        <p class="text-secondary font-mono">SCROLL UPWARD TO WATCH EVERY ELEMENT RETRACE ITS EXACT INVERSE PATH</p>
+      </div>
+    </section>
+
+    <!-- Section 13: Final Scroll Sequence -->
+    <section class="st7-scrub-section" id="st7_sec13">
+      <div class="st2-content text-center">
+        <h2 class="display-3 fw-bold mb-3">EVERY PIXEL FOLLOWS YOU.</h2>
+        <p class="text-info font-mono">AT 100%: YOU ARE IN CONTROL.</p>
+      </div>
+    </section>
+
+    <!-- Section 14: Interaction Comparison Grid -->
+    <section class="st7-scrub-section" id="st7_sec14">
+      <div class="st2-content">
+        <h2 class="h2 fw-bold text-center mb-4" style="font-family: var(--font-editorial);">Scrolling Paradigm Comparison</h2>
+        <div class="st7-comparison-grid">
+          <div class="st7-compare-card">
+            <span class="badge-tech mb-2">TRIGGER</span>
+            <div class="h6 fw-bold">Plays upon reaching element.</div>
+          </div>
+          <div class="st7-compare-card">
+            <span class="badge-tech mb-2">PIN</span>
+            <div class="h6 fw-bold">Holds visual while world evolves.</div>
+          </div>
+          <div class="st7-compare-card">
+            <span class="badge-tech mb-2">PARALLAX</span>
+            <div class="h6 fw-bold">Multi-speed dimensional depth.</div>
+          </div>
+          <div class="st7-compare-card">
+            <span class="badge-tech mb-2">HORIZONTAL</span>
+            <div class="h6 fw-bold">Travels sideways through scenes.</div>
+          </div>
+          <div class="st7-compare-card">
+            <span class="badge-tech mb-2">PROGRESS</span>
+            <div class="h6 fw-bold">UI explicitly reflects journey.</div>
+          </div>
+          <div class="st7-compare-card active-compare">
+            <span class="badge-tech mb-2 text-info">LINKED</span>
+            <div class="h6 fw-bold text-info">Scroll position IS the animation timeline.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 15: Closing CTA -->
+    <section class="st7-scrub-section" id="st7_sec15">
+      <div class="st2-content text-center">
+        <h2 class="display-4 fw-bold mb-3" style="font-family: var(--font-editorial);">WHAT SHOULD YOUR SCROLL CONTROL?</h2>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <button type="button" class="btn-modern btn-primary-glow px-4 py-2" onclick="window.openStylesHubModal();">
+            EXPLORE ALL STYLES
+          </button>
+          <button type="button" class="btn-modern btn-outline-glow px-4 py-2" onclick="window.closeIllusionScrollModal();">
+            START A PROJECT
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       STYLES HUB OVERLAY MODAL (7 STYLES DIRECT LAUNCHER)
+       ====================================================================== -->
+  <div class="styles-hub-overlay" id="stylesHubOverlay">
+    <div class="styles-hub-dialog">
+      <div class="styles-hub-header">
+        <div>
+          <span class="badge-tech" style="color: #00f5ff; border-color: rgba(0,245,255,0.4);">
+            <i class="bi bi-grid-fill me-1"></i> MASTERCLASS COLLECTION
+          </span>
+          <h2 class="h4 fw-bold text-white mt-1 mb-0" style="font-family: var(--font-editorial);">Interactive Scrolling Styles Hub</h2>
+        </div>
+        <button type="button" class="btn-modern btn-subtle btn-sm text-white" id="btnCloseStylesHub" title="Close Hub">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="styles-hub-body">
+        <div class="styles-hub-grid">
+          <!-- Style 01 -->
+          <div class="style-card" data-style-target="1" style="--card-accent: #ff2bd6; --card-glow: rgba(255,43,214,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #ff2bd6;">STYLE 01</span>
+              <h3 class="style-card-title">The Illusion of Scroll</h3>
+              <p class="style-card-desc">The page stays stationary while the 3D world, camera, and lighting transform across 20 distinct acts.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>20 Acts</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 02 -->
+          <div class="style-card" data-style-target="2" style="--card-accent: #00f5ff; --card-glow: rgba(0,245,255,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #00f5ff;">STYLE 02</span>
+              <h3 class="style-card-title">Scroll Trigger</h3>
+              <p class="style-card-desc">Nothing happens until you reach it. Choreographed animations unfold when elements enter the viewport.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>12 Sections</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 03 -->
+          <div class="style-card" data-style-target="3" style="--card-accent: #8b5cf6; --card-glow: rgba(139,92,246,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #8b5cf6;">STYLE 03</span>
+              <h3 class="style-card-title">Pin Animation</h3>
+              <p class="style-card-desc">Hold the moment. Elements lock to the screen while internal content and color spaces transform.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>14 Sections</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 04 -->
+          <div class="style-card" data-style-target="4" style="--card-accent: #f59e0b; --card-glow: rgba(245,158,11,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #f59e0b;">STYLE 04</span>
+              <h3 class="style-card-title">Parallax Depth</h3>
+              <p class="style-card-desc">Background slow, midground medium, foreground fast. True cinematic multidimensional depth.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>15 Sections</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 05 -->
+          <div class="style-card" data-style-target="5" style="--card-accent: #10b981; --card-glow: rgba(16,185,129,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #10b981;">STYLE 05</span>
+              <h3 class="style-card-title">Horizontal Scroll</h3>
+              <p class="style-card-desc">Turn the page sideways. Normal vertical scroll input controls an expansive sideways canvas.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>15 Scenes</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 06 -->
+          <div class="style-card" data-style-target="6" style="--card-accent: #ec4899; --card-glow: rgba(236,72,153,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #ec4899;">STYLE 06</span>
+              <h3 class="style-card-title">Scroll Progress</h3>
+              <p class="style-card-desc">The user's scroll position becomes the navigation interface. Persistent metrics and milestone gauges.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>15 Sections</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Style 07 -->
+          <div class="style-card" data-style-target="7" style="--card-accent: #06b6d4; --card-glow: rgba(6,182,212,0.2);">
+            <div>
+              <span class="style-card-badge" style="color: #06b6d4;">STYLE 07</span>
+              <h3 class="style-card-title">Scroll Linked Animation</h3>
+              <p class="style-card-desc">You control the motion. 100% scrubbable forward and backward timeline directly tied to scroll position.</p>
+            </div>
+            <div class="style-card-footer">
+              <span>15 Sections</span>
+              <span class="text-white">Launch &rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
+{% block extra_js %}
+<!-- Immediate Synchronous Modal Controllers -->
+<script>
+  window.openLittlestTokyoModal = function() {
+    var modal = document.getElementById('threeLabModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    if (typeof window.startLittlestTokyoScene === 'function') {
+      window.startLittlestTokyoScene();
+    }
+  };
+
+  window.closeLittlestTokyoModal = function() {
+    var modal = document.getElementById('threeLabModal');
+    if (modal) {
+      modal.classList.remove('active');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    if (typeof window.stopLittlestTokyoScene === 'function') {
+      window.stopLittlestTokyoScene();
+    }
+  };
+
+  window.openAILabModal = function() {
+    var modal = document.getElementById('aiLabFullscreenModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      // Trigger canvas resize so hero and constellation adapt to modal dimensions
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+      }, 60);
+    }
+  };
+
+  window.closeAILabModal = function() {
+    var modal = document.getElementById('aiLabFullscreenModal');
+    if (modal) {
+      modal.classList.remove('active');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  };
+
+  window.openIllusionScrollModal = function() {
+    var modal = document.getElementById('illusionScrollModal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+        var vp = document.getElementById('illusionViewport');
+        if (vp) vp.focus();
+      }, 60);
+    }
+    var eng = window.illusionEngine || (typeof window.getIllusionEngine === 'function' ? window.getIllusionEngine() : null);
+    if (eng) {
+      eng.resize();
+      eng.start();
+    }
+  };
+
+  window.closeIllusionScrollModal = function() {
+    var modal = document.getElementById('illusionScrollModal');
+    if (modal) {
+      modal.classList.remove('active');
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    if (window.illusionEngine) {
+      window.illusionEngine.stop();
+    }
+  };
+
+  // Keyboard controls (Esc to close, Enter/Space on cue card)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var manualModal = document.getElementById('labManualModal');
+      if (manualModal && manualModal.classList.contains('active')) {
+        manualModal.classList.remove('active');
+        return;
+      }
+      var theatreModal = document.getElementById('labTheatreModal');
+      if (theatreModal && theatreModal.classList.contains('active')) {
+        return;
+      }
+      var illusionModal = document.getElementById('illusionScrollModal');
+      if (illusionModal && (illusionModal.classList.contains('active') || illusionModal.style.display === 'flex')) {
+        window.closeIllusionScrollModal();
+        return;
+      }
+      var aiLabModal = document.getElementById('aiLabFullscreenModal');
+      if (aiLabModal && (aiLabModal.classList.contains('active') || aiLabModal.style.display === 'flex')) {
+        window.closeAILabModal();
+        return;
+      }
+      var modal = document.getElementById('threeLabModal');
+      if (modal && (modal.classList.contains('active') || modal.style.display === 'flex')) {
+        window.closeLittlestTokyoModal();
+        return;
+      }
+    }
+  });
+
+  var cueCard = document.getElementById('openLittlestTokyoCard');
+  if (cueCard) {
+    cueCard.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.openLittlestTokyoModal();
+      }
+    });
+  }
+
+  var aiLabCard = document.getElementById('openAILabCard');
+  if (aiLabCard) {
+    aiLabCard.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.openAILabModal();
+      }
+    });
+  }
+
+  var illusionCard = document.getElementById('openIllusionScrollCard');
+  if (illusionCard) {
+    illusionCard.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.openIllusionScrollModal();
+      }
+    });
+  }
+</script>
+
+<!-- ES Module Import Map for Three.js and Addons -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "{% static 'js/three/three.module.js' %}",
+    "three/addons/": "{% static 'js/three/addons/' %}"
+  }
+}
+</script>
+
+<!-- Littlest Tokyo Official Three.js Keyframe Animation Viewer -->
+<script type="module">
+  import { LittlestTokyoViewer } from "{% static 'js/littlest_tokyo.js' %}?v=20260906_tokyo_v2";
+
+  const container = document.getElementById('threeLabCanvasContainer');
+  const loadingScreen = document.getElementById('threeLabLoadingScreen');
+  const btnAutoTour = document.getElementById('btnAutoTour');
+
+  let viewer = null;
+
+  function getViewer() {
+    if (!viewer) {
+      viewer = new LittlestTokyoViewer(container, loadingScreen);
+    }
+    return viewer;
+  }
+
+  window.startLittlestTokyoScene = function() {
+    const v = getViewer();
+    v.start();
+  };
+
+  window.stopLittlestTokyoScene = function() {
+    if (viewer) {
+      viewer.stop();
+      viewer = null;
+    }
+  };
+
+  window.setTokyoViewpoint = function(viewKey, btnEl) {
+    const v = getViewer();
+    v.setCameraViewpoint(viewKey);
+
+    // Update active pill styling
+    if (btnEl) {
+      document.querySelectorAll('.lab-preset-pill').forEach(el => el.classList.remove('active'));
+      btnEl.classList.add('active');
+    }
+  };
+
+  window.toggleTokyoAutoTour = function() {
+    const v = getViewer();
+    const isTour = v.toggleAutoTour();
+    if (btnAutoTour) {
+      if (isTour) {
+        btnAutoTour.classList.add('active');
+      } else {
+        btnAutoTour.classList.remove('active');
+      }
+    }
+  };
+
+  window.resetTokyoCamera = function() {
+    const v = getViewer();
+    v.resetCamera();
+    const firstPill = document.querySelector('.lab-preset-pill');
+    if (firstPill) {
+      document.querySelectorAll('.lab-preset-pill').forEach(el => el.classList.remove('active'));
+      firstPill.classList.add('active');
+    }
+  };
+
+  // Backward-compatibility aliases
+  window.startIndianCityScene = window.startLittlestTokyoScene;
+  window.stopIndianCityScene = window.stopLittlestTokyoScene;
+  window.setCityViewpoint = window.setTokyoViewpoint;
+  window.toggleCityAutoTour = window.toggleTokyoAutoTour;
+  window.resetCityCamera = window.resetTokyoCamera;
+
+  // Auto-launch if query param ?open=1, ?open=ai_lab, or modal is already open
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('open') === 'scroll' || urlParams.get('lab') === 'scroll' || urlParams.get('open') === 'illusion') {
+    setTimeout(() => {
+      window.openIllusionScrollModal();
+    }, 150);
+  } else if (urlParams.get('open') === 'ai_lab' || urlParams.get('lab') === 'ai') {
+    setTimeout(() => {
+      window.openAILabModal();
+    }, 150);
+  } else if (urlParams.get('open') === '1') {
+    window.openLittlestTokyoModal();
+    const view = urlParams.get('view');
+    if (view) {
+      setTimeout(() => {
+        window.setTokyoViewpoint(view);
+      }, 1000);
+    }
+  } else {
+    const modal = document.getElementById('threeLabModal');
+    if (modal && (modal.classList.contains('active') || modal.style.display === 'flex')) {
+      window.startLittlestTokyoScene();
+    }
+  }
+</script>
+
+<!-- AI Experimental Lab Master Controller (Modular ES6 Architecture) -->
+<script type="module" src="{% static 'js/ai_lab/lab_shell.js' %}?v=20260906_ai_lab"></script>
+
+<!-- The Illusion of Scroll Engine (Scrub-driven 3D Camera & Morphing Fields) -->
+<script type="module" src="{% static 'js/illusion_scroll.js' %}?v=20260906_scroll"></script>
+
+<!-- Scrolling Styles Collection (Styles 02-07 & Global Switcher) -->
+<script src="{% static 'js/scrolling_styles.js' %}?v=20260906_styles"></script>
+{% endblock %}

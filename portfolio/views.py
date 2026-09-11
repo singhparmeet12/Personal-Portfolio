@@ -291,10 +291,23 @@ You can reply directly to {contact_msg.name} at: {contact_msg.email}
 
 def lab_view(request):
     """Experimental Sandbox / Skills Playground: A free-form area for creative tech demos."""
+    if not getattr(settings, 'ENABLE_LAB', False):
+        return redirect('portfolio:home')
     context = {
         'active_page': 'lab',
     }
     return render(request, 'portfolio/lab.html', context)
+
+
+def ai_prompts_view(request):
+    """AI Prompts Visual Discovery Library & Experimentation Lab."""
+    if not getattr(settings, 'ENABLE_LAB', False):
+        return redirect('portfolio:home')
+    context = {
+        'active_page': 'lab',
+        'subpage': 'ai_prompts',
+    }
+    return render(request, 'portfolio/ai_prompts.html', context)
 
 
 def custom_404_view(request, exception=None):

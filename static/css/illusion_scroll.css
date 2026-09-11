@@ -1,0 +1,1113 @@
+/* ==========================================================================
+   LAB EXPERIMENT: THE ILLUSION OF SCROLL (20-ACT PROFESSIONAL ENGINE)
+   Calibrated Proportions, Razor-Sharp Vector Typography, 
+   Super-Professional Glassmorphism & Contained Spatial Stages
+   ========================================================================== */
+
+.illusion-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999995;
+  background: #06040d;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.illusion-modal.active {
+  display: flex !important;
+  animation: illusionFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes illusionFadeIn {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   TOP NAVIGATION & TELEMETRY BAR
+   -------------------------------------------------------------------------- */
+.illusion-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.75rem;
+  background: rgba(8, 6, 18, 0.88);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 100;
+  gap: 1rem;
+  height: 52px;
+  box-sizing: border-box;
+}
+
+.illusion-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.illusion-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.illusion-progress-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 43, 214, 0.12);
+  border: 1px solid rgba(255, 43, 214, 0.35);
+  color: #ff2bd6;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.04em;
+}
+
+.illusion-act-selector {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.illusion-act-selector:focus {
+  border-color: #00f5ff;
+}
+
+/* --------------------------------------------------------------------------
+   3D STAGE & CAMERA VIEWPORT (FULL-PAGE ENGINE)
+   -------------------------------------------------------------------------- */
+.illusion-stage-viewport {
+  position: relative;
+  flex: 1;
+  width: 100vw;
+  height: calc(100vh - 52px);
+  overflow: hidden;
+  perspective: 1400px;
+  perspective-origin: center center;
+  cursor: grab;
+}
+
+.illusion-stage-viewport:active {
+  cursor: grabbing;
+}
+
+/* Background Morphing Canvas (Pixel-Sharp Retina Display) */
+.illusion-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* The World Camera Rig */
+.illusion-world-camera {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.illusion-world-camera * {
+  pointer-events: auto;
+}
+
+/* Base Scene Container: Clean Proportions & Contained Stages */
+.scene-phase {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 2rem 3rem 6rem 3rem; /* Breathing room for topbar and bottom HUD */
+}
+
+/* --------------------------------------------------------------------------
+   FLOATING TECHNIQUE & SKILL HUD (SLEEK DOCKED CARD)
+   -------------------------------------------------------------------------- */
+.illusion-technique-hud {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  z-index: 80;
+  max-width: 400px;
+  background: rgba(10, 8, 22, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 0.75rem 1.1rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 245, 255, 0.08);
+  pointer-events: none;
+}
+
+.hud-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
+.hud-act-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #00f5ff;
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  padding: 0.12rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.hud-skill-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ff2bd6;
+  background: rgba(255, 43, 214, 0.1);
+  border: 1px solid rgba(255, 43, 214, 0.25);
+  padding: 0.12rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.technique-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+  letter-spacing: -0.01em;
+}
+
+.technique-desc {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   INTERACTIVE CHAPTER SCRUBBER RAIL (20 ACTS)
+   -------------------------------------------------------------------------- */
+.illusion-rail {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 440px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  z-index: 90;
+  cursor: pointer;
+}
+
+.illusion-rail-fill {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #00f5ff, #ff2bd6, #b6ff00, #f59e0b, #7c3cff);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px #ff2bd6;
+  transition: height 0.05s linear;
+}
+
+.illusion-rail-ticks {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.rail-tick {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  border: 2px solid #06040d;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.rail-tick:hover, .rail-tick.active {
+  background: #00f5ff;
+  transform: translate(-50%, -50%) scale(1.35);
+  box-shadow: 0 0 10px #00f5ff;
+}
+
+.rail-tick::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.rail-tick:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* Floating Hint */
+.illusion-scroll-hint {
+  position: absolute;
+  bottom: 20px;
+  right: 42px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #cbd5e1;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.7rem;
+  z-index: 40;
+  pointer-events: none;
+  animation: hintFloat 2.5s infinite ease-in-out;
+}
+
+@keyframes hintFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ==========================================================================
+   ACT 01: KINETIC TYPOGRAPHY WARP (CLEAN & CRISP)
+   ========================================================================== */
+.scene-phase-1 {
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+}
+
+.inscription-title {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 0.85rem 0;
+  text-transform: uppercase;
+  text-shadow: 0 0 35px rgba(0, 245, 255, 0.35);
+  will-change: transform, opacity, letter-spacing;
+}
+
+.inscription-sub {
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  font-weight: 400;
+  color: #94a3b8;
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
+   ACT 02: 3D MONOLITH ROOM 90° FLIP (CONTAINED & SHARP)
+   ========================================================================== */
+.room-flipper-stage {
+  width: min(720px, 88vw);
+  height: 380px;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+}
+
+.room-box-3d {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.room-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2.25rem 2.75rem;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+.room-face-blueprint {
+  background: radial-gradient(circle at center, rgba(14, 26, 46, 0.96) 0%, rgba(6, 12, 22, 0.98) 100%);
+  border: 1px solid rgba(0, 245, 255, 0.28);
+  transform: translateZ(190px);
+}
+
+.room-face-cyber {
+  background: radial-gradient(circle at center, rgba(38, 12, 44, 0.96) 0%, rgba(14, 4, 20, 0.98) 100%);
+  border: 1px solid rgba(255, 43, 214, 0.35);
+  transform: rotateY(90deg) translateZ(190px);
+}
+
+.room-grid-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background-size: 32px 32px;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.room-hero-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0.35rem 0 0.65rem 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.room-hero-sub {
+  font-size: 0.92rem;
+  max-width: 560px;
+  text-align: center;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin-bottom: 1.4rem;
+}
+
+.room-telemetry-strip {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.room-telemetry-item {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   ACT 03: EDGE-TO-EDGE DULL-TO-VIVID LASER CURTAIN WIPE
+   ========================================================================== */
+.wipe-fullscreen-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wipe-pane-full {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 3rem 6rem 3rem;
+  box-sizing: border-box;
+}
+
+.wipe-pane-dull-full {
+  background: #0e1117;
+  color: #71717a;
+}
+
+.dull-watermark {
+  position: absolute;
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.025);
+  letter-spacing: 0.15em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wipe-pane-vivid-full {
+  background: radial-gradient(circle at 75% 35%, rgba(255, 43, 214, 0.32) 0%, rgba(0, 245, 255, 0.22) 45%, #080314 90%);
+  color: #ffffff;
+  will-change: clip-path;
+}
+
+.vivid-watermark {
+  position: absolute;
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 900;
+  color: rgba(0, 245, 255, 0.035);
+  letter-spacing: 0.15em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wipe-laser-line-full {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #00f5ff;
+  box-shadow: 0 0 16px #00f5ff, 0 0 35px #ff2bd6;
+  z-index: 50;
+  pointer-events: none;
+  will-change: left;
+}
+
+.wipe-laser-head {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 20px #00f5ff, 0 0 40px #ff2bd6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #06040d;
+  font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   ACT 04: SACRED GEOMETRY & CONSTELLATION NODE MESH
+   ========================================================================== */
+.constellation-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.morph-svg-wrap {
+  width: 170px;
+  height: 170px;
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.morph-svg-graphic {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 18px rgba(182, 255, 0, 0.45));
+}
+
+.morph-svg-path {
+  fill: none;
+  stroke: #b6ff00;
+  stroke-width: 2.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: d 0.25s ease-out;
+}
+
+/* ==========================================================================
+   ACT 05: PANORAMIC LATERAL SPEEDWAY CONVEYOR
+   ========================================================================== */
+.conveyor-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.conveyor-speedway-track {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  will-change: transform;
+}
+
+.speedway-card {
+  flex: 0 0 260px;
+  height: 300px;
+  border-radius: 18px;
+  padding: 1.75rem;
+  background: rgba(14, 18, 34, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+}
+
+.speedway-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 1.8rem;
+  font-weight: 800;
+  opacity: 0.35;
+}
+
+/* ==========================================================================
+   ACT 06: FULLSCREEN DIAGONAL GUILLOTINE FAULT SHEAR
+   ========================================================================== */
+.guillotine-stage-full {
+  width: min(720px, 90vw);
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+}
+
+.guillotine-half {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.guillotine-top {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(10, 8, 24, 0.98));
+  border-bottom: 2px solid #00f5ff;
+}
+
+.guillotine-bottom {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.22), rgba(10, 8, 24, 0.98));
+  border-top: 2px solid #ff2bd6;
+}
+
+/* ==========================================================================
+   ACT 07: 3D ORIGAMI SPATIAL OS UNFOLD
+   ========================================================================== */
+.origami-stage-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.origami-hub {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  background: rgba(12, 10, 28, 0.96);
+  border: 1.5px solid #ff2bd6;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  box-shadow: 0 0 35px rgba(255, 43, 214, 0.35);
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+
+.origami-panel {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(15, 12, 32, 0.98), rgba(24, 15, 48, 0.98));
+  border: 1px solid rgba(0, 245, 255, 0.5);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  backface-visibility: visible;
+  will-change: transform;
+  box-sizing: border-box;
+}
+
+.origami-panel-top {
+  top: -95px; left: 10px; right: 10px; height: 90px;
+  transform-origin: bottom center;
+  border-color: #00f5ff;
+}
+
+.origami-panel-bottom {
+  bottom: -95px; left: 10px; right: 10px; height: 90px;
+  transform-origin: top center;
+  border-color: #b6ff00;
+}
+
+.origami-panel-left {
+  left: -135px; top: 10px; bottom: 10px; width: 130px;
+  transform-origin: right center;
+  border-color: #ff2bd6;
+}
+
+.origami-panel-right {
+  right: -135px; top: 10px; bottom: 10px; width: 130px;
+  transform-origin: left center;
+  border-color: #818cf8;
+}
+
+/* ==========================================================================
+   ACT 08: FULLSCREEN CYLINDRICAL HOLO-TURBINE
+   ========================================================================== */
+.turbine-stage-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.turbine-drum {
+  width: min(600px, 85vw);
+  height: 90px;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.turbine-slat {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 28, 0.95);
+  border: 1px solid rgba(0, 245, 255, 0.4);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  box-shadow: 0 0 25px rgba(0, 245, 255, 0.2);
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.turbine-slat.slat-0   { transform: rotateX(0deg) translateZ(120px); border-color: #00f5ff; }
+.turbine-slat.slat-60  { transform: rotateX(60deg) translateZ(120px); border-color: #ff2bd6; }
+.turbine-slat.slat-120 { transform: rotateX(120deg) translateZ(120px); border-color: #b6ff00; }
+.turbine-slat.slat-180 { transform: rotateX(180deg) translateZ(120px); border-color: #818cf8; }
+.turbine-slat.slat-240 { transform: rotateX(240deg) translateZ(120px); border-color: #f59e0b; }
+.turbine-slat.slat-300 { transform: rotateX(300deg) translateZ(120px); border-color: #ec4899; }
+
+/* ==========================================================================
+   ACT 09: N-BODY GRAVITATIONAL SINGULARITY
+   ========================================================================== */
+.singularity-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ==========================================================================
+   ACT 10: EXPLODED 3D GLASSMORPHISM DESKTOP
+   ========================================================================== */
+.glass-desktop-stage {
+  width: min(600px, 86vw);
+  height: 340px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.glass-plate {
+  position: absolute;
+  width: 100%;
+  height: 96px;
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 1rem 1.6rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  will-change: transform;
+}
+
+.glass-plate h2 {
+  font-size: 1.2rem !important;
+  margin: 0.2rem 0 !important;
+}
+
+.glass-plate p {
+  font-size: 0.8rem !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* ==========================================================================
+   ACT 11: CYBERPUNK MATRIX RAIN & GLYPH DECODER
+   ========================================================================== */
+.matrix-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix-terminal-box {
+  background: rgba(4, 14, 10, 0.94);
+  border: 1.5px solid #10b981;
+  border-radius: 18px;
+  padding: 2.2rem 3rem;
+  max-width: min(640px, 88vw);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+  text-align: center;
+}
+
+.matrix-stream-text {
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  color: #10b981;
+  text-shadow: 0 0 15px #10b981;
+  margin: 0.75rem 0;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   ACT 12: AUDIO-REACTIVE POLAR OSCILLOSCOPE
+   ========================================================================== */
+.polar-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ==========================================================================
+   ACT 13: REVERSE GRAVITY INVERSION VORTEX
+   ========================================================================== */
+.antigravity-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ==========================================================================
+   ACT 14: INFINITE VOLUMETRIC HEX WARP TUNNEL
+   ========================================================================== */
+.hextunnel-stage-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.hex-ring {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border: 2px solid #00f5ff;
+  border-radius: 36px;
+  box-shadow: 0 0 25px rgba(0, 245, 255, 0.35);
+  will-change: transform;
+}
+
+/* ==========================================================================
+   ACT 15: VISCOUS LIQUID FERROFLUID SIMULATION
+   ========================================================================== */
+.ferrofluid-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ferro-magnetic-orb {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #38bdf8, #020617 75%);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.4), inset 0 0 20px #00f5ff;
+  margin-bottom: 1.25rem;
+  animation: ferroPulse 3s infinite ease-in-out;
+}
+
+@keyframes ferroPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #00f5ff); }
+  50% { transform: scale(1.05) rotate(12deg); filter: drop-shadow(0 0 30px #ff2bd6); }
+}
+
+/* ==========================================================================
+   ACT 16: RETRO CRT PHOSPHOR SCANLINE GLITCH
+   ========================================================================== */
+.crt-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 3px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.crt-glitch-badge {
+  font-family: var(--font-mono, monospace);
+  color: #ff2bd6;
+  text-shadow: 1.5px 0 #00f5ff, -1.5px 0 #b6ff00;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  margin: 0.65rem 0;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   ACT 17: ISOMETRIC WIREFRAME BLUEPRINT CITY
+   ========================================================================== */
+.isocity-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.isocity-grid-floor {
+  width: 440px;
+  height: 280px;
+  position: relative;
+  transform: rotateX(55deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+  background-size: 36px 36px;
+  background-image: linear-gradient(to right, rgba(0, 245, 255, 0.2) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 245, 255, 0.2) 1px, transparent 1px);
+  border: 1px solid rgba(0, 245, 255, 0.35);
+}
+
+.isocity-tower {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 245, 255, 0.25);
+  border: 1px solid #00f5ff;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+  will-change: transform;
+}
+
+/* ==========================================================================
+   ACT 18: REALITY DETONATION & GLASS SHATTER
+   ========================================================================== */
+.shatter-stage-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shatter-plaque-full {
+  position: relative;
+  width: min(640px, 86vw);
+  height: 280px;
+  transform-style: preserve-3d;
+}
+
+.shatter-shard-full {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 10, 32, 0.95);
+  border: 1px solid rgba(0, 245, 255, 0.38);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  will-change: transform, opacity;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ==========================================================================
+   ACT 19: CELESTIAL WORMHOLE & HYPERSPACE SINGULARITY
+   ========================================================================== */
+.wormhole-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.singularity-core {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #000000;
+  box-shadow: 0 0 45px #ff2bd6, 0 0 90px #00f5ff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.25rem;
+  animation: singularitySpin 8s infinite linear;
+}
+
+@keyframes singularitySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   ACT 20: LUMINOUS DAWN HORIZON & MASTER SKILLS MATRIX
+   ========================================================================== */
+.dawn-stage-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: min(880px, 92vw);
+  box-sizing: border-box;
+}
+
+.dawn-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.3rem 0;
+  text-align: center;
+}
+
+.dawn-sub {
+  font-size: 0.9rem;
+  max-width: 640px;
+  color: #475569;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0 auto 1.5rem auto;
+}
+
+.skills-matrix-20 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.skill-card-20 {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-card-20:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.skill-card-20-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.2rem;
+}
+
+.skill-card-20-desc {
+  font-size: 0.74rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .skills-matrix-20 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .illusion-topbar { padding: 0.5rem 1rem; }
+  .illusion-technique-hud { bottom: 12px; left: 12px; right: 12px; max-width: none; }
+  .illusion-rail { display: none; }
+  .illusion-scroll-hint { display: none; }
+  .skills-matrix-20 { grid-template-columns: 1fr; }
+}
