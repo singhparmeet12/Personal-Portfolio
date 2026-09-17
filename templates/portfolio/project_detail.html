@@ -291,7 +291,17 @@
     </div>
   {% elif project.featured_image %}
     <div class="modern-card" style="padding: 0; overflow: hidden; border-radius: var(--radius-lg); margin-bottom: 3rem; border: 1px solid var(--border-medium); box-shadow: var(--shadow-md);">
-      <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" alt="{{ project.title }} Banner" style="width: 100%; aspect-ratio: 16/9; max-height: 560px; object-fit: cover; display: block;">
+      <picture>
+        <source srcset="{{ project.get_webp_image_url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" type="image/webp">
+        <img src="{{ project.featured_image.url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" 
+             alt="{{ project.title }} Banner" 
+             style="width: 100%; aspect-ratio: 16/9; max-height: 560px; object-fit: cover; display: block;" 
+             width="1200" 
+             height="675" 
+             fetchpriority="high" 
+             loading="eager" 
+             decoding="async">
+      </picture>
     </div>
   {% endif %}
 

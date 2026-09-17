@@ -131,6 +131,14 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('portfolio:project_detail', kwargs={'slug': self.slug})
 
+    def get_webp_image_url(self):
+        """Returns the optimized WebP image URL if available, otherwise original."""
+        if not self.featured_image:
+            return ''
+        url = self.featured_image.url
+        base, _ = os.path.splitext(url)
+        return f"{base}.webp"
+
     def get_domain_tag(self):
         """Returns a concise, meaningful industry / domain vertical for the project card."""
         domain_map = {
