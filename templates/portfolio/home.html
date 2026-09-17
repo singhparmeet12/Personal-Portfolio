@@ -266,7 +266,7 @@
     <!-- Project Cards Grid -->
     <div class="grid-3">
       {% for project in featured_projects %}
-        <article class="project-card">
+        <article class="project-card clickable-project-card" data-href="{{ project.get_absolute_url }}" tabindex="0" role="link" aria-label="Open {{ project.title }} project details">
           <a href="{{ project.get_absolute_url }}" class="project-card-image-link" title="Open {{ project.title }} Case Study">
             <div class="project-card-image-wrap">
               {% if project.featured_image %}

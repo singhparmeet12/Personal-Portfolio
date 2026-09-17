@@ -48,7 +48,7 @@
         <canvas id="resumePdfCanvas" class="resume-pdf-canvas" aria-label="Resume Document Preview"></canvas>
         <div id="resumePdfFallback" class="resume-pdf-fallback" style="display:none;">
           <iframe 
-            src="{{ resume_doc.file.url }}#toolbar=0&navpanes=0&scrollbar=0&view=Fit" 
+            src="{{ resume_doc.file.url }}?v={{ resume_doc.updated_at|date:'U'|default:'2026' }}#toolbar=0&navpanes=0&scrollbar=0&view=Fit" 
             class="resume-iframe-exact"
             title="Parmeet Singh Resume PDF">
           </iframe>
@@ -260,7 +260,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('resumePdfCanvas');
     const fallback = document.getElementById('resumePdfFallback');
-    const pdfUrl = "{{ resume_doc.file.url|default:'' }}";
+    const pdfUrl = "{{ resume_doc.file.url|default:'' }}?v={{ resume_doc.updated_at|date:'U'|default:'2026' }}";
     if (!canvas || !pdfUrl) return;
 
     if (typeof pdfjsLib !== 'undefined') {

@@ -1714,6 +1714,13 @@ html[data-theme="dark"] .theme-toggle-btn .icon-moon {
   transition: all var(--transition-normal);
   content-visibility: auto;
   contain-intrinsic-size: auto 450px;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.project-card:active {
+  transform: scale(0.988);
 }
 
 .project-card:hover {
@@ -3256,6 +3263,30 @@ html[data-theme="dark"] .cs-footer-summary p {
     display: flex !important;
     flex-direction: column !important;
     flex: 1 !important;
+  }
+
+  /* Domain / Category Micro-Pill (Sleek, Single-Line, Compact) */
+  .project-card-badge-row {
+    margin-bottom: 0.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+  }
+
+  .badge-project-category {
+    font-size: 0.44rem !important;
+    padding: 0.08rem 0.32rem !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.03em !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    border-radius: var(--radius-full) !important;
+    border-width: 1px !important;
   }
 
   /* Headings: 100% fully readable without ugly dotted ellipsis truncation, wraps cleanly to next line */
@@ -4944,6 +4975,28 @@ html[data-theme="dark"] .cs-footer-summary p {
     display: flex;
     flex-direction: column;
     min-width: 0;
+  }
+
+  .project-card-badge-row {
+    margin-bottom: 0.18rem !important;
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0 !important;
+  }
+
+  .badge-project-category {
+    font-size: 0.44rem !important;
+    padding: 0.08rem 0.32rem !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.03em !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    border-radius: var(--radius-full) !important;
   }
 
   .project-card-title,
@@ -11027,8 +11080,8 @@ html[data-theme="dark"] .badge-project-type.academic {
 .badge-project-category {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.72rem;
+  gap: 0.3rem;
+  font-size: 0.65rem;
   font-weight: 700;
   font-family: var(--font-mono);
   letter-spacing: 0.04em;
@@ -11036,8 +11089,13 @@ html[data-theme="dark"] .badge-project-type.academic {
   color: var(--accent-primary);
   background: var(--accent-primary-subtle);
   border: 1px solid rgba(37, 99, 235, 0.22);
-  padding: 0.22rem 0.65rem;
+  padding: 0.16rem 0.52rem;
   border-radius: var(--radius-full);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
   transition: all var(--transition-fast);
 }
 

@@ -10,6 +10,75 @@
       <link rel="preload" as="image" href="{{ project.get_webp_image_url }}?v={{ project.updated_at|date:'U'|default:'2026' }}" type="image/webp" fetchpriority="high">
     {% endif %}
   {% endfor %}
+  <style>
+    /* Blue Category Pill Box - Guaranteed Instant Render */
+    .badge-project-category {
+      display: inline-flex !important;
+      align-items: center !important;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: var(--font-mono, monospace);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0284c7 !important;
+      background: rgba(2, 132, 199, 0.1) !important;
+      border: 1px solid rgba(2, 132, 199, 0.3) !important;
+      padding: 0.22rem 0.65rem;
+      border-radius: 9999px !important;
+      white-space: nowrap;
+      line-height: 1.2;
+      transition: all 0.2s ease;
+    }
+
+    html[data-theme="dark"] .badge-project-category {
+      color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.12) !important;
+      border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    }
+
+    /* Mobile View: Exact Same Blue Box, Only Reduced Size To Fit Sleekly On One Line */
+    @media (max-width: 768px) {
+      .project-card-badge-row {
+        margin-bottom: 0.22rem !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .badge-project-category {
+        font-size: 0.44rem !important;
+        padding: 0.08rem 0.35rem !important;
+        line-height: 1.15 !important;
+        letter-spacing: 0.03em !important;
+        border-radius: 9999px !important;
+        border-width: 1px !important;
+        border-style: solid !important;
+        white-space: nowrap !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .badge-project-category {
+        font-size: 0.40rem !important;
+        padding: 0.06rem 0.28rem !important;
+      }
+    }
+
+    /* Whole Cue Card Clickable */
+    .clickable-project-card,
+    .project-card {
+      cursor: pointer;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .clickable-project-card:active {
+      transform: scale(0.985);
+    }
+    .project-card-image-link {
+      cursor: pointer;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
@@ -48,9 +117,13 @@
     <div class="grid-3" id="projectsGrid">
       {% for project in projects %}
         <article 
-          class="project-card" 
+          class="project-card clickable-project-card" 
           data-project-category="all {{ project.category.slug|default:'' }}"
-          id="project-{{ project.slug }}">
+          id="project-{{ project.slug }}"
+          data-href="{{ project.get_absolute_url }}"
+          tabindex="0"
+          role="link"
+          aria-label="Open {{ project.title }} project details">
           
           <a href="{{ project.get_absolute_url }}" class="project-card-image-link" title="Open {{ project.title }} Case Study">
             <div class="project-card-image-wrap">
@@ -147,4 +220,42 @@
 
   </div>
 </section>
+
+<script>
+  // Whole Cue Card & Banner Click Navigation
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('projectsGrid');
+    if (!grid) return;
+
+    grid.addEventListener('click', function(e) {
+      // Allow explicit external icon buttons (e.g. Live Demo new tab, GitHub new tab, Modal trigger) to open normally
+      const explicitAction = e.target.closest('a[target="_blank"], button, .btn-modern[target="_blank"], [onclick]');
+      if (explicitAction) return;
+
+      const card = e.target.closest('.project-card[data-href]');
+      if (card) {
+        const href = card.getAttribute('data-href');
+        if (href) {
+          // If clicked directly on an existing internal anchor, let default browser navigation proceed.
+          // If clicked anywhere else on the card (body, badge, description, tech tags, empty padding):
+          if (!e.target.closest('a')) {
+            window.location.href = href;
+          }
+        }
+      }
+    });
+
+    // Keyboard Accessibility (Enter / Space navigation on card focus)
+    grid.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = document.activeElement ? document.activeElement.closest('.project-card[data-href]') : null;
+        if (card && !e.target.closest('a, button')) {
+          e.preventDefault();
+          const href = card.getAttribute('data-href');
+          if (href) window.location.href = href;
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}

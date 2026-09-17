@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutWorldExperience();
   initMobileDockOnboardingHint();
   initInstantPagePrefetch();
+  initClickableProjectCards();
 });
 
 /* --------------------------------------------------------------------------
@@ -640,6 +641,41 @@ function initProjectFiltering() {
         }
       });
     });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   WHOLE CUE CARD & BANNER CLICK NAVIGATION
+   -------------------------------------------------------------------------- */
+function initClickableProjectCards() {
+  document.addEventListener('click', (e) => {
+    // If the user clicked an explicit action like Live Demo, GitHub, or modal button, do not hijack
+    if (e.target.closest('a[target="_blank"], button, .btn-modern[target="_blank"], [onclick]')) {
+      return;
+    }
+
+    const card = e.target.closest('.project-card[data-href]');
+    if (!card) return;
+
+    const href = card.getAttribute('data-href');
+    if (href) {
+      // If the user clicked an existing link (e.g. title or image link), let native navigation handle it
+      if (!e.target.closest('a')) {
+        window.location.href = href;
+      }
+    }
+  });
+
+  // Keyboard navigation support
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const card = document.activeElement ? document.activeElement.closest('.project-card[data-href]') : null;
+      if (card && !e.target.closest('a, button')) {
+        e.preventDefault();
+        const href = card.getAttribute('data-href');
+        if (href) window.location.href = href;
+      }
+    }
   });
 }
 

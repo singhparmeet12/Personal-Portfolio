@@ -176,11 +176,12 @@ def resume_download_view(request):
     """Streams the active resume PDF to download directly with friendly filename."""
     resume_doc = Resume.objects.filter(is_active=True).first()
     if resume_doc and resume_doc.file and os.path.exists(resume_doc.file.path):
+        filename = os.path.basename(resume_doc.file.name) if resume_doc.file else "Resume__Parmeet.pdf"
         response = FileResponse(
             open(resume_doc.file.path, 'rb'),
             content_type='application/pdf'
         )
-        response['Content-Disposition'] = 'attachment; filename="Parmeet_Singh_Resume.pdf"'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
     
     # If no physical PDF file is present yet, redirect to resume page with message
