@@ -580,8 +580,37 @@ function initLofiWorkspace() {
 function initProjectFiltering() {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const projectItems = document.querySelectorAll('[data-project-category]');
+  const noticeTitle = document.getElementById('contextNoticeTitle');
+  const noticeDesc = document.getElementById('contextNoticeDesc');
 
   if (filterButtons.length === 0 || projectItems.length === 0) return;
+
+  const categoryMessages = {
+    'all': {
+      title: 'Curated Concept Prototypes & Client Showcases:',
+      desc: 'The projects below include interactive sample builds, client platforms, and technical prototypes crafted to demonstrate frontend polish, backend architecture, and problem-solving.'
+    },
+    'web-development': {
+      title: 'Web Development — Sample Concept Prototypes & UI Showcases:',
+      desc: 'High-fidelity demonstration builds showcasing modern UI/UX design systems, component architecture, and responsive layouts across real-world business verticals. Built to demonstrate technical craft for prospective clients.'
+    },
+    'full-stack': {
+      title: 'Full Stack Web Applications:',
+      desc: 'End-to-end architectures connecting clientside user interfaces with database models, backend logic, and production APIs.'
+    },
+    'data-analytics': {
+      title: 'Data Science & Analytics Systems:',
+      desc: 'Data extraction, exploratory pipelines, statistical analysis, and interactive telemetry dashboards.'
+    },
+    'ai-ml': {
+      title: 'AI & Machine Learning Engineering:',
+      desc: 'Applied deep learning, computer vision models, time-series telemetry, and intelligent algorithmic workflows.'
+    },
+    'freelance': {
+      title: 'Client & Freelance Production Work:',
+      desc: 'Custom software and web platforms engineered for business owners, dealerships, and enterprise clients.'
+    }
+  };
 
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -589,6 +618,11 @@ function initProjectFiltering() {
 
       filterButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
+      if (noticeTitle && noticeDesc && categoryMessages[selectedSlug]) {
+        noticeTitle.textContent = categoryMessages[selectedSlug].title;
+        noticeDesc.textContent = categoryMessages[selectedSlug].desc;
+      }
 
       projectItems.forEach(item => {
         const itemCategories = item.getAttribute('data-project-category').split(' ');

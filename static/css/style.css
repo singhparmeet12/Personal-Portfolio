@@ -3114,13 +3114,51 @@ textarea.form-control {
 }
 
 .cs-footer-summary {
-  background: linear-gradient(135deg, rgba(7, 9, 14, 0.95), rgba(11, 16, 27, 0.95));
-  border: 1px solid rgba(0, 242, 254, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
-  padding: 2.25rem;
+  padding: 2.5rem 2rem;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
   margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.cs-footer-summary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-cyan), var(--accent-emerald));
+}
+
+.cs-footer-summary h3,
+.cs-footer-summary .cs-footer-title {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.cs-footer-summary p {
+  color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .cs-footer-summary {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .cs-footer-summary h3,
+html[data-theme="dark"] .cs-footer-summary .cs-footer-title {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .cs-footer-summary p {
+  color: #cbd5e1;
 }
 
 @media (max-width: 992px) {
@@ -10848,3 +10886,337 @@ html:not([data-theme="dark"]) .teaser-timeline-box {
     display: none;
   }
 }
+
+/* ==========================================================================
+   PROJECT SEGREGATION & PROTOTYPE NOTICE STYLES
+   ========================================================================== */
+
+/* Category Context Notice Banner on /work/ */
+.category-context-notice {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.35rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.context-notice-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.context-notice-inner i {
+  font-size: 1.25rem;
+  color: var(--accent-primary);
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.context-notice-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.context-notice-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: inline-block;
+  margin-right: 0.35rem;
+}
+
+html[data-theme="dark"] .category-context-notice {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-left: 4px solid var(--accent-cyan);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .context-notice-inner i {
+  color: var(--accent-cyan);
+}
+
+html[data-theme="dark"] .context-notice-text {
+  color: #cbd5e1;
+}
+
+html[data-theme="dark"] .context-notice-text strong {
+  color: #f8fafc;
+}
+
+/* Badge Strip on Project Cards */
+.project-card-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge-project-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.badge-project-type.prototype {
+  background: rgba(147, 51, 234, 0.1);
+  border: 1px solid rgba(147, 51, 234, 0.25);
+  color: #7e22ce;
+}
+
+.badge-project-type.client {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #047857;
+}
+
+.badge-project-type.personal {
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  color: #0284c7;
+}
+
+.badge-project-type.academic {
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  color: #b45309;
+}
+
+html[data-theme="dark"] .badge-project-type.prototype {
+  background: rgba(168, 85, 247, 0.18);
+  border-color: rgba(168, 85, 247, 0.4);
+  color: #c084fc;
+}
+
+html[data-theme="dark"] .badge-project-type.client {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
+html[data-theme="dark"] .badge-project-type.personal {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+
+html[data-theme="dark"] .badge-project-type.academic {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.badge-project-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+html[data-theme="dark"] .badge-project-category {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+/* Prototype Disclaimer Banner on Project Detail */
+.prototype-case-study-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.15rem 1.4rem;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.05), rgba(2, 132, 199, 0.04));
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  border-left: 4px solid #7e22ce;
+  border-radius: var(--radius-md);
+  margin-top: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.prototype-notice-icon {
+  font-size: 1.35rem;
+  color: #7e22ce;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.prototype-notice-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prototype-notice-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b21a8;
+}
+
+.prototype-notice-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.prototype-notice-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .prototype-case-study-notice {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(56, 189, 248, 0.08));
+  border-color: rgba(168, 85, 247, 0.35);
+  border-left-color: #a855f7;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .prototype-notice-icon {
+  color: #c084fc;
+}
+
+html[data-theme="dark"] .prototype-notice-tag {
+  color: #c084fc;
+}
+
+html[data-theme="dark"] .prototype-notice-text {
+  color: #cbd5e1;
+}
+
+html[data-theme="dark"] .prototype-notice-text strong {
+  color: #f8fafc;
+}
+
+/* ==========================================================================
+   CASE STUDY CTA CARD (EXPERIENCE THE LIVE PROTOTYPE / DEMO)
+   ========================================================================== */
+.case-study-cta-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.case-study-cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-cyan));
+}
+
+.case-study-cta-card .cta-card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+.case-study-cta-card .cta-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.65;
+}
+
+.case-study-cta-card .cta-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+html[data-theme="dark"] .case-study-cta-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+  border-color: rgba(56, 189, 248, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .case-study-cta-card .cta-card-title {
+  color: #f8fafc;
+}
+
+html[data-theme="dark"] .case-study-cta-card .cta-card-desc {
+  color: #94a3b8;
+}
+
+/* Signature Feature Card in Case Study */
+.signature-feature-card {
+  padding: 1.25rem 1.4rem;
+  background: rgba(56, 189, 248, 0.05);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: var(--radius-md);
+}
+
+html[data-theme="dark"] .signature-feature-card {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.28);
+}
+
+/* Design Identity Card in Case Study */
+.design-identity-card {
+  padding: 1.15rem 1.35rem;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+}
+
+/* Clean features list */
+.clean-features-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.clean-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.clean-features-list li i {
+  color: var(--accent-emerald);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}

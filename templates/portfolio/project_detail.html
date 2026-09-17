@@ -26,12 +26,49 @@
     </nav>
 
     <div class="mt-2" style="margin-top: 0.75rem;">
-      <h1 class="hero-title mt-2 mb-2" style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.75rem 0;">
+      <div class="project-card-badge-row mb-2">
+        {% if project.client_type == 'prototype' %}
+          <span class="badge-project-type prototype">
+            <i class="bi bi-code-slash"></i> Concept Prototype / Sample Build
+          </span>
+        {% elif project.client_type == 'freelance' %}
+          <span class="badge-project-type client">
+            <i class="bi bi-briefcase"></i> Client Production Work
+          </span>
+        {% elif project.client_type == 'academic' %}
+          <span class="badge-project-type academic">
+            <i class="bi bi-mortarboard"></i> Academic Research
+          </span>
+        {% else %}
+          <span class="badge-project-type personal">
+            <i class="bi bi-stars"></i> Portfolio Showcase
+          </span>
+        {% endif %}
+        {% if project.category %}
+          <span class="badge-project-category">{{ project.category.name }}</span>
+        {% endif %}
+      </div>
+
+      <h1 class="hero-title mt-1 mb-2" style="font-size: clamp(2rem, 4vw, 3rem); margin: 0.5rem 0;">
         {{ project.title }}
       </h1>
       <p class="lead" style="max-width: 800px;">
         {{ project.tagline }}
       </p>
+
+      {% if project.client_type == 'prototype' %}
+        <div class="prototype-case-study-notice">
+          <div class="prototype-notice-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <div class="prototype-notice-body">
+            <span class="prototype-notice-tag">Interactive Client Showcase Prototype</span>
+            <p class="prototype-notice-text">
+              This site is a functional <strong>concept prototype and demonstration build</strong> created by Parmeet to showcase domain-specific UI/UX architecture, responsive layouts, and interactive mechanics for prospective clients. It is not an operating commercial business.
+            </p>
+          </div>
+        </div>
+      {% endif %}
     </div>
 
     <!-- Metadata Quick Strip (Only Project Links) -->
@@ -550,15 +587,15 @@
         <!-- SECTION 13 — PORTFOLIO SUMMARY CARD -->
         <div class="cs-footer-summary">
           <span class="badge-tech accent mb-3" style="display: inline-block;">Production Showcase</span>
-          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">GAADIMANDI</h3>
+          <h3 class="cs-footer-title" style="font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem;">GAADIMANDI</h3>
           <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
             Automotive Marketplace + Dealership Operating System
           </p>
           <p style="font-size: 0.92rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 1.5rem auto;">
             Personal Digital Showrooms · Live Inventory · Dealer Intelligence · Direct Buyer Conversion
           </p>
-          {% if project.demo_url %}
-            <a href="{{ project.demo_url }}" target="_blank" rel="noopener" class="btn-modern btn-primary-glow">
+          {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn-modern btn-primary-glow">
               <span>EXPLORE THE LIVE EXPERIENCE</span>
               <i class="bi bi-arrow-right"></i>
             </a>
@@ -790,7 +827,7 @@
         <!-- SECTION 09 — PORTFOLIO SUMMARY CARD -->
         <div class="cs-footer-summary">
           <span class="badge-tech accent mb-3" style="display: inline-block;">Production Showcase</span>
-          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">TOURCRAZE</h3>
+          <h3 class="cs-footer-title" style="font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem;">TOURCRAZE</h3>
           <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
             Intelligent Travel Planning &amp; Collaborative Group Expense Platform
           </p>
@@ -1113,7 +1150,7 @@
         <!-- SECTION 12 — PORTFOLIO SUMMARY CARD -->
         <div class="cs-footer-summary">
           <span class="badge-tech accent mb-3" style="display: inline-block;">Flagship Showcase</span>
-          <h3 style="font-size: 1.85rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">TRADELAB</h3>
+          <h3 class="cs-footer-title" style="font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem;">TRADELAB</h3>
           <p style="font-size: 1.05rem; color: var(--accent-cyan); font-weight: 600; margin-bottom: 0.75rem;">
             AI-Powered Trading Education &amp; Multi-Market Analysis Platform
           </p>
@@ -1129,40 +1166,42 @@
         </div>
 
       {% else %}
-        <!-- Standard Generic Case Study Sections for other projects -->
-        <!-- Section 1: Overview / Problem -->
+        <!-- Standard Structured Case Study for Sample Prototypes & Showcases -->
+        <!-- SECTION 01 — THE CONCEPT -->
         <section class="case-study-block">
           <h3>
-            <i class="bi bi-bullseye" style="color: var(--accent-cyan);"></i>
-            <span>Project Overview</span>
+            <i class="bi bi-lightbulb" style="color: var(--accent-cyan);"></i>
+            <span>The Concept</span>
           </h3>
-          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
-            {{ project.overview|linebreaks }}
+          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary); margin: 0;">
+            {{ project.overview }}
           </p>
         </section>
 
-        <!-- Section 2: What I Built -->
+        <!-- SECTION 02 — SIGNATURE FEATURE & IMPLEMENTATION -->
         <section class="case-study-block">
           <h3>
-            <i class="bi bi-cpu" style="color: var(--accent-primary);"></i>
-            <span>What I Built &amp; Architecture</span>
+            <i class="bi bi-stars" style="color: var(--accent-primary);"></i>
+            <span>Signature Feature &amp; Interactive Mechanics</span>
           </h3>
-          <p style="font-size: 1.05rem; line-height: 1.75; color: var(--text-secondary);">
-            {{ project.what_i_built|linebreaks }}
-          </p>
+          <div class="signature-feature-card">
+            <p style="font-size: 1.02rem; line-height: 1.75; color: var(--text-primary); margin: 0;">
+              {{ project.what_i_built }}
+            </p>
+          </div>
         </section>
 
-        <!-- Section 3: Key Features -->
+        <!-- SECTION 03 — KEY CAPABILITIES -->
         {% if features_list %}
           <section class="case-study-block">
             <h3>
-              <i class="bi bi-check2-square" style="color: var(--accent-emerald);"></i>
-              <span>Key Features &amp; Capabilities</span>
+              <i class="bi bi-check2-circle" style="color: var(--accent-emerald);"></i>
+              <span>Key Capabilities &amp; UX Details</span>
             </h3>
-            <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem;">
+            <ul class="clean-features-list">
               {% for feature in features_list %}
-                <li style="display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.98rem; color: var(--text-secondary);">
-                  <i class="bi bi-check-circle-fill" style="color: var(--accent-emerald); margin-top: 0.2rem;"></i>
+                <li>
+                  <i class="bi bi-check-circle-fill"></i>
                   <span>{{ feature }}</span>
                 </li>
               {% endfor %}
@@ -1170,12 +1209,27 @@
           </section>
         {% endif %}
 
-        <!-- Section 4: Screenshot Gallery -->
+        <!-- SECTION 04 — DESIGN IDENTITY & EXECUTION -->
+        {% if project.challenges_learning %}
+          <section class="case-study-block">
+            <h3>
+              <i class="bi bi-palette" style="color: var(--accent-amber);"></i>
+              <span>Design Identity &amp; Execution</span>
+            </h3>
+            <div class="design-identity-card">
+              <p style="font-size: 0.98rem; line-height: 1.7; color: var(--text-secondary); margin: 0;">
+                {{ project.challenges_learning }}
+              </p>
+            </div>
+          </section>
+        {% endif %}
+
+        <!-- SECTION 05 — VISUAL GALLERY -->
         {% if project.gallery_images.all and project.slug != 'tourcraze' %}
           <section class="case-study-block">
             <h3>
               <i class="bi bi-images" style="color: var(--accent-cyan);"></i>
-              <span>Visuals &amp; Interface</span>
+              <span>Visual Gallery</span>
             </h3>
             <div class="grid-2" style="margin-top: 1rem;">
               {% for item in project.gallery_images.all %}
@@ -1192,20 +1246,29 @@
           </section>
         {% endif %}
 
-        <!-- Section 5: Technical Challenges & Learnings -->
-        {% if project.challenges_learning %}
-          <section class="case-study-block">
-            <h3>
-              <i class="bi bi-lightbulb" style="color: var(--accent-amber);"></i>
-              <span>Challenges &amp; Technical Learnings</span>
-            </h3>
-            <div class="modern-card" style="background: var(--bg-surface-subtle); border-left: 4px solid var(--accent-primary); padding: 1.5rem;">
-              <p style="font-size: 0.98rem; line-height: 1.7; color: var(--text-secondary); margin: 0;">
-                {{ project.challenges_learning|linebreaks }}
-              </p>
-            </div>
-          </section>
-        {% endif %}
+        <!-- SECTION 06 — LIVE EXPERIENCE CTA -->
+        <div class="case-study-cta-card mt-5">
+          <h4 class="cta-card-title">
+            Experience the Live Prototype
+          </h4>
+          <p class="cta-card-desc">
+            Interact with the live interface, test the responsive controls, and explore the design execution firsthand.
+          </p>
+          <div class="cta-card-actions">
+            {% if project.live_url %}
+              <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-primary-glow btn-sm">
+                <i class="bi bi-box-arrow-up-right me-1"></i>
+                <span>Open Live Demo</span>
+              </a>
+            {% endif %}
+            {% if project.github_url %}
+              <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn-modern btn-secondary-outline btn-sm">
+                <i class="bi bi-github me-1"></i>
+                <span>View Repository</span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
       {% endif %}
 
     </div>

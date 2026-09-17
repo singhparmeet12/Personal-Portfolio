@@ -30,10 +30,10 @@ def home_view(request):
     services_preview = []
     skill_categories = []
     try:
-        qs = list(Project.objects.filter(is_featured=True).select_related('category').prefetch_related('technologies')[:3])
-        if not qs:
-            qs = list(Project.objects.all().select_related('category').prefetch_related('technologies')[:3])
-        featured_projects = qs
+        home_order = ['gaadimandi', 'tourcraze', 'tradelab']
+        qs = list(Project.objects.filter(is_featured=True).select_related('category').prefetch_related('technologies'))
+        qs.sort(key=lambda p: home_order.index(p.slug) if p.slug in home_order else 99)
+        featured_projects = qs[:3]
     except Exception:
         featured_projects = []
 

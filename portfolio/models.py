@@ -88,6 +88,7 @@ class Project(models.Model):
     CLIENT_TYPE_CHOICES = [
         ('personal', 'Personal Project'),
         ('freelance', 'Freelance / Client Work'),
+        ('prototype', 'Concept Prototype / Sample Build'),
         ('academic', 'Academic / Research'),
         ('open_source', 'Open Source'),
     ]
@@ -129,6 +130,31 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse('portfolio:project_detail', kwargs={'slug': self.slug})
+
+    def get_domain_tag(self):
+        """Returns a concise, meaningful industry / domain vertical for the project card."""
+        domain_map = {
+            'gaadimandi': 'Automotive Marketplace',
+            'tradelab': 'FinTech & AI Analytics',
+            'trailforge': 'Expedition Automotive',
+            'pulse-fitness': 'Fitness & Performance',
+            'ember-and-oak': 'Culinary Bistro',
+            'wellspring-health': 'Healthcare & Clinic',
+            'scribbleverse': 'Interactive Canvas',
+            'thar': 'Automotive 3D Motion',
+            'tourcraze': 'Travel & FinTech',
+            'noir-etoile': 'Haute Couture Fashion',
+            'fieldnote-studio': 'Creative Agency',
+            'torque-rentals': 'Car Rental Engine',
+            'lumo': 'Mobile App SaaS',
+            'haven-and-co': 'Real Estate Platform',
+            'nexaflow': 'AI Workflow & SaaS',
+            'glitchpop': 'Y2K E-Commerce',
+            'marea-bay-resort': 'Luxury Hospitality',
+            'pathwise': 'EdTech & Learning',
+            'sip-analytics': 'Quantitative Wealth Analytics',
+        }
+        return domain_map.get(self.slug, self.category.name if self.category else '')
 
     def get_features_list(self):
         """Returns key features as a clean list of non-empty strings."""
