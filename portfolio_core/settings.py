@@ -89,9 +89,11 @@ else:
     if 'VERCEL' in os.environ or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
         import shutil
         tmp_db = Path('/tmp/db.sqlite3')
-        if not tmp_db.exists() and db_file.exists():
+        if db_file.exists():
             try:
-                shutil.copyfile(db_file, tmp_db)
+                # Synchronize if tmp_db does not exist or if deployed db.sqlite3 has changed
+                if not tmp_db.exists() or tmp_db.stat().st_size != db_file.stat().st_size or db_file.stat().st_mtime > tmp_db.stat().st_mtime:
+                    shutil.copyfile(db_file, tmp_db)
             except Exception:
                 pass
         if tmp_db.exists():
